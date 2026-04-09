@@ -30,8 +30,16 @@ group:
       hu553in/gdrive-assistant-bot
       hu553in/keenetic-vpn-switcher
       hu553in/grooming-studio-chat-helper
-      hu553in/kinescope-io-loader
       hu553in/yandex-alice-openai
+
+  - files:
+      - source: templates/dependabot.yml.j2
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_uv: true
+    repos: |
+      hu553in/kinescope-io-loader
       hu553in/dbeaver-gcloud-free
 
   - files:
@@ -67,9 +75,17 @@ group:
     repos: |
       hu553in/grooming-studio
       hu553in/wotd-bot
+      hu553in/cash-bot
+
+  - files:
+      - source: templates/dependabot.yml.j2
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_npm: true
+    repos: |
       hu553in/vrubel-museum-exhibitions
       hu553in/flash-games
-      hu553in/cash-bot
 
   - files:
       - source: templates/dependabot.yml.j2
