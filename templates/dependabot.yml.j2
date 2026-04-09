@@ -5,8 +5,8 @@ registries:
   ghcr:
     type: docker-registry
     url: https://ghcr.io
-    username: "${{github.repository_owner}}"
-    password: "${{secrets.GITHUB_TOKEN}}"
+    username: '{% raw %}${{github.repository_owner}}{% endraw %}'
+    password: '{% raw %}${{secrets.GITHUB_TOKEN}}{% endraw %}'
 {% endif %}
 
 updates:
