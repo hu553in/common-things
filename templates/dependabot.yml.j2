@@ -5,22 +5,22 @@ registries:
   ghcr:
     type: docker-registry
     url: https://ghcr.io
-    username: "${{github.repository_owner}}"
-    password: "${{secrets.GITHUB_TOKEN}}"
+    username: '${{github.repository_owner}}'
+    password: '${{secrets.GITHUB_TOKEN}}'
 {% endif %}
 
 updates:
 {% if enable_github_actions | default(false, true) %}
 
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     allow:
       - dependency-type: all
     groups:
@@ -36,9 +36,9 @@ updates:
 
   - package-ecosystem: docker
     directories:
-      - "/"
+      - '/'
 {% for d in extra_docker_directories | default([], true) %}
-      - "{{ d }}"
+      - '{{ d }}'
 {% endfor %}
     schedule:
       interval: daily
@@ -46,7 +46,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     registries:
       - ghcr
     allow:
@@ -63,14 +63,14 @@ updates:
 {% if enable_gomod | default(false, true) %}
 
   - package-ecosystem: gomod
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     allow:
       - dependency-type: all
     groups:
@@ -85,14 +85,14 @@ updates:
 {% if enable_gradle | default(false, true) %}
 
   - package-ecosystem: gradle
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     allow:
       - dependency-type: all
     groups:
@@ -107,14 +107,14 @@ updates:
 {% if enable_npm | default(false, true) %}
 
   - package-ecosystem: npm
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     allow:
       - dependency-type: all
     groups:
@@ -129,14 +129,14 @@ updates:
 {% if enable_uv | default(false, true) %}
 
   - package-ecosystem: uv
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     allow:
       - dependency-type: all
     groups:
@@ -151,20 +151,20 @@ updates:
 {% if enable_swift | default(false, true) %}
 
   - package-ecosystem: swift
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     allow:
       - dependency-type: all
 {% if swift_ignore_dependencies | default([], true) %}
     ignore:
 {% for d in swift_ignore_dependencies %}
-      - dependency-name: "{{ d }}"
+      - dependency-name: '{{ d }}'
 {% endfor %}
 {% endif %}
     groups:
@@ -179,14 +179,14 @@ updates:
 {% if enable_bundler | default(false, true) %}
 
   - package-ecosystem: bundler
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     allow:
       - dependency-type: all
     groups:
@@ -201,14 +201,14 @@ updates:
 {% if enable_gitsubmodule | default(false, true) %}
 
   - package-ecosystem: gitsubmodule
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(dependabot):"
+      prefix: 'deps(dependabot):'
     allow:
       - dependency-type: all
     groups:
