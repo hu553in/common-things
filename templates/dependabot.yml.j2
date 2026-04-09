@@ -8,6 +8,8 @@ registries:
     password: "${{secrets.GITHUB_TOKEN}}"
 
 updates:
+{% if enable_github_actions | default(false, true) %}
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
@@ -27,14 +29,15 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
+{% if enable_docker | default(false, true) %}
 
   - package-ecosystem: docker
     directories:
       - "/"
-      - "/src/tizen_tool/resources"
-      - "/ansible/playbooks/roles/file_deployment/files/3x_ui"
-      - "/ansible/playbooks/roles/file_deployment/files/general"
-      - "/ansible/playbooks/roles/file_deployment/files/grooming"
+{% for d in extra_docker_directories | default([], true) %}
+      - "{{ d }}"
+{% endfor %}
     schedule:
       interval: daily
     open-pull-requests-limit: 5
@@ -54,6 +57,8 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
+{% if enable_gomod | default(false, true) %}
 
   - package-ecosystem: gomod
     directory: "/"
@@ -74,6 +79,8 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
+{% if enable_gradle | default(false, true) %}
 
   - package-ecosystem: gradle
     directory: "/"
@@ -94,6 +101,8 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
+{% if enable_npm | default(false, true) %}
 
   - package-ecosystem: npm
     directory: "/"
@@ -114,6 +123,8 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
+{% if enable_uv | default(false, true) %}
 
   - package-ecosystem: uv
     directory: "/"
@@ -134,6 +145,8 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
+{% if enable_swift | default(false, true) %}
 
   - package-ecosystem: swift
     directory: "/"
@@ -146,6 +159,12 @@ updates:
       prefix: "deps(dependabot):"
     allow:
       - dependency-type: all
+{% if swift_ignore_dependencies | default([], true) %}
+    ignore:
+{% for d in swift_ignore_dependencies %}
+      - dependency-name: "{{ d }}"
+{% endfor %}
+{% endif %}
     groups:
       patch-and-minor:
         update-types:
@@ -154,6 +173,8 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
+{% if enable_bundler | default(false, true) %}
 
   - package-ecosystem: bundler
     directory: "/"
@@ -174,6 +195,8 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
+{% if enable_gitsubmodule | default(false, true) %}
 
   - package-ecosystem: gitsubmodule
     directory: "/"
@@ -194,3 +217,4 @@ updates:
       major:
         update-types:
           - major
+{% endif %}
