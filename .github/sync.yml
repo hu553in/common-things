@@ -2,25 +2,29 @@ group:
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
     repos: |
       hu553in/hu553in
       hu553in/homebrew-tap
       hu553in/common-things
-    template:
-      enable_github_actions: true
 
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_gitsubmodule: true
     repos: |
       hu553in/personal-website
-    template:
-      enable_github_actions: true
-      enable_gitsubmodule: true
 
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_uv: true
     repos: |
       hu553in/spa-crawler
       hu553in/gdrive-assistant-bot
@@ -29,81 +33,77 @@ group:
       hu553in/kinescope-io-loader
       hu553in/yandex-alice-openai
       hu553in/dbeaver-gcloud-free
-    template:
-      enable_github_actions: true
-      enable_docker: true
-      enable_uv: true
 
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_gomod: true
     repos: |
       hu553in/grooming-studio-api
       hu553in/dockguard
       hu553in/telekilogram
       hu553in/tempstream
-    template:
-      enable_github_actions: true
-      enable_docker: true
-      enable_gomod: true
 
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_gradle: true
     repos: |
       hu553in/invites-keycloak
-    template:
-      enable_github_actions: true
-      enable_docker: true
-      enable_gradle: true
 
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_npm: true
     repos: |
       hu553in/grooming-studio
       hu553in/wotd-bot
       hu553in/vrubel-museum-exhibitions
       hu553in/flash-games
       hu553in/cash-bot
-    template:
-      enable_github_actions: true
-      enable_docker: true
-      enable_npm: true
 
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_uv: true
+          extra_docker_directories:
+            - "/src/tizen_tool/resources"
     repos: |
       hu553in/tizen-tool
-    template:
-      enable_github_actions: true
-      enable_docker: true
-      enable_uv: true
-      extra_docker_directories:
-        - "/src/tizen_tool/resources"
 
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          extra_docker_directories:
+            - "/playbooks/roles/file_deployment/files/3x_ui"
+            - "/playbooks/roles/file_deployment/files/general"
+            - "/playbooks/roles/file_deployment/files/grooming"
     repos: |
       hu553in/single-deployment
-    template:
-      enable_github_actions: true
-      enable_docker: true
-      extra_docker_directories:
-        - "/playbooks/roles/file_deployment/files/3x_ui"
-        - "/playbooks/roles/file_deployment/files/general"
-        - "/playbooks/roles/file_deployment/files/grooming"
 
   - files:
       - source: templates/dependabot.yml.j2
         dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_swift: true
+          enable_bundler: true
+          swift_ignore_dependencies:
+            - swift-transformers
     repos: |
       hu553in/relay
-    template:
-      enable_github_actions: true
-      enable_swift: true
-      enable_bundler: true
-      swift_ignore_dependencies:
-        - swift-transformers

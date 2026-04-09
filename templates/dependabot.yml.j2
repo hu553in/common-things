@@ -1,4 +1,5 @@
 version: 2
+{% if enable_docker | default(false, true) %}
 
 registries:
   ghcr:
@@ -6,6 +7,7 @@ registries:
     url: https://ghcr.io
     username: "${{github.repository_owner}}"
     password: "${{secrets.GITHUB_TOKEN}}"
+{% endif %}
 
 updates:
 {% if enable_github_actions | default(false, true) %}
