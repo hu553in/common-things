@@ -120,6 +120,6 @@ group:
           enable_swift: true
           enable_bundler: true
           swift_ignore_dependencies:
-            - swift-transformers
+            - "github.com/huggingface/swift-transformers"
     repos: |
       hu553in/relay
