@@ -141,3 +141,31 @@ group:
       hu553in/tempstream
       hu553in/spa-crawler
       hu553in/yandex-alice-openai
+
+  - files:
+      - source: files/AGENTS.md
+        dest: AGENTS.md
+      - source: files/CLAUDE.md
+        dest: CLAUDE.md
+    repos: |
+      hu553in/invites-keycloak
+      hu553in/telekilogram
+      hu553in/relay
+      hu553in/dockguard
+      hu553in/vrubel-museum-exhibitions
+      hu553in/personal-website
+      hu553in/grooming-studio-api
+      hu553in/wotd-bot
+      hu553in/cash-bot
+      hu553in/grooming-studio
+      hu553in/single-deployment
+      hu553in/flash-games
+      hu553in/tizen-tool
+      hu553in/gdrive-assistant-bot
+      hu553in/yandex-alice-openai
+      hu553in/spa-crawler
+      hu553in/grooming-studio-chat-helper
+      hu553in/keenetic-vpn-switcher
+      hu553in/kinescope-io-loader
+      hu553in/dbeaver-gcloud-free
+      hu553in/tempstream
