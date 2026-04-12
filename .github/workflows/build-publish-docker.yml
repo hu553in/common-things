@@ -22,6 +22,9 @@ on:
         required: false
         type: boolean
         default: true
+    outputs:
+      digest:
+        value: ${{ jobs.publish.outputs.digest }}
 
 jobs:
   publish:
@@ -59,17 +62,3 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: ${{ inputs.build_args }}
-
-  attest:
-    if: ${{ github.event.repository.private == false }}
-    needs: publish
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      attestations: write
-    steps:
-      - uses: actions/attest@v4
-        with:
-          subject-name: ${{ inputs.image }}
-          subject-digest: ${{ needs.publish.outputs.digest }}
-          push-to-registry: true

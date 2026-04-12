@@ -1,0 +1,24 @@
+name: Attest Docker image
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      digest:
+        required: true
+        type: string
+
+jobs:
+  attest:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/attest@v4
+        with:
+          subject-name: ${{ inputs.image }}
+          subject-digest: ${{ inputs.digest }}
+          push-to-registry: true
