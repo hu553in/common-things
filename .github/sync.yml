@@ -1,6 +1,6 @@
 group:
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
@@ -10,7 +10,7 @@ group:
       hu553in/common-things
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
@@ -19,7 +19,7 @@ group:
       hu553in/personal-website
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
@@ -33,7 +33,7 @@ group:
       hu553in/yandex-alice-openai
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
@@ -43,7 +43,7 @@ group:
       hu553in/dbeaver-gcloud-free
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
@@ -56,7 +56,7 @@ group:
       hu553in/tempstream
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
@@ -66,7 +66,7 @@ group:
       hu553in/invites-keycloak
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
@@ -78,7 +78,7 @@ group:
       hu553in/cash-bot
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
@@ -88,48 +88,47 @@ group:
       hu553in/flash-games
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
           enable_docker: true
           enable_uv: true
           extra_docker_directories:
-            - "/src/tizen_tool/resources"
+            - '/src/tizen_tool/resources'
     repos: |
       hu553in/tizen-tool
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
           enable_docker: true
           extra_docker_directories:
-            - "/playbooks/roles/file_deployment/files/3x_ui"
-            - "/playbooks/roles/file_deployment/files/general"
-            - "/playbooks/roles/file_deployment/files/grooming"
+            - '/playbooks/roles/file_deployment/files/3x_ui'
+            - '/playbooks/roles/file_deployment/files/general'
+            - '/playbooks/roles/file_deployment/files/grooming'
     repos: |
       hu553in/single-deployment
 
   - files:
-      - source: templates/dependabot.yml.njk
+      - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
           enable_swift: true
-          enable_bundler: true
           swift_ignore_dependencies:
-            - "github.com/huggingface/swift-transformers"
+            - 'github.com/huggingface/swift-transformers'
     repos: |
       hu553in/relay
 
   - files:
-      - source: files/LICENSE
+      - source: files/docs/LICENSE
         dest: LICENSE
-      - source: files/CONTRIBUTING.md
+      - source: files/docs/CONTRIBUTING.md
         dest: CONTRIBUTING.md
-      - source: files/CODE_OF_CONDUCT.md
+      - source: files/docs/CODE_OF_CONDUCT.md
         dest: CODE_OF_CONDUCT.md
     repos: |
       hu553in/invites-keycloak
@@ -143,9 +142,9 @@ group:
       hu553in/yandex-alice-openai
 
   - files:
-      - source: files/AGENTS.md
+      - source: files/docs/AGENTS.md
         dest: AGENTS.md
-      - source: files/CLAUDE.md
+      - source: files/docs/CLAUDE.md
         dest: CLAUDE.md
     repos: |
       hu553in/invites-keycloak
@@ -171,9 +170,9 @@ group:
       hu553in/tempstream
 
   - files:
-      - source: files/.editorconfig
+      - source: files/configs/.editorconfig
         dest: .editorconfig
-      - source: files/.gitattributes
+      - source: files/configs/.gitattributes
         dest: .gitattributes
     repos: |
       hu553in/invites-keycloak

@@ -11,7 +11,6 @@ registries:
 
 updates:
 {% if enable_github_actions | default(false, true) %}
-
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
@@ -33,7 +32,6 @@ updates:
           - major
 {% endif %}
 {% if enable_docker | default(false, true) %}
-
   - package-ecosystem: docker
     directories:
       - '/'
@@ -61,7 +59,6 @@ updates:
           - major
 {% endif %}
 {% if enable_gomod | default(false, true) %}
-
   - package-ecosystem: gomod
     directory: '/'
     schedule:
@@ -83,7 +80,6 @@ updates:
           - major
 {% endif %}
 {% if enable_gradle | default(false, true) %}
-
   - package-ecosystem: gradle
     directory: '/'
     schedule:
@@ -105,7 +101,6 @@ updates:
           - major
 {% endif %}
 {% if enable_npm | default(false, true) %}
-
   - package-ecosystem: npm
     directory: '/'
     schedule:
@@ -127,7 +122,6 @@ updates:
           - major
 {% endif %}
 {% if enable_uv | default(false, true) %}
-
   - package-ecosystem: uv
     directory: '/'
     schedule:
@@ -149,7 +143,6 @@ updates:
           - major
 {% endif %}
 {% if enable_swift | default(false, true) %}
-
   - package-ecosystem: swift
     directory: '/'
     schedule:
@@ -176,30 +169,7 @@ updates:
         update-types:
           - major
 {% endif %}
-{% if enable_bundler | default(false, true) %}
-
-  - package-ecosystem: bundler
-    directory: '/'
-    schedule:
-      interval: daily
-    open-pull-requests-limit: 5
-    assignees:
-      - hu553in
-    commit-message:
-      prefix: 'deps(dependabot):'
-    allow:
-      - dependency-type: all
-    groups:
-      patch-and-minor:
-        update-types:
-          - patch
-          - minor
-      major:
-        update-types:
-          - major
-{% endif %}
 {% if enable_gitsubmodule | default(false, true) %}
-
   - package-ecosystem: gitsubmodule
     directory: '/'
     schedule:
