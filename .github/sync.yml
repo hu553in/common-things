@@ -60,7 +60,7 @@ group:
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
-          enable_docker: true
+          enable_docker_compose: true
           enable_gradle: true
     repos: |
       hu553in/invites-keycloak
@@ -104,8 +104,8 @@ group:
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
-          enable_docker: true
-          extra_docker_directories:
+          enable_docker_compose: true
+          extra_docker_compose_directories:
             - '/playbooks/roles/file_deployment/files/3x_ui'
             - '/playbooks/roles/file_deployment/files/general'
             - '/playbooks/roles/file_deployment/files/grooming'

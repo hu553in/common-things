@@ -1,5 +1,5 @@
 version: 2
-{% if enable_docker | default(false, true) %}
+{% if enable_docker | default(false, true) or enable_docker_compose | default(false, true) %}
 
 registries:
   ghcr:
@@ -36,6 +36,33 @@ updates:
     directories:
       - '/'
 {% for d in extra_docker_directories | default([], true) %}
+      - '{{ d }}'
+{% endfor %}
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 5
+    assignees:
+      - hu553in
+    commit-message:
+      prefix: 'deps(dependabot):'
+    registries:
+      - ghcr
+    allow:
+      - dependency-type: all
+    groups:
+      patch-and-minor:
+        update-types:
+          - patch
+          - minor
+      major:
+        update-types:
+          - major
+{% endif %}
+{% if enable_docker_compose | default(false, true) %}
+  - package-ecosystem: docker-compose
+    directories:
+      - '/'
+{% for d in extra_docker_compose_directories | default([], true) %}
       - '{{ d }}'
 {% endfor %}
     schedule:
