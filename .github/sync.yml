@@ -26,10 +26,20 @@ group:
           enable_docker: true
           enable_uv: true
     repos: |
-      hu553in/spa-crawler
-      hu553in/gdrive-assistant-bot
       hu553in/keenetic-vpn-switcher
       hu553in/grooming-studio-chat-helper
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_docker_compose: true
+          enable_uv: true
+    repos: |
+      hu553in/spa-crawler
+      hu553in/gdrive-assistant-bot
       hu553in/yandex-alice-openai
 
   - files:
@@ -53,6 +63,16 @@ group:
       hu553in/grooming-studio-api
       hu553in/dockguard
       hu553in/telekilogram
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_docker_compose: true
+          enable_gomod: true
+    repos: |
       hu553in/tempstream
 
   - files:
