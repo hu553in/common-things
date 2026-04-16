@@ -106,6 +106,7 @@ group:
     repos: |
       hu553in/vrubel-museum-exhibitions
       hu553in/flash-games
+      hu553in/gh-workflow-dashboard
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -179,6 +180,7 @@ group:
       hu553in/grooming-studio
       hu553in/single-deployment
       hu553in/flash-games
+      hu553in/gh-workflow-dashboard
       hu553in/tizen-tool
       hu553in/gdrive-assistant-bot
       hu553in/yandex-alice-openai
@@ -209,6 +211,7 @@ group:
       hu553in/cash-bot
       hu553in/grooming-studio
       hu553in/flash-games
+      hu553in/gh-workflow-dashboard
       hu553in/personal-website
       hu553in/single-deployment
       hu553in/telekilogram
