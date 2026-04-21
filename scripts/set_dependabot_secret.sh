@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-SECRET_NAME="GHCR_PAT"
+SECRET_NAME=""
 SECRET_VALUE=""
 
 REPOS=(
