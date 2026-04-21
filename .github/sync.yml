@@ -63,6 +63,7 @@ group:
       hu553in/grooming-studio-api
       hu553in/dockguard
       hu553in/telekilogram
+      hu553in/swaggerhub-latest-proxy
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -170,6 +171,7 @@ group:
     repos: |
       hu553in/invites-keycloak
       hu553in/telekilogram
+      hu553in/swaggerhub-latest-proxy
       hu553in/relay
       hu553in/dockguard
       hu553in/vrubel-museum-exhibitions
@@ -215,6 +217,7 @@ group:
       hu553in/personal-website
       hu553in/single-deployment
       hu553in/telekilogram
+      hu553in/swaggerhub-latest-proxy
       hu553in/tempstream
       hu553in/dockguard
       hu553in/grooming-studio-api
