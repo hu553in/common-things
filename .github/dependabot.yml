@@ -9,7 +9,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(github-actions):'
     allow:
       - dependency-type: all
     groups:
