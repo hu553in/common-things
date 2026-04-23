@@ -114,6 +114,18 @@ group:
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
+          enable_npm: true
+          enable_cargo: true
+          extra_cargo_directories:
+            - '/src-tauri'
+    repos: |
+      hu553in/relay-rs
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
           enable_docker: true
           enable_uv: true
           extra_docker_directories:
@@ -192,6 +204,7 @@ group:
       hu553in/kinescope-io-loader
       hu553in/dbeaver-gcloud-free
       hu553in/tempstream
+      hu553in/relay-rs
 
   - files:
       - source: files/configs/.editorconfig
@@ -222,3 +235,4 @@ group:
       hu553in/dockguard
       hu553in/grooming-studio-api
       hu553in/common-things
+      hu553in/relay-rs

@@ -19,7 +19,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(github-actions):'
     allow:
       - dependency-type: all
     groups:
@@ -44,7 +44,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(docker):'
     registries:
       - ghcr
     allow:
@@ -71,7 +71,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(docker-compose):'
     registries:
       - ghcr
     allow:
@@ -94,7 +94,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(gomod):'
     allow:
       - dependency-type: all
     groups:
@@ -115,7 +115,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(gradle):'
     allow:
       - dependency-type: all
     groups:
@@ -136,7 +136,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(npm):'
     allow:
       - dependency-type: all
     groups:
@@ -157,7 +157,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(uv):'
     allow:
       - dependency-type: all
     groups:
@@ -178,7 +178,7 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(swift):'
     allow:
       - dependency-type: all
 {% if swift_ignore_dependencies | default([], true) %}
@@ -205,7 +205,34 @@ updates:
     assignees:
       - hu553in
     commit-message:
-      prefix: 'deps(dependabot):'
+      prefix: 'deps(gitsubmodule):'
+    allow:
+      - dependency-type: all
+    groups:
+      patch-and-minor:
+        update-types:
+          - patch
+          - minor
+      major:
+        update-types:
+          - major
+{% endif %}
+{% if enable_cargo | default(false, true) %}
+  - package-ecosystem: cargo
+    directories:
+      - '/'
+{% for d in extra_cargo_directories | default([], true) %}
+      - '{{ d }}'
+{% endfor %}
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 5
+    assignees:
+      - hu553in
+    commit-message:
+      prefix: 'deps(cargo):'
+    registries:
+      - ghcr
     allow:
       - dependency-type: all
     groups:
