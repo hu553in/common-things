@@ -95,8 +95,6 @@ group:
           enable_npm: true
     repos: |
       hu553in/grooming-studio
-      hu553in/wotd-bot
-      hu553in/cash-bot
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -189,8 +187,6 @@ group:
       hu553in/vrubel-museum-exhibitions
       hu553in/personal-website
       hu553in/grooming-studio-api
-      hu553in/wotd-bot
-      hu553in/cash-bot
       hu553in/grooming-studio
       hu553in/single-deployment
       hu553in/flash-games
@@ -222,8 +218,6 @@ group:
       hu553in/kinescope-io-loader
       hu553in/dbeaver-gcloud-free
       hu553in/vrubel-museum-exhibitions
-      hu553in/wotd-bot
-      hu553in/cash-bot
       hu553in/grooming-studio
       hu553in/flash-games
       hu553in/gh-workflow-dashboard

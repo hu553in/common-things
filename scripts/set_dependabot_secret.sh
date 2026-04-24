@@ -18,8 +18,6 @@ REPOS=(
   hu553in/tempstream
   hu553in/invites-keycloak
   hu553in/grooming-studio
-  hu553in/wotd-bot
-  hu553in/cash-bot
   hu553in/tizen-tool
   hu553in/single-deployment
 )
