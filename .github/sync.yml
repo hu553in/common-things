@@ -138,7 +138,6 @@ group:
           enable_github_actions: true
           enable_docker_compose: true
           extra_docker_compose_directories:
-            - '/playbooks/roles/file_deployment/files/3x_ui'
             - '/playbooks/roles/file_deployment/files/general'
             - '/playbooks/roles/file_deployment/files/grooming'
     repos: |
