@@ -117,7 +117,7 @@ group:
           extra_cargo_directories:
             - '/src-tauri'
     repos: |
-      hu553in/relay-rs
+      hu553in/relay
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -144,17 +144,6 @@ group:
       hu553in/single-deployment
 
   - files:
-      - source: templates/configs/dependabot.yml.njk
-        dest: .github/dependabot.yml
-        template:
-          enable_github_actions: true
-          enable_swift: true
-          swift_ignore_dependencies:
-            - 'github.com/huggingface/swift-transformers'
-    repos: |
-      hu553in/relay
-
-  - files:
       - source: files/docs/LICENSE
         dest: LICENSE
       - source: files/docs/CONTRIBUTING.md
@@ -165,7 +154,6 @@ group:
       hu553in/invites-keycloak
       hu553in/telekilogram
       hu553in/gdrive-assistant-bot
-      hu553in/relay
       hu553in/dockguard
       hu553in/tizen-tool
       hu553in/tempstream
@@ -181,7 +169,6 @@ group:
       hu553in/invites-keycloak
       hu553in/telekilogram
       hu553in/swaggerhub-latest-proxy
-      hu553in/relay
       hu553in/dockguard
       hu553in/vrubel-museum-exhibitions
       hu553in/personal-website
@@ -199,7 +186,7 @@ group:
       hu553in/kinescope-io-loader
       hu553in/dbeaver-gcloud-free
       hu553in/tempstream
-      hu553in/relay-rs
+      hu553in/relay
 
   - files:
       - source: files/configs/.editorconfig
@@ -228,4 +215,4 @@ group:
       hu553in/dockguard
       hu553in/grooming-studio-api
       hu553in/common-things
-      hu553in/relay-rs
+      hu553in/relay

@@ -169,33 +169,6 @@ updates:
         update-types:
           - major
 {% endif %}
-{% if enable_swift | default(false, true) %}
-  - package-ecosystem: swift
-    directory: '/'
-    schedule:
-      interval: daily
-    open-pull-requests-limit: 5
-    assignees:
-      - hu553in
-    commit-message:
-      prefix: 'deps(swift):'
-    allow:
-      - dependency-type: all
-{% if swift_ignore_dependencies | default([], true) %}
-    ignore:
-{% for d in swift_ignore_dependencies %}
-      - dependency-name: '{{ d }}'
-{% endfor %}
-{% endif %}
-    groups:
-      patch-and-minor:
-        update-types:
-          - patch
-          - minor
-      major:
-        update-types:
-          - major
-{% endif %}
 {% if enable_gitsubmodule | default(false, true) %}
   - package-ecosystem: gitsubmodule
     directory: '/'
