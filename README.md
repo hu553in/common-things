@@ -1,3 +1,3 @@
-# My common things
+# Common things
 
 Shared resources for cross-project use.
