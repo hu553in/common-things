@@ -2,14 +2,15 @@
 
 set -euo pipefail
 
-SECRET_NAME=""
+SECRET_NAME="GHCR_PAT"
 SECRET_VALUE=""
 
 REPOS=(
-  hu553in/spa-crawler
-  hu553in/gdrive-assistant-bot
   hu553in/keenetic-vpn-switcher
   hu553in/grooming-studio-chat-helper
+  hu553in/polybot
+  hu553in/spa-crawler
+  hu553in/gdrive-assistant-bot
   hu553in/yandex-alice-openai
   hu553in/grooming-studio-api
   hu553in/dockguard
