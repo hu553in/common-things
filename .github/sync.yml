@@ -28,6 +28,7 @@ group:
     repos: |
       hu553in/keenetic-vpn-switcher
       hu553in/grooming-studio-chat-helper
+      hu553in/polybot
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -115,7 +116,7 @@ group:
           enable_npm: true
           enable_cargo: true
           extra_cargo_directories:
-            - '/src-tauri'
+            - /src-tauri
     repos: |
       hu553in/relay
 
@@ -127,7 +128,7 @@ group:
           enable_docker: true
           enable_uv: true
           extra_docker_directories:
-            - '/src/tizen_tool/resources'
+            - /src/tizen_tool/resources
     repos: |
       hu553in/tizen-tool
 
@@ -138,8 +139,8 @@ group:
           enable_github_actions: true
           enable_docker_compose: true
           extra_docker_compose_directories:
-            - '/playbooks/roles/file_deployment/files/general'
-            - '/playbooks/roles/file_deployment/files/grooming'
+            - /playbooks/roles/file_deployment/files/general
+            - /playbooks/roles/file_deployment/files/grooming
     repos: |
       hu553in/single-deployment
 
@@ -187,6 +188,7 @@ group:
       hu553in/dbeaver-gcloud-free
       hu553in/tempstream
       hu553in/relay
+      hu553in/polybot
 
   - files:
       - source: files/configs/.editorconfig
@@ -216,3 +218,4 @@ group:
       hu553in/grooming-studio-api
       hu553in/common-things
       hu553in/relay
+      hu553in/polybot
