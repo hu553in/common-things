@@ -160,6 +160,7 @@ group:
       hu553in/tempstream
       hu553in/spa-crawler
       hu553in/yandex-alice-openai
+      hu553in/polybot
 
   - files:
       - source: files/docs/AGENTS.md
