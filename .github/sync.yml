@@ -50,8 +50,8 @@ group:
           enable_github_actions: true
           enable_uv: true
     repos: |
+      hu553in-org/kinescope-io-loader
       hu553in/dbeaver-gcloud-free
-      hu553in/kinescope-io-loader
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -94,7 +94,7 @@ group:
           enable_docker: true
           enable_gradle: true
     repos: |
-      hu553in/na-omsk-bot
+      hu553in-org/na-omsk-bot
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -127,7 +127,7 @@ group:
           extra_cargo_directories:
             - /src-tauri
     repos: |
-      hu553in/relay
+      hu553in-org/relay
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -153,7 +153,7 @@ group:
             - /playbooks/roles/file_deployment/files/spacecore-nl
             - /playbooks/roles/file_deployment/files/yc
     repos: |
-      hu553in/single-deployment
+      hu553in-org/single-deployment
 
   - files:
       - source: files/docs/LICENSE
@@ -171,6 +171,10 @@ group:
       - source: files/docs/CLAUDE.md
         dest: CLAUDE.md
     repos: |
+      hu553in-org/kinescope-io-loader
+      hu553in-org/na-omsk-bot
+      hu553in-org/relay
+      hu553in-org/single-deployment
       hu553in/common-things
       hu553in/dbeaver-gcloud-free
       hu553in/dockguard
@@ -182,12 +186,8 @@ group:
       hu553in/grooming-studio-chat-helper
       hu553in/invites-keycloak
       hu553in/keenetic-vpn-switcher
-      hu553in/kinescope-io-loader
-      hu553in/na-omsk-bot
       hu553in/personal-website
       hu553in/polybot
-      hu553in/relay
-      hu553in/single-deployment
       hu553in/spa-crawler
       hu553in/telekilogram
       hu553in/tempstream
