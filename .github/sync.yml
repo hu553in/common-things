@@ -148,10 +148,10 @@ group:
           enable_github_actions: true
           enable_docker_compose: true
           extra_docker_compose_directories:
-            - /playbooks/roles/file_deployment/files/general
-            - /playbooks/roles/file_deployment/files/grooming
-            - /playbooks/roles/file_deployment/files/polybot
-            - /playbooks/roles/file_deployment/files/amnezia_ru
+            - /playbooks/roles/file_deployment/files/hostvds-lv
+            - /playbooks/roles/file_deployment/files/beget
+            - /playbooks/roles/file_deployment/files/spacecore-nl
+            - /playbooks/roles/file_deployment/files/yc
     repos: |
       hu553in/single-deployment
 

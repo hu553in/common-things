@@ -22,13 +22,17 @@ on:
         required: false
         type: boolean
         default: true
+      runs-on:
+        required: false
+        type: string
+        default: ubuntu-latest
     outputs:
       digest:
         value: ${{ jobs.publish.outputs.digest }}
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     outputs:
       digest: ${{ steps.build.outputs.digest }}
     permissions:
