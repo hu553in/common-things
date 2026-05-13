@@ -2,14 +2,14 @@ version: 2
 
 updates:
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: '/'
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
     assignees:
       - hu553in
     commit-message:
-      prefix: "deps(github-actions):"
+      prefix: 'deps(github-actions):'
     allow:
       - dependency-type: all
     groups:
