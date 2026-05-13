@@ -5,9 +5,9 @@ group:
         template:
           enable_github_actions: true
     repos: |
-      hu553in/hu553in
-      hu553in/homebrew-tap
       hu553in/common-things
+      hu553in/homebrew-tap
+      hu553in/hu553in
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -26,8 +26,8 @@ group:
           enable_docker: true
           enable_uv: true
     repos: |
-      hu553in/keenetic-vpn-switcher
       hu553in/grooming-studio-chat-helper
+      hu553in/keenetic-vpn-switcher
       hu553in/polybot
 
   - files:
@@ -39,8 +39,8 @@ group:
           enable_docker_compose: true
           enable_uv: true
     repos: |
-      hu553in/spa-crawler
       hu553in/gdrive-assistant-bot
+      hu553in/spa-crawler
       hu553in/yandex-alice-openai
 
   - files:
@@ -50,8 +50,8 @@ group:
           enable_github_actions: true
           enable_uv: true
     repos: |
-      hu553in/kinescope-io-loader
       hu553in/dbeaver-gcloud-free
+      hu553in/kinescope-io-loader
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -61,8 +61,8 @@ group:
           enable_docker: true
           enable_gomod: true
     repos: |
-      hu553in/grooming-studio-api
       hu553in/dockguard
+      hu553in/grooming-studio-api
       hu553in/telekilogram
 
   - files:
@@ -113,9 +113,9 @@ group:
           enable_github_actions: true
           enable_npm: true
     repos: |
-      hu553in/vrubel-museum-exhibitions
       hu553in/flash-games
       hu553in/gh-workflow-dashboard
+      hu553in/vrubel-museum-exhibitions
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -162,72 +162,35 @@ group:
         dest: CONTRIBUTING.md
       - source: files/docs/CODE_OF_CONDUCT.md
         dest: CODE_OF_CONDUCT.md
-    repos: |
-      hu553in/invites-keycloak
-      hu553in/telekilogram
-      hu553in/gdrive-assistant-bot
-      hu553in/dockguard
-      hu553in/tizen-tool
-      hu553in/tempstream
-      hu553in/spa-crawler
-      hu553in/yandex-alice-openai
-      hu553in/polybot
-
-  - files:
+      - source: files/configs/.editorconfig
+        dest: .editorconfig
+      - source: files/configs/.gitattributes
+        dest: .gitattributes
       - source: files/docs/AGENTS.md
         dest: AGENTS.md
       - source: files/docs/CLAUDE.md
         dest: CLAUDE.md
     repos: |
-      hu553in/invites-keycloak
-      hu553in/na-omsk-bot
-      hu553in/telekilogram
-      hu553in/dockguard
-      hu553in/vrubel-museum-exhibitions
-      hu553in/personal-website
-      hu553in/grooming-studio-api
-      hu553in/grooming-studio
-      hu553in/single-deployment
-      hu553in/flash-games
-      hu553in/gh-workflow-dashboard
-      hu553in/tizen-tool
-      hu553in/gdrive-assistant-bot
-      hu553in/yandex-alice-openai
-      hu553in/spa-crawler
-      hu553in/grooming-studio-chat-helper
-      hu553in/keenetic-vpn-switcher
-      hu553in/kinescope-io-loader
-      hu553in/dbeaver-gcloud-free
-      hu553in/tempstream
-      hu553in/relay
-      hu553in/polybot
-
-  - files:
-      - source: files/configs/.editorconfig
-        dest: .editorconfig
-      - source: files/configs/.gitattributes
-        dest: .gitattributes
-    repos: |
-      hu553in/invites-keycloak
-      hu553in/na-omsk-bot
-      hu553in/tizen-tool
-      hu553in/gdrive-assistant-bot
-      hu553in/yandex-alice-openai
-      hu553in/spa-crawler
-      hu553in/grooming-studio-chat-helper
-      hu553in/keenetic-vpn-switcher
-      hu553in/kinescope-io-loader
-      hu553in/dbeaver-gcloud-free
-      hu553in/vrubel-museum-exhibitions
-      hu553in/grooming-studio
-      hu553in/flash-games
-      hu553in/gh-workflow-dashboard
-      hu553in/personal-website
-      hu553in/single-deployment
-      hu553in/telekilogram
-      hu553in/tempstream
-      hu553in/dockguard
-      hu553in/grooming-studio-api
       hu553in/common-things
-      hu553in/relay
+      hu553in/dbeaver-gcloud-free
+      hu553in/dockguard
+      hu553in/flash-games
+      hu553in/gdrive-assistant-bot
+      hu553in/gh-workflow-dashboard
+      hu553in/grooming-studio
+      hu553in/grooming-studio-api
+      hu553in/grooming-studio-chat-helper
+      hu553in/invites-keycloak
+      hu553in/keenetic-vpn-switcher
+      hu553in/kinescope-io-loader
+      hu553in/na-omsk-bot
+      hu553in/personal-website
       hu553in/polybot
+      hu553in/relay
+      hu553in/single-deployment
+      hu553in/spa-crawler
+      hu553in/telekilogram
+      hu553in/tempstream
+      hu553in/tizen-tool
+      hu553in/vrubel-museum-exhibitions
+      hu553in/yandex-alice-openai
