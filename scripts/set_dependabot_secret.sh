@@ -15,9 +15,9 @@ REPOS=(
   hu553in/grooming-studio-api
   hu553in/dockguard
   hu553in/telekilogram
-  hu553in/swaggerhub-latest-proxy
   hu553in/tempstream
   hu553in/invites-keycloak
+  hu553in/na-omsk-bot
   hu553in/grooming-studio
   hu553in/tizen-tool
   hu553in/single-deployment
