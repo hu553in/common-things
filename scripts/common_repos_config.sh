@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-for repo in $(gh repo list --limit 200 --source | awk '{print $1}'); do
+for owner in hu553in $(gh org list); do
+  gh repo list "$owner" --limit 200 --source | awk '{print $1}'
+done | while read -r repo; do
   gh repo edit "$repo" \
     --delete-branch-on-merge \
     --allow-update-branch \

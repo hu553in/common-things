@@ -146,10 +146,13 @@ group:
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
+          enable_docker: true
           enable_docker_compose: true
+          extra_docker_directories:
+            - /playbooks/roles/file_deployment/files/spacecore-nl
           extra_docker_compose_directories:
-            - /playbooks/roles/file_deployment/files/hostvds-lv
             - /playbooks/roles/file_deployment/files/beget
+            - /playbooks/roles/file_deployment/files/hostvds-lv
             - /playbooks/roles/file_deployment/files/spacecore-nl
             - /playbooks/roles/file_deployment/files/yc
     repos: |
