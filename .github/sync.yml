@@ -52,6 +52,7 @@ group:
     repos: |
       hu553in-org/kinescope-io-loader
       hu553in/dbeaver-gcloud-free
+      hu553in/vod-recovery
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -195,5 +196,6 @@ group:
       hu553in/telekilogram
       hu553in/tempstream
       hu553in/tizen-tool
+      hu553in/vod-recovery
       hu553in/vrubel-museum-exhibitions
       hu553in/yandex-alice-openai
