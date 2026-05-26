@@ -188,7 +188,6 @@ group:
       hu553in/keenetic-vpn-switcher
       hu553in/personal-website
       hu553in/polybot
-      hu553in/single-deployment
       hu553in/spa-crawler
       hu553in/telekilogram
       hu553in/tempstream
@@ -210,4 +209,5 @@ group:
       hu553in/kinescope-io-loader
       hu553in/na-omsk-bot
       hu553in/relay
+      hu553in/single-deployment
       hu553in/voomy
