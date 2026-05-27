@@ -5,30 +5,57 @@ set -euo pipefail
 USER_OWNER="hu553in"
 KEYWORD=""
 
-mapfile -t OWNERS < <(
-  {
-    echo "$USER_OWNER"
-    gh org list
-  } | sort -u
+repos=(
+  # "owner/repo"
 )
 
-echo "🔍 Searching for open PRs with '$KEYWORD' in title for owners: ${OWNERS[*]}"
+if [ -z "$KEYWORD" ]; then
+  echo "KEYWORD is empty."
+  exit 1
+fi
 
 pr_urls=()
 
-for owner in "${OWNERS[@]}"; do
-  echo "→ Searching owner: $owner"
+if [ "${#repos[@]}" -gt 0 ]; then
+  echo "🔍 Searching for open PRs with '$KEYWORD' in title for repos: ${repos[*]}"
 
-  mapfile -t owner_pr_urls < <(gh search prs \
-    "$KEYWORD" \
-    --state open \
-    --owner "$owner" \
-    --json url \
-    --jq '.[].url' \
-    --limit 100)
+  for repo in "${repos[@]}"; do
+    echo "→ Searching repo: $repo"
 
-  pr_urls+=("${owner_pr_urls[@]}")
-done
+    mapfile -t repo_pr_urls < <(gh search prs \
+      "$KEYWORD" \
+      --state open \
+      --repo "$repo" \
+      --json url \
+      --jq '.[].url' \
+      --limit 100)
+
+    pr_urls+=("${repo_pr_urls[@]}")
+  done
+else
+  mapfile -t OWNERS < <(
+    {
+      echo "$USER_OWNER"
+      gh org list
+    } | sort -u
+  )
+
+  echo "🔍 Searching for open PRs with '$KEYWORD' in title for owners: ${OWNERS[*]}"
+
+  for owner in "${OWNERS[@]}"; do
+    echo "→ Searching owner: $owner"
+
+    mapfile -t owner_pr_urls < <(gh search prs \
+      "$KEYWORD" \
+      --state open \
+      --owner "$owner" \
+      --json url \
+      --jq '.[].url' \
+      --limit 100)
+
+    pr_urls+=("${owner_pr_urls[@]}")
+  done
+fi
 
 if [[ ${#pr_urls[@]} -eq 0 ]]; then
   echo "No matching open PRs found."
