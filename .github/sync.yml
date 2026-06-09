@@ -6,7 +6,6 @@ group:
           enable_github_actions: true
     repos: |
       hu553in/common-things
-      hu553in/homebrew-tap
       hu553in/hu553in
 
   - files:
@@ -63,7 +62,6 @@ group:
           enable_gomod: true
     repos: |
       hu553in/dockguard
-      hu553in/grooming-studio-api
       hu553in/telekilogram
 
   - files:
@@ -193,7 +191,6 @@ group:
       hu553in/gdrive-assistant-bot
       hu553in/gh-workflow-dashboard
       hu553in/grooming-studio
-      hu553in/grooming-studio-api
       hu553in/grooming-studio-chat-helper
       hu553in/invites-keycloak
       hu553in/keenetic-vpn-switcher
