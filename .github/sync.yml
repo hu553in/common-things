@@ -103,6 +103,17 @@ group:
         template:
           enable_github_actions: true
           enable_docker: true
+          enable_docker_compose: true
+          enable_npm: true
+    repos: |
+      hu553in/voomy
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
           enable_npm: true
     repos: |
       hu553in/grooming-studio
