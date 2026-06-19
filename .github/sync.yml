@@ -1,0 +1,219 @@
+group:
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+    repos: |
+      hu553in/common-things
+      hu553in/hu553in
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_gitsubmodule: true
+    repos: |
+      hu553in/personal-website
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_uv: true
+    repos: |
+      hu553in/grooming-studio-chat-helper
+      hu553in/keenetic-vpn-switcher
+      hu553in/polybot
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_docker_compose: true
+          enable_uv: true
+    repos: |
+      hu553in/gdrive-assistant-bot
+      hu553in/spa-crawler
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_uv: true
+    repos: |
+      hu553in/dbeaver-gcloud-free
+      hu553in/kinescope-io-loader
+      hu553in/vod-recovery
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_gomod: true
+    repos: |
+      hu553in/dockguard
+      hu553in/telekilogram
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_docker_compose: true
+          enable_gomod: true
+    repos: |
+      hu553in/tempstream
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker_compose: true
+          enable_gradle: true
+    repos: |
+      hu553in/invites-keycloak
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_gradle: true
+    repos: |
+      hu553in/na-omsk-bot
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_docker_compose: true
+          enable_npm: true
+    repos: |
+      hu553in/voomy
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_npm: true
+    repos: |
+      hu553in/grooming-studio
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_npm: true
+    repos: |
+      hu553in/flash-games
+      hu553in/gh-workflow-dashboard
+      hu553in/vrubel-museum-exhibitions
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_npm: true
+          enable_cargo: true
+          extra_cargo_directories:
+            - /src-tauri
+    repos: |
+      hu553in/relay
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_uv: true
+          extra_docker_directories:
+            - /src/tizen_tool/resources
+    repos: |
+      hu553in/tizen-tool
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_docker_compose: true
+          extra_docker_directories:
+            - /playbooks/roles/file_deployment/files/spacecore-nl
+          extra_docker_compose_directories:
+            - /playbooks/roles/file_deployment/files/beget
+            - /playbooks/roles/file_deployment/files/hostvds-lv
+            - /playbooks/roles/file_deployment/files/spacecore-nl
+            - /playbooks/roles/file_deployment/files/yc
+    repos: |
+      hu553in/single-deployment
+
+  - files:
+      - source: files/docs/LICENSE
+        dest: LICENSE
+      - source: files/docs/CONTRIBUTING.md
+        dest: CONTRIBUTING.md
+      - source: files/docs/CODE_OF_CONDUCT.md
+        dest: CODE_OF_CONDUCT.md
+      - source: files/configs/.editorconfig
+        dest: .editorconfig
+      - source: files/configs/.gitattributes
+        dest: .gitattributes
+      - source: files/docs/AGENTS.md
+        dest: AGENTS.md
+      - source: files/docs/CLAUDE.md
+        dest: CLAUDE.md
+    repos: |
+      hu553in/common-things
+      hu553in/dbeaver-gcloud-free
+      hu553in/dockguard
+      hu553in/flash-games
+      hu553in/gdrive-assistant-bot
+      hu553in/gh-workflow-dashboard
+      hu553in/grooming-studio
+      hu553in/grooming-studio-chat-helper
+      hu553in/invites-keycloak
+      hu553in/keenetic-vpn-switcher
+      hu553in/personal-website
+      hu553in/polybot
+      hu553in/relay
+      hu553in/spa-crawler
+      hu553in/telekilogram
+      hu553in/tempstream
+      hu553in/tizen-tool
+      hu553in/vod-recovery
+      hu553in/vrubel-museum-exhibitions
+
+  - files:
+      - source: files/configs/.editorconfig
+        dest: .editorconfig
+      - source: files/configs/.gitattributes
+        dest: .gitattributes
+      - source: files/docs/AGENTS.md
+        dest: AGENTS.md
+      - source: files/docs/CLAUDE.md
+        dest: CLAUDE.md
+    repos: |
+      hu553in/kinescope-io-loader
+      hu553in/na-omsk-bot
+      hu553in/single-deployment
+      hu553in/voomy
