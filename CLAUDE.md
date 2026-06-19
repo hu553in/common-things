@@ -69,6 +69,10 @@
 ## 📚 Documentation
 
 - For Markdown files:
+  - prefer a **maximum line length of ~120 characters**, except for:
+    - long tables;
+    - long links;
+    - code blocks.
   - headers must use sentence case (only the first letter capitalized) unless explicitly requested
     otherwise by the user.
     - Correct example: `## Project rules and conventions`.
