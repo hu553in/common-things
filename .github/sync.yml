@@ -117,6 +117,7 @@ group:
   - files:
       - source: templates/configs/.golangci.yaml.njk
         dest: .golangci.yaml
+        template: {}
     repos: |
       hu553in/telekilogram
       hu553in/tempstream
