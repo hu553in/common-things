@@ -2,23 +2,24 @@
 
 set -euo pipefail
 
-USER_OWNER="hu553in"
-REPO_LIMIT="200"
+USER_OWNER="${USER_OWNER:-hu553in}"
+REPO_LIMIT="${REPO_LIMIT:-200}"
 
-SECRET_NAME="GHCR_PAT"
-SECRET_VALUE=""
-
-repos=(
-  # "owner/repo"
-)
+SECRET_NAME="${SECRET_NAME:-GHCR_PAT}"
+SECRET_VALUE="${SECRET_VALUE:-}"
+REPOS="${REPOS:-}"
 
 if [ -z "$SECRET_VALUE" ]; then
   echo "SECRET_VALUE is empty."
   exit 1
 fi
 
-if [ "${#repos[@]}" -gt 0 ]; then
-  printf '%s\n' "${repos[@]}"
+repo_list_from_env() {
+  printf '%s\n' "$REPOS" | tr ',' '\n' | tr '[:space:]' '\n' | sed '/^$/d'
+}
+
+if [ -n "$REPOS" ]; then
+  repo_list_from_env
 else
   for owner in "$USER_OWNER" $(gh org list); do
     gh repo list "$owner" --limit "$REPO_LIMIT" --source | awk '{print $1}'

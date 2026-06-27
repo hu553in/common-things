@@ -1,4 +1,7 @@
 group:
+  # =============================================================================
+  # DEPENDABOT: UTILITY, PROFILE, AND WEBSITE REPOSITORIES
+  # =============================================================================
   - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
@@ -17,6 +20,9 @@ group:
     repos: |
       hu553in/personal-website
 
+  # =============================================================================
+  # PYTHON REPOSITORIES
+  # =============================================================================
   - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
@@ -53,6 +59,32 @@ group:
       hu553in/vod-recovery
 
   - files:
+      - source: templates/configs/.pre-commit-config.python.yaml.njk
+        dest: .pre-commit-config.yaml
+        template:
+          enable_test: false
+    repos: |
+      hu553in/dbeaver-gcloud-free
+      hu553in/grooming-studio-chat-helper
+      hu553in/keenetic-vpn-switcher
+      hu553in/kinescope-io-loader
+      hu553in/tizen-tool
+
+  - files:
+      - source: templates/configs/.pre-commit-config.python.yaml.njk
+        dest: .pre-commit-config.yaml
+        template:
+          enable_test: true
+    repos: |
+      hu553in/gdrive-assistant-bot
+      hu553in/polybot
+      hu553in/spa-crawler
+      hu553in/vod-recovery
+
+  # =============================================================================
+  # GO REPOSITORIES
+  # =============================================================================
+  - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
@@ -75,6 +107,48 @@ group:
       hu553in/tempstream
 
   - files:
+      - source: templates/configs/.golangci.yaml.njk
+        dest: .golangci.yaml
+        template:
+          local_prefix: github.com/hu553in/dockguard
+    repos: |
+      hu553in/dockguard
+
+  - files:
+      - source: templates/configs/.golangci.yaml.njk
+        dest: .golangci.yaml
+        template:
+          local_prefix: github.com/hu553in/telekilogram
+    repos: |
+      hu553in/telekilogram
+
+  - files:
+      - source: templates/configs/.golangci.yaml.njk
+        dest: .golangci.yaml
+        template:
+          local_prefix: github.com/hu553in/tempstream
+    repos: |
+      hu553in/tempstream
+
+  - files:
+      - source: files/configs/.testcoverage.yml
+        dest: .testcoverage.yml
+    repos: |
+      hu553in/dockguard
+      hu553in/telekilogram
+
+  - files:
+      - source: files/configs/.pre-commit-config.go.yaml
+        dest: .pre-commit-config.yaml
+    repos: |
+      hu553in/dockguard
+      hu553in/telekilogram
+      hu553in/tempstream
+
+  # =============================================================================
+  # KOTLIN / GRADLE REPOSITORIES
+  # =============================================================================
+  - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
@@ -95,14 +169,26 @@ group:
       hu553in/na-omsk-bot
 
   - files:
+      - source: files/configs/.pre-commit-config.gradle.yaml
+        dest: .pre-commit-config.yaml
+      - source: files/configs/detekt.yml
+        dest: config/detekt.yml
+    repos: |
+      hu553in/invites-keycloak
+      hu553in/na-omsk-bot
+
+  # =============================================================================
+  # DEPENDABOT: OTHER REPOSITORY STACKS
+  # =============================================================================
+  - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
-          enable_docker: true
           enable_docker_compose: true
           enable_npm: true
     repos: |
+      hu553in/dota-2-matches
       hu553in/voomy
 
   - files:
@@ -163,10 +249,12 @@ group:
             - /playbooks/roles/file_deployment/files/beget
             - /playbooks/roles/file_deployment/files/hostvds-lv
             - /playbooks/roles/file_deployment/files/spacecore-nl
-            - /playbooks/roles/file_deployment/files/yc
     repos: |
       hu553in/single-deployment
 
+  # =============================================================================
+  # SHARED DOCS AND BASE CONFIGS
+  # =============================================================================
   - files:
       - source: files/docs/LICENSE
         dest: LICENSE
@@ -213,6 +301,7 @@ group:
       - source: files/docs/CLAUDE.md
         dest: CLAUDE.md
     repos: |
+      hu553in/dota-2-matches
       hu553in/kinescope-io-loader
       hu553in/na-omsk-bot
       hu553in/single-deployment

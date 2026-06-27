@@ -2,12 +2,9 @@
 
 set -euo pipefail
 
-USER_OWNER="hu553in"
-REPO_LIMIT="200"
-
-repos=(
-  # "owner/repo"
-)
+USER_OWNER="${USER_OWNER:-hu553in}"
+REPO_LIMIT="${REPO_LIMIT:-200}"
+REPOS="${REPOS:-}"
 
 RULESET_NAMES=(
   "main: only me can update/delete"
@@ -66,8 +63,12 @@ delete_all_temp_rulesets() {
   done
 }
 
-if [ "${#repos[@]}" -gt 0 ]; then
-  printf '%s\n' "${repos[@]}"
+repo_list_from_env() {
+  printf '%s\n' "$REPOS" | tr ',' '\n' | tr '[:space:]' '\n' | sed '/^$/d'
+}
+
+if [ -n "$REPOS" ]; then
+  repo_list_from_env
 else
   for owner in "$USER_OWNER" $(gh org list); do
     gh repo list "$owner" --limit "$REPO_LIMIT" --source | awk '{print $1}'

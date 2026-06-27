@@ -2,12 +2,9 @@
 
 set -euo pipefail
 
-USER_OWNER="hu553in"
-KEYWORD=""
-
-repos=(
-  # "owner/repo"
-)
+USER_OWNER="${USER_OWNER:-hu553in}"
+KEYWORD="${KEYWORD:-}"
+REPOS="${REPOS:-}"
 
 if [ -z "$KEYWORD" ]; then
   echo "KEYWORD is empty."
@@ -16,7 +13,12 @@ fi
 
 pr_urls=()
 
-if [ "${#repos[@]}" -gt 0 ]; then
+repo_list_from_env() {
+  printf '%s\n' "$REPOS" | tr ',' '\n' | tr '[:space:]' '\n' | sed '/^$/d'
+}
+
+if [ -n "$REPOS" ]; then
+  mapfile -t repos < <(repo_list_from_env)
   echo "🔍 Searching for open PRs with '$KEYWORD' in title for repos: ${repos[*]}"
 
   for repo in "${repos[@]}"; do
@@ -25,6 +27,7 @@ if [ "${#repos[@]}" -gt 0 ]; then
     mapfile -t repo_pr_urls < <(gh search prs \
       "$KEYWORD" \
       --state open \
+      --match title \
       --repo "$repo" \
       --json url \
       --jq '.[].url' \
@@ -48,6 +51,7 @@ else
     mapfile -t owner_pr_urls < <(gh search prs \
       "$KEYWORD" \
       --state open \
+      --match title \
       --owner "$owner" \
       --json url \
       --jq '.[].url' \
@@ -72,7 +76,7 @@ for url in "${pr_urls[@]}"; do
   if gh pr merge "$url" --squash --delete-branch; then
     echo "✅ Successfully merged!"
   else
-    echo "❌ Merge is failed."
+    echo "❌ Merge failed."
   fi
 done
 
