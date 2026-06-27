@@ -117,17 +117,8 @@ group:
   - files:
       - source: templates/configs/.golangci.yaml.njk
         dest: .golangci.yaml
-        template:
-          local_prefix: github.com/hu553in/telekilogram
     repos: |
       hu553in/telekilogram
-
-  - files:
-      - source: templates/configs/.golangci.yaml.njk
-        dest: .golangci.yaml
-        template:
-          local_prefix: github.com/hu553in/tempstream
-    repos: |
       hu553in/tempstream
 
   - files:
