@@ -9,11 +9,12 @@ formatters:
     - golines
 
   settings:
-{%- if local_prefix | default('', true) %}
+{% if local_prefix | default('', true) %}
     goimports:
       local-prefixes:
         - {{ local_prefix }}
-{%- endif %}
+
+{% endif %}
     golines:
       max-len: 120
 
