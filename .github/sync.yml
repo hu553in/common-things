@@ -15,7 +15,6 @@ group:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
-          enable_github_actions: true
           enable_gitsubmodule: true
     repos: |
       hu553in/personal-website
