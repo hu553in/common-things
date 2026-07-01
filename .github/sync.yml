@@ -209,9 +209,6 @@ group:
         template:
           enable_github_actions: true
           enable_npm: true
-          enable_cargo: true
-          extra_cargo_directories:
-            - /src-tauri
     repos: |
       hu553in/relay
 
@@ -242,6 +239,16 @@ group:
             - /playbooks/roles/file_deployment/files/spacecore-nl
     repos: |
       hu553in/single-deployment
+
+  # =============================================================================
+  # RELEASE CONFIGS
+  # =============================================================================
+  - files:
+      - source: files/configs/.release-it.yml
+        dest: .release-it.yml
+    repos: |
+      hu553in/dockguard
+      hu553in/relay
 
   # =============================================================================
   # SHARED DOCS AND BASE CONFIGS

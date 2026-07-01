@@ -11,7 +11,8 @@ Shared resources for cross-project use.
   `.pre-commit-config.gradle.yaml`.
 
 Current shared resources include common docs, base editor/git configs, Dependabot configs,
-Python/Go/Gradle pre-commit configs, Go coverage config, Go lint config, and Detekt config.
+release-it config, Python/Go/Gradle pre-commit configs, Go coverage config, Go lint config, and
+Detekt config.
 
 ## Repo sync
 
