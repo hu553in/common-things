@@ -32,7 +32,6 @@ group:
     repos: |
       hu553in/grooming-studio-chat-helper
       hu553in/keenetic-vpn-switcher
-      hu553in/polybot
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -76,7 +75,6 @@ group:
           enable_test: true
     repos: |
       hu553in/gdrive-assistant-bot
-      hu553in/polybot
       hu553in/spa-crawler
       hu553in/vod-recovery
 
@@ -179,7 +177,6 @@ group:
           enable_docker_compose: true
           enable_npm: true
     repos: |
-      hu553in/dota-2-matches
       hu553in/voomy
 
   - files:
@@ -280,7 +277,6 @@ group:
       hu553in/invites-keycloak
       hu553in/keenetic-vpn-switcher
       hu553in/personal-website
-      hu553in/polybot
       hu553in/relay
       hu553in/spa-crawler
       hu553in/telekilogram
@@ -299,7 +295,6 @@ group:
       - source: files/docs/CLAUDE.md
         dest: CLAUDE.md
     repos: |
-      hu553in/dota-2-matches
       hu553in/kinescope-io-loader
       hu553in/na-omsk-bot
       hu553in/single-deployment
