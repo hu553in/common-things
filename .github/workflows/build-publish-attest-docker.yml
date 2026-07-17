@@ -1,0 +1,51 @@
+name: Build, publish, and attest Docker image
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      context:
+        required: false
+        type: string
+        default: .
+      file:
+        required: false
+        type: string
+        default: Dockerfile
+      build_args:
+        required: false
+        type: string
+        default: ''
+      runs-on:
+        required: false
+        type: string
+        default: ubuntu-latest
+    outputs:
+      digest:
+        value: ${{ jobs.publish.outputs.digest }}
+
+jobs:
+  publish:
+    uses: hu553in/common-things/.github/workflows/build-publish-docker.yml@main
+    permissions:
+      contents: read
+      packages: write
+    with:
+      image: ${{ inputs.image }}
+      context: ${{ inputs.context }}
+      file: ${{ inputs.file }}
+      build_args: ${{ inputs.build_args }}
+      runs-on: ${{ inputs.runs-on }}
+
+  attest:
+    needs: publish
+    uses: hu553in/common-things/.github/workflows/attest-docker.yml@main
+    permissions:
+      packages: write
+      id-token: write
+      attestations: write
+    with:
+      image: ${{ inputs.image }}
+      digest: ${{ needs.publish.outputs.digest }}

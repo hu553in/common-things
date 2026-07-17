@@ -1,13 +1,4 @@
 version: 2
-{% if enable_docker | default(false, true) or enable_docker_compose | default(false, true) %}
-
-registries:
-  ghcr:
-    type: docker-registry
-    url: https://ghcr.io
-    username: '{% raw %}${{github.repository_owner}}{% endraw %}'
-    password: '{% raw %}${{secrets.GHCR_PAT}}{% endraw %}'
-{% endif %}
 
 updates:
 {% if enable_github_actions | default(false, true) %}
@@ -15,13 +6,8 @@ updates:
     directory: '/'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
     assignees:
       - hu553in
-    commit-message:
-      prefix: 'deps(github-actions):'
-    allow:
-      - dependency-type: all
     groups:
       patch-and-minor:
         update-types:
@@ -34,21 +20,13 @@ updates:
 {% if enable_docker | default(false, true) %}
   - package-ecosystem: docker
     directories:
-      - '/'
-{% for d in extra_docker_directories | default([], true) %}
+{% for d in docker_directories | default(['/'], true) %}
       - '{{ d }}'
 {% endfor %}
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
     assignees:
       - hu553in
-    commit-message:
-      prefix: 'deps(docker):'
-    registries:
-      - ghcr
-    allow:
-      - dependency-type: all
     groups:
       patch-and-minor:
         update-types:
@@ -61,21 +39,13 @@ updates:
 {% if enable_docker_compose | default(false, true) %}
   - package-ecosystem: docker-compose
     directories:
-      - '/'
-{% for d in extra_docker_compose_directories | default([], true) %}
+{% for d in docker_compose_directories | default(['/'], true) %}
       - '{{ d }}'
 {% endfor %}
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
     assignees:
       - hu553in
-    commit-message:
-      prefix: 'deps(docker-compose):'
-    registries:
-      - ghcr
-    allow:
-      - dependency-type: all
     groups:
       patch-and-minor:
         update-types:
@@ -90,13 +60,8 @@ updates:
     directory: '/'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
     assignees:
       - hu553in
-    commit-message:
-      prefix: 'deps(gomod):'
-    allow:
-      - dependency-type: all
     groups:
       patch-and-minor:
         update-types:
@@ -111,13 +76,8 @@ updates:
     directory: '/'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
     assignees:
       - hu553in
-    commit-message:
-      prefix: 'deps(gradle):'
-    allow:
-      - dependency-type: all
     groups:
       patch-and-minor:
         update-types:
@@ -127,18 +87,13 @@ updates:
         update-types:
           - major
 {% endif %}
-{% if enable_npm | default(false, true) %}
-  - package-ecosystem: npm
+{% if enable_bun | default(false, true) %}
+  - package-ecosystem: bun
     directory: '/'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
     assignees:
       - hu553in
-    commit-message:
-      prefix: 'deps(npm):'
-    allow:
-      - dependency-type: all
     groups:
       patch-and-minor:
         update-types:
@@ -153,59 +108,8 @@ updates:
     directory: '/'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
     assignees:
       - hu553in
-    commit-message:
-      prefix: 'deps(uv):'
-    allow:
-      - dependency-type: all
-    groups:
-      patch-and-minor:
-        update-types:
-          - patch
-          - minor
-      major:
-        update-types:
-          - major
-{% endif %}
-{% if enable_gitsubmodule | default(false, true) %}
-  - package-ecosystem: gitsubmodule
-    directory: '/'
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    assignees:
-      - hu553in
-    commit-message:
-      prefix: 'deps(gitsubmodule):'
-    allow:
-      - dependency-type: all
-    groups:
-      patch-and-minor:
-        update-types:
-          - patch
-          - minor
-      major:
-        update-types:
-          - major
-{% endif %}
-{% if enable_cargo | default(false, true) %}
-  - package-ecosystem: cargo
-    directories:
-      - '/'
-{% for d in extra_cargo_directories | default([], true) %}
-      - '{{ d }}'
-{% endfor %}
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    assignees:
-      - hu553in
-    commit-message:
-      prefix: 'deps(cargo):'
-    allow:
-      - dependency-type: all
     groups:
       patch-and-minor:
         update-types:

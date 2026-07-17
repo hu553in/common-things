@@ -1,0 +1,31 @@
+name: Check Bun project
+
+on:
+  workflow_call:
+    inputs:
+      cache_playwright:
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun ci
+      - if: inputs.cache_playwright
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright|${{ runner.os }}|${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            playwright|${{ runner.os }}|
+      - run: bun check

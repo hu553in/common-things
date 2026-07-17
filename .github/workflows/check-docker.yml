@@ -1,0 +1,62 @@
+name: Check Docker image
+
+on:
+  workflow_call:
+    inputs:
+      context:
+        required: false
+        type: string
+        default: .
+      file:
+        required: false
+        type: string
+        default: Dockerfile
+      build_args:
+        required: false
+        type: string
+        default: ''
+      build:
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: hadolint/hadolint-action@v3.3.0
+        with:
+          dockerfile: ${{ inputs.file }}
+          failure-threshold: warning
+          ignore: DL3008
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          call: check
+          context: ${{ inputs.context }}
+          file: ${{ inputs.file }}
+          build-args: ${{ inputs.build_args }}
+      - if: inputs.build
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ inputs.context }}
+          file: ${{ inputs.file }}
+          build-args: ${{ inputs.build_args }}
+          load: true
+          tags: local/docker-check:${{ github.sha }}
+          cache-from: type=gha,scope=${{ inputs.file }}
+          cache-to: type=gha,scope=${{ inputs.file }},mode=max
+      - if: inputs.build
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: local/docker-check:${{ github.sha }}
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+          scanners: vuln

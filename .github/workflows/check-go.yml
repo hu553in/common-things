@@ -1,0 +1,22 @@
+name: Check Go project
+
+on:
+  workflow_call:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - uses: oven-sh/setup-bun@v2
+      - uses: golangci/golangci-lint-action@v9
+        with:
+          install-only: true
+      - run: make check

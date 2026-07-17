@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    permissions:
+      contents: read
+    uses: hu553in/common-things/.github/workflows/check-bun.yml@main

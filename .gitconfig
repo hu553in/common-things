@@ -1,0 +1,7 @@
+[hook "check"]
+  event = pre-commit
+  command = "make check || { make check-fix; exit 1; }"
+
+[hook "commitlint"]
+  event = commit-msg
+  command = "bunx --silent --package @commitlint/cli@latest commitlint --default-config --strict --edit"

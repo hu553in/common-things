@@ -1,0 +1,396 @@
+{
+  "ascii-profile-card": {
+    "description": "GitHub Action that generates Neofetch-style SVG profile cards with daily ASCII art and live GitHub stats",
+    "homepage": null,
+    "topics": [
+      "ascii-art",
+      "bun",
+      "generative-art",
+      "github-action",
+      "github-api",
+      "github-profile",
+      "neofetch",
+      "profile-readme",
+      "svg",
+      "typescript"
+    ]
+  },
+  "common-things": {
+    "description": "Shared docs, config templates, and maintenance scripts for repository upkeep",
+    "homepage": null,
+    "topics": [
+      "automation",
+      "dependabot",
+      "developer-tools",
+      "github-actions",
+      "nunjucks",
+      "repo-file-sync",
+      "repository-management",
+      "shell",
+      "templates"
+    ]
+  },
+  "dbeaver-gcloud-free": {
+    "description": "DBeaver Community launcher for Google Cloud PostgreSQL token auth",
+    "homepage": null,
+    "topics": [
+      "access-token",
+      "auth",
+      "cli",
+      "database-tools",
+      "dbeaver",
+      "developer-tools",
+      "gcloud",
+      "google-cloud",
+      "postgresql",
+      "python"
+    ]
+  },
+  "dota2-schedule-bot": {
+    "description": "Cloudflare Telegram bot for Dota 2 schedules, live matches, results, and favorites",
+    "homepage": "https://t.me/d2_schedule_bot",
+    "topics": [
+      "bun",
+      "cloudflare-d1",
+      "cloudflare-workers",
+      "dota-2",
+      "esports",
+      "grammy",
+      "pandascore",
+      "self-hosted",
+      "telegram-bot",
+      "typescript"
+    ]
+  },
+  "dotfiles": {
+    "description": "Personal dotfiles and environment configuration managed with yadm",
+    "homepage": null,
+    "topics": ["configuration", "developer-environment", "dotfiles", "macos", "shell", "yadm"]
+  },
+  "flash-games": {
+    "description": "Offline-capable Ruffle PWA for bundled Flash games",
+    "homepage": "https://flash-games-hu553in.vercel.app",
+    "topics": [
+      "bun",
+      "flash",
+      "games",
+      "javascript",
+      "legacy",
+      "offline-first",
+      "pwa",
+      "ruffle",
+      "static-site",
+      "swf"
+    ]
+  },
+  "gh-workflow-dashboard": {
+    "description": "Browser-only GitHub Actions workflow dashboard for multiple repositories",
+    "homepage": "https://gh-workflow-dashboard.vercel.app",
+    "topics": [
+      "bun",
+      "client-side",
+      "dashboard",
+      "github-actions",
+      "github-api",
+      "github-workflows",
+      "javascript",
+      "monitoring",
+      "static-site",
+      "vite"
+    ]
+  },
+  "grooming-studio": {
+    "description": "React/Vite website for a pet grooming studio in Omsk",
+    "homepage": "https://xn-----flcj2bnpjd0gcb.xn--p1ai",
+    "topics": [
+      "bun",
+      "business",
+      "docker",
+      "grooming",
+      "landing-page",
+      "pets",
+      "react",
+      "self-hosted",
+      "typescript",
+      "vite",
+      "website"
+    ]
+  },
+  "grooming-studio-chat-helper": {
+    "description": "Telegram bot with reusable message templates for a pet grooming studio",
+    "homepage": null,
+    "topics": [
+      "business",
+      "docker",
+      "grooming",
+      "message-templates",
+      "pets",
+      "python",
+      "self-hosted",
+      "telegram-bot"
+    ]
+  },
+  "hu553in": {
+    "description": "GitHub profile README for Ruslan Khasanshin",
+    "homepage": "https://hu553in.su",
+    "topics": ["github-actions", "github-profile", "markdown", "profile-readme"]
+  },
+  "invites-keycloak": {
+    "description": "Spring Boot service for Keycloak invitation links and user registration",
+    "homepage": null,
+    "topics": [
+      "docker",
+      "docker-compose",
+      "flyway",
+      "invitation-links",
+      "keycloak",
+      "kotlin",
+      "oauth2",
+      "openid-connect",
+      "postgresql",
+      "security",
+      "self-hosted",
+      "spring-boot",
+      "user-registration"
+    ]
+  },
+  "keenetic-vpn-switcher": {
+    "description": "Private Telegram bot for switching Keenetic device VPN policies",
+    "homepage": null,
+    "topics": [
+      "docker",
+      "keenetic",
+      "networking",
+      "python",
+      "router",
+      "self-hosted",
+      "telegram-bot",
+      "vpn"
+    ]
+  },
+  "kinescope-io-loader": {
+    "description": "pywebview desktop app for downloading Kinescope HLS/DASH exports",
+    "homepage": null,
+    "topics": [
+      "desktop-app",
+      "drm",
+      "hls",
+      "kinescope",
+      "mpeg-dash",
+      "python",
+      "pywebview",
+      "video-downloader",
+      "widevine"
+    ]
+  },
+  "na-omsk-bot": {
+    "description": "Kotlin Telegram bot for Omsk Narcotics Anonymous group resources",
+    "homepage": null,
+    "topics": [
+      "docker",
+      "flyway",
+      "kotlin",
+      "narcotics-anonymous",
+      "omsk",
+      "self-hosted",
+      "sqlite",
+      "telegram-bot"
+    ]
+  },
+  "personal-website": {
+    "description": "Personal Next.js website for Ruslan Khasanshin",
+    "homepage": "https://hu553in.su",
+    "topics": [
+      "bun",
+      "nextjs",
+      "personal-website",
+      "react",
+      "tailwindcss",
+      "typescript",
+      "vercel",
+      "website"
+    ]
+  },
+  "relay": {
+    "description": "Electron desktop app for live speech transcription and translated captions",
+    "homepage": null,
+    "topics": [
+      "bun",
+      "captions",
+      "desktop-app",
+      "electron",
+      "live-captions",
+      "openai",
+      "openai-realtime-api",
+      "react",
+      "speech-to-text",
+      "transcription",
+      "translation",
+      "typescript"
+    ]
+  },
+  "single-deployment": {
+    "description": "Ansible and Komodo configuration for personal Docker hosts",
+    "homepage": null,
+    "topics": [
+      "ansible",
+      "automation",
+      "backup",
+      "deployment",
+      "devops",
+      "docker",
+      "docker-compose",
+      "gatus",
+      "home-server",
+      "infrastructure",
+      "jinja",
+      "komodo",
+      "monitoring",
+      "restic",
+      "self-hosted"
+    ]
+  },
+  "skills": {
+    "description": "Personal reusable agent skills",
+    "homepage": "https://skills.sh/hu553in/skills",
+    "topics": [
+      "agent-skills",
+      "ai-agents",
+      "code-review",
+      "codex",
+      "developer-tools",
+      "repository-management",
+      "skills"
+    ]
+  },
+  "spa-crawler": {
+    "description": "Playwright/Crawlee CLI for mirroring SPAs into static files",
+    "homepage": null,
+    "topics": [
+      "browser-automation",
+      "cli",
+      "crawlee",
+      "docker",
+      "nextjs",
+      "playwright",
+      "python",
+      "scraping",
+      "site-mirroring",
+      "spa",
+      "static-site",
+      "web-crawler"
+    ]
+  },
+  "telekilogram": {
+    "description": "Go Telegram bot for RSS/Atom/JSON feed digests and channel summaries",
+    "homepage": "https://t.me/hu553in_telekilogram_bot",
+    "topics": [
+      "atom",
+      "digest",
+      "docker",
+      "feed",
+      "golang",
+      "json",
+      "openai",
+      "rss",
+      "self-hosted",
+      "sqlite",
+      "summarization",
+      "telegram-bot",
+      "telegram-channel"
+    ]
+  },
+  "tempstream": {
+    "description": "Go service for temporary HLS live-stream access links managed from Telegram",
+    "homepage": null,
+    "topics": [
+      "access-control",
+      "caddy",
+      "docker",
+      "docker-compose",
+      "golang",
+      "hls",
+      "live-streaming",
+      "mediamtx",
+      "rtmp",
+      "self-hosted",
+      "telegram-bot",
+      "temporary-links",
+      "video-streaming"
+    ]
+  },
+  "tizen-tool": {
+    "description": "Python CLI for Tizen TV package builds and signing via Dockerized Tizen Studio",
+    "homepage": null,
+    "topics": [
+      "automation",
+      "cli",
+      "deployment",
+      "developer-tools",
+      "docker",
+      "packaging",
+      "python",
+      "samsung-tv",
+      "signing",
+      "tizen",
+      "tizen-studio",
+      "tizen-tv",
+      "web-app",
+      "wgt"
+    ]
+  },
+  "vod-recovery": {
+    "description": "Python CLI for finding and downloading recoverable hidden Twitch VOD playlists",
+    "homepage": null,
+    "topics": [
+      "cli",
+      "ffmpeg",
+      "hls",
+      "m3u8",
+      "python",
+      "streaming",
+      "twitch",
+      "twitch-vods",
+      "video-downloader",
+      "vod-recovery"
+    ]
+  },
+  "voomy": {
+    "description": "Next.js creator platform for videos, subscriptions, and community content",
+    "homepage": "https://dev.voomy.tv",
+    "topics": [
+      "better-auth",
+      "bun",
+      "creator-platform",
+      "drizzle-orm",
+      "minio",
+      "nextjs",
+      "object-storage",
+      "postgresql",
+      "react",
+      "s3",
+      "self-hosted",
+      "subscriptions",
+      "typescript",
+      "video-platform",
+      "video-streaming"
+    ]
+  },
+  "vrubel-museum-exhibitions": {
+    "description": "React/Vite exhibition website for the Omsk M. A. Vrubel Museum of Fine Arts",
+    "homepage": "https://vrubel-museum-exhibitions.vercel.app",
+    "topics": [
+      "arts",
+      "bun",
+      "diploma",
+      "museum",
+      "museum-exhibition",
+      "omsk",
+      "react",
+      "static-site",
+      "typescript",
+      "vite",
+      "website"
+    ]
+  }
+}

@@ -1,18 +1,11 @@
+hooks:
+  before:init: bun check
+
 git:
-  requireCleanWorkingDir: true
   requireBranch: main
-  requireUpstream: true
-  tag: true
   tagName: 'v${version}'
   tagAnnotation: 'v${version}'
-  commit: false
-  push: true
+  commitMessage: 'chore(release): v${version}'
 
 npm:
   publish: false
-
-github:
-  release: false
-
-gitlab:
-  release: false

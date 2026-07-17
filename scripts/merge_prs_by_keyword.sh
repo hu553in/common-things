@@ -12,53 +12,52 @@ if [ -z "$KEYWORD" ]; then
 fi
 
 pr_urls=()
+failed=false
 
 repo_list_from_env() {
   printf '%s\n' "$REPOS" | tr ',' '\n' | tr '[:space:]' '\n' | sed '/^$/d'
 }
 
 if [ -n "$REPOS" ]; then
-  mapfile -t repos < <(repo_list_from_env)
+  repos=()
+  repo_list="$(repo_list_from_env)"
+  while read -r repo; do
+    [[ -n "$repo" ]] && repos+=("$repo")
+  done <<<"$repo_list"
+
   echo "🔍 Searching for open PRs with '$KEYWORD' in title for repos: ${repos[*]}"
 
   for repo in "${repos[@]}"; do
     echo "→ Searching repo: $repo"
 
-    mapfile -t repo_pr_urls < <(gh search prs \
+    repo_pr_urls="$(gh search prs \
       "$KEYWORD" \
       --state open \
       --match title \
       --repo "$repo" \
       --json url \
       --jq '.[].url' \
-      --limit 100)
+      --limit 100)"
 
-    pr_urls+=("${repo_pr_urls[@]}")
+    while read -r url; do
+      [[ -n "$url" ]] && pr_urls+=("$url")
+    done <<<"$repo_pr_urls"
   done
 else
-  mapfile -t OWNERS < <(
-    {
-      echo "$USER_OWNER"
-      gh org list
-    } | sort -u
-  )
+  echo "🔍 Searching for open PRs with '$KEYWORD' in title for owner: $USER_OWNER"
 
-  echo "🔍 Searching for open PRs with '$KEYWORD' in title for owners: ${OWNERS[*]}"
+  owner_pr_urls="$(gh search prs \
+    "$KEYWORD" \
+    --state open \
+    --match title \
+    --owner "$USER_OWNER" \
+    --json url \
+    --jq '.[].url' \
+    --limit 100)"
 
-  for owner in "${OWNERS[@]}"; do
-    echo "→ Searching owner: $owner"
-
-    mapfile -t owner_pr_urls < <(gh search prs \
-      "$KEYWORD" \
-      --state open \
-      --match title \
-      --owner "$owner" \
-      --json url \
-      --jq '.[].url' \
-      --limit 100)
-
-    pr_urls+=("${owner_pr_urls[@]}")
-  done
+  while read -r url; do
+    [[ -n "$url" ]] && pr_urls+=("$url")
+  done <<<"$owner_pr_urls"
 fi
 
 if [[ ${#pr_urls[@]} -eq 0 ]]; then
@@ -77,8 +76,13 @@ for url in "${pr_urls[@]}"; do
     echo "✅ Successfully merged!"
   else
     echo "❌ Merge failed."
+    failed=true
   fi
 done
 
 echo "----------------------------------------"
 echo "Done! Processed ${#pr_urls[@]} PR(s)."
+
+if [[ "$failed" == "true" ]]; then
+  exit 1
+fi

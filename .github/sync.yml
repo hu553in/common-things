@@ -1,7 +1,8 @@
 group:
   # =============================================================================
-  # DEPENDABOT: UTILITY, PROFILE, AND WEBSITE REPOSITORIES
+  # GITHUB ACTIONS ONLY
   # =============================================================================
+
   - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
@@ -10,18 +11,86 @@ group:
     repos: |
       hu553in/common-things
       hu553in/hu553in
+      hu553in/skills
+
+  # =============================================================================
+  # BUN PROJECTS
+  # =============================================================================
 
   - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
-          enable_gitsubmodule: true
+          enable_github_actions: true
+          enable_bun: true
     repos: |
+      hu553in/ascii-profile-card
+      hu553in/dota2-schedule-bot
+      hu553in/flash-games
+      hu553in/gh-workflow-dashboard
       hu553in/personal-website
+      hu553in/relay
+      hu553in/vrubel-museum-exhibitions
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker: true
+          enable_bun: true
+    repos: |
+      hu553in/grooming-studio
+
+  - files:
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
+        template:
+          enable_github_actions: true
+          enable_docker_compose: true
+          enable_bun: true
+    repos: |
+      hu553in/voomy
+
+  - files:
+      - source: files/configs/lefthook.bun.yml
+        dest: lefthook.yml
+    repos: |
+      hu553in/ascii-profile-card
+      hu553in/dota2-schedule-bot
+      hu553in/flash-games
+      hu553in/gh-workflow-dashboard
+      hu553in/grooming-studio
+      hu553in/personal-website
+      hu553in/relay
+      hu553in/voomy
+      hu553in/vrubel-museum-exhibitions
+
+  - files:
+      - source: files/workflows/ci.yml.bun
+        dest: .github/workflows/ci.yml
+    repos: |
+      hu553in/dota2-schedule-bot
+      hu553in/gh-workflow-dashboard
+      hu553in/personal-website
+      hu553in/voomy
+      hu553in/vrubel-museum-exhibitions
 
   # =============================================================================
-  # PYTHON REPOSITORIES
+  # RELEASE CONFIGURATION
   # =============================================================================
+
+  - files:
+      - source: files/configs/.release-it.yml
+        dest: .release-it.yml
+    repos: |
+      hu553in/ascii-profile-card
+      hu553in/relay
+
+  # =============================================================================
+  # PYTHON PROJECTS
+  # =============================================================================
+
   - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
@@ -42,7 +111,6 @@ group:
           enable_docker_compose: true
           enable_uv: true
     repos: |
-      hu553in/gdrive-assistant-bot
       hu553in/spa-crawler
 
   - files:
@@ -57,30 +125,43 @@ group:
       hu553in/vod-recovery
 
   - files:
-      - source: templates/configs/.pre-commit-config.python.yaml.njk
-        dest: .pre-commit-config.yaml
+      - source: templates/configs/dependabot.yml.njk
+        dest: .github/dependabot.yml
         template:
-          enable_test: false
+          enable_github_actions: true
+          enable_docker: true
+          enable_uv: true
+          docker_directories:
+            - /src/tizen_tool/resources
     repos: |
-      hu553in/dbeaver-gcloud-free
-      hu553in/grooming-studio-chat-helper
-      hu553in/keenetic-vpn-switcher
-      hu553in/kinescope-io-loader
       hu553in/tizen-tool
 
   - files:
-      - source: templates/configs/.pre-commit-config.python.yaml.njk
-        dest: .pre-commit-config.yaml
-        template:
-          enable_test: true
+      - source: files/workflows/ci.yml.python
+        dest: .github/workflows/ci.yml
     repos: |
-      hu553in/gdrive-assistant-bot
-      hu553in/spa-crawler
+      hu553in/dbeaver-gcloud-free
+      hu553in/kinescope-io-loader
       hu553in/vod-recovery
 
+  - files:
+      - source: files/workflows/ci.yml.python-docker
+        dest: .github/workflows/ci.yml
+    repos: |
+      hu553in/grooming-studio-chat-helper
+      hu553in/keenetic-vpn-switcher
+
+  - files:
+      - source: files/configs/.dockerignore.python
+        dest: .dockerignore
+    repos: |
+      hu553in/grooming-studio-chat-helper
+      hu553in/keenetic-vpn-switcher
+
   # =============================================================================
-  # GO REPOSITORIES
+  # GO PROJECTS
   # =============================================================================
+
   - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
@@ -89,7 +170,6 @@ group:
           enable_docker: true
           enable_gomod: true
     repos: |
-      hu553in/dockguard
       hu553in/telekilogram
 
   - files:
@@ -104,39 +184,30 @@ group:
       hu553in/tempstream
 
   - files:
-      - source: templates/configs/.golangci.yaml.njk
+      - source: files/configs/.golangci.yaml
         dest: .golangci.yaml
-        template:
-          local_prefix: github.com/hu553in/dockguard
-    repos: |
-      hu553in/dockguard
-
-  - files:
-      - source: templates/configs/.golangci.yaml.njk
-        dest: .golangci.yaml
-        template: {}
     repos: |
       hu553in/telekilogram
       hu553in/tempstream
 
   - files:
-      - source: files/configs/.testcoverage.yml
-        dest: .testcoverage.yml
+      - source: files/workflows/ci.yml.go-docker
+        dest: .github/workflows/ci.yml
     repos: |
-      hu553in/dockguard
       hu553in/telekilogram
+      hu553in/tempstream
 
   - files:
-      - source: files/configs/.pre-commit-config.go.yaml
-        dest: .pre-commit-config.yaml
+      - source: files/configs/.dockerignore.go
+        dest: .dockerignore
     repos: |
-      hu553in/dockguard
       hu553in/telekilogram
       hu553in/tempstream
 
   # =============================================================================
-  # KOTLIN / GRADLE REPOSITORIES
+  # GRADLE PROJECTS
   # =============================================================================
+
   - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
@@ -158,132 +229,119 @@ group:
       hu553in/na-omsk-bot
 
   - files:
-      - source: files/configs/.pre-commit-config.gradle.yaml
-        dest: .pre-commit-config.yaml
       - source: files/configs/detekt.yml
         dest: config/detekt.yml
     repos: |
       hu553in/invites-keycloak
       hu553in/na-omsk-bot
 
+  - files:
+      - source: files/configs/gradle.properties
+        dest: gradle.properties
+    repos: |
+      hu553in/invites-keycloak
+      hu553in/na-omsk-bot
+
   # =============================================================================
-  # DEPENDABOT: OTHER REPOSITORY STACKS
+  # INFRASTRUCTURE
   # =============================================================================
+
   - files:
       - source: templates/configs/dependabot.yml.njk
         dest: .github/dependabot.yml
         template:
           enable_github_actions: true
           enable_docker_compose: true
-          enable_npm: true
-    repos: |
-      hu553in/voomy
-
-  - files:
-      - source: templates/configs/dependabot.yml.njk
-        dest: .github/dependabot.yml
-        template:
-          enable_github_actions: true
-          enable_docker: true
-          enable_npm: true
-    repos: |
-      hu553in/grooming-studio
-
-  - files:
-      - source: templates/configs/dependabot.yml.njk
-        dest: .github/dependabot.yml
-        template:
-          enable_github_actions: true
-          enable_npm: true
-    repos: |
-      hu553in/flash-games
-      hu553in/gh-workflow-dashboard
-      hu553in/vrubel-museum-exhibitions
-
-  - files:
-      - source: templates/configs/dependabot.yml.njk
-        dest: .github/dependabot.yml
-        template:
-          enable_github_actions: true
-          enable_npm: true
-    repos: |
-      hu553in/relay
-
-  - files:
-      - source: templates/configs/dependabot.yml.njk
-        dest: .github/dependabot.yml
-        template:
-          enable_github_actions: true
-          enable_docker: true
-          enable_uv: true
-          extra_docker_directories:
-            - /src/tizen_tool/resources
-    repos: |
-      hu553in/tizen-tool
-
-  - files:
-      - source: templates/configs/dependabot.yml.njk
-        dest: .github/dependabot.yml
-        template:
-          enable_github_actions: true
-          enable_docker: true
-          enable_docker_compose: true
-          extra_docker_directories:
-            - /playbooks/roles/file_deployment/files/spacecore-nl
-          extra_docker_compose_directories:
-            - /playbooks/roles/file_deployment/files/beget
-            - /playbooks/roles/file_deployment/files/hostvds-lv
-            - /playbooks/roles/file_deployment/files/spacecore-nl
+          docker_compose_directories:
+            - /stacks/beget
+            - /stacks/hostvds-lv
+            - /stacks/spacecore-nl
     repos: |
       hu553in/single-deployment
 
   # =============================================================================
-  # RELEASE CONFIGS
+  # RUNTIME VERSION UPDATES
   # =============================================================================
+
   - files:
-      - source: files/configs/.release-it.yml
-        dest: .release-it.yml
+      - source: files/configs/renovate.python.json
+        dest: renovate.json
     repos: |
-      hu553in/dockguard
-      hu553in/relay
+      hu553in/dbeaver-gcloud-free
+      hu553in/grooming-studio-chat-helper
+      hu553in/keenetic-vpn-switcher
+      hu553in/kinescope-io-loader
+      hu553in/spa-crawler
+      hu553in/tizen-tool
+      hu553in/vod-recovery
+
+  - files:
+      - source: files/configs/renovate.go.json
+        dest: renovate.json
+    repos: |
+      hu553in/telekilogram
+      hu553in/tempstream
 
   # =============================================================================
-  # SHARED DOCS AND BASE CONFIGS
+  # FORMATTER CONFIGURATION
   # =============================================================================
+
   - files:
-      - source: files/docs/LICENSE
-        dest: LICENSE
-      - source: files/docs/CONTRIBUTING.md
-        dest: CONTRIBUTING.md
-      - source: files/docs/CODE_OF_CONDUCT.md
-        dest: CODE_OF_CONDUCT.md
-      - source: files/configs/.editorconfig
-        dest: .editorconfig
-      - source: files/configs/.gitattributes
-        dest: .gitattributes
-      - source: files/docs/AGENTS.md
-        dest: AGENTS.md
-      - source: files/docs/CLAUDE.md
-        dest: CLAUDE.md
+      - source: files/configs/.prettierrc.json
+        dest: .prettierrc.json
     repos: |
       hu553in/common-things
       hu553in/dbeaver-gcloud-free
-      hu553in/dockguard
-      hu553in/flash-games
-      hu553in/gdrive-assistant-bot
-      hu553in/gh-workflow-dashboard
-      hu553in/grooming-studio
       hu553in/grooming-studio-chat-helper
+      hu553in/hu553in
       hu553in/invites-keycloak
       hu553in/keenetic-vpn-switcher
-      hu553in/personal-website
-      hu553in/relay
+      hu553in/kinescope-io-loader
+      hu553in/na-omsk-bot
+      hu553in/single-deployment
+      hu553in/skills
       hu553in/spa-crawler
       hu553in/telekilogram
       hu553in/tempstream
       hu553in/tizen-tool
       hu553in/vod-recovery
-      hu553in/vrubel-museum-exhibitions
+
+  # =============================================================================
+  # PREK HOOKS
+  # =============================================================================
+
+  - files:
+      - source: files/configs/prek.toml
+        dest: prek.toml
+    repos: |
+      hu553in/dbeaver-gcloud-free
+      hu553in/grooming-studio-chat-helper
+      hu553in/invites-keycloak
+      hu553in/keenetic-vpn-switcher
+      hu553in/kinescope-io-loader
+      hu553in/na-omsk-bot
+      hu553in/spa-crawler
+      hu553in/telekilogram
+      hu553in/tempstream
+      hu553in/tizen-tool
+      hu553in/vod-recovery
+
+  # =============================================================================
+  # NATIVE GIT HOOKS
+  # =============================================================================
+
+  - files:
+      - source: files/configs/.gitconfig
+        dest: .gitconfig
+    repos: |
+      hu553in/common-things
+      hu553in/hu553in
+      hu553in/single-deployment
+      hu553in/skills
+
+  # =============================================================================
+  # BASE CONFIGURATION
+  # =============================================================================
 
   - files:
       - source: files/configs/.editorconfig
@@ -295,7 +353,27 @@ group:
       - source: files/docs/CLAUDE.md
         dest: CLAUDE.md
     repos: |
+      hu553in/ascii-profile-card
+      hu553in/common-things
+      hu553in/dbeaver-gcloud-free
+      hu553in/dota2-schedule-bot
+      hu553in/flash-games
+      hu553in/gh-workflow-dashboard
+      hu553in/grooming-studio
+      hu553in/grooming-studio-chat-helper
+      hu553in/hu553in
+      hu553in/invites-keycloak
+      hu553in/keenetic-vpn-switcher
       hu553in/kinescope-io-loader
       hu553in/na-omsk-bot
+      hu553in/personal-website
+      hu553in/relay
       hu553in/single-deployment
+      hu553in/skills
+      hu553in/spa-crawler
+      hu553in/telekilogram
+      hu553in/tempstream
+      hu553in/tizen-tool
+      hu553in/vod-recovery
       hu553in/voomy
+      hu553in/vrubel-museum-exhibitions

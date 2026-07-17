@@ -13,7 +13,10 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: BetaHuhn/repo-file-sync-action@v1
         with:
           GH_PAT: ${{ secrets.GH_PAT }}
           ASSIGNEES: hu553in
+          COMMIT_PREFIX: 'chore(sync):'

@@ -5,43 +5,56 @@ set -euo pipefail
 USER_OWNER="${USER_OWNER:-hu553in}"
 REPO_LIMIT="${REPO_LIMIT:-200}"
 REPOS="${REPOS:-}"
+failed=false
 
 step() {
   local name="$1"
+  local output
   shift
 
   printf "  %-45s " "$name"
 
-  if "$@" >/dev/null 2>&1; then
+  if output="$("$@" 2>&1)"; then
     echo "ok"
   else
     echo "not ok"
+    if [[ -n "$output" ]]; then
+      printf '    %s\n' "${output//$'\n'/$'\n    '}" >&2
+    fi
+    failed=true
   fi
+}
+
+skip() {
+  local name="$1"
+  local reason="$2"
+
+  printf "  %-45s skipped (%s)\n" "$name" "$reason"
 }
 
 edit_repo() {
   local repo="$1"
 
   gh repo edit "$repo" \
+    --default-branch main \
     --delete-branch-on-merge \
     --allow-update-branch \
+    --enable-auto-merge=false \
+    --enable-issues \
     --enable-merge-commit=false \
     --enable-projects=false \
     --enable-discussions=false \
     --enable-rebase-merge=false \
-    --enable-secret-scanning \
-    --enable-secret-scanning-push-protection \
     --enable-squash-merge \
-    --enable-wiki=false ||
-    gh repo edit "$repo" \
-      --delete-branch-on-merge \
-      --allow-update-branch \
-      --enable-merge-commit=false \
-      --enable-projects=false \
-      --enable-discussions=false \
-      --enable-rebase-merge=false \
-      --enable-squash-merge \
-      --enable-wiki=false
+    --enable-wiki=false
+}
+
+enable_secret_scanning() {
+  local repo="$1"
+
+  gh repo edit "$repo" \
+    --enable-secret-scanning \
+    --enable-secret-scanning-push-protection
 }
 
 github_api() {
@@ -95,12 +108,11 @@ repo_list() {
     return
   fi
 
-  {
-    printf '%s\n' "$USER_OWNER"
-    gh org list
-  } | sort -u | while read -r owner; do
-    gh repo list "$owner" --limit "$REPO_LIMIT" --source | awk '{print $1}'
-  done
+  gh repo list "$USER_OWNER" \
+    --limit "$REPO_LIMIT" \
+    --source \
+    --json nameWithOwner \
+    --jq '.[].nameWithOwner'
 }
 
 protect_main_only_me() {
@@ -238,7 +250,13 @@ EOF
 
 user_id="$(github_api user --jq .id)"
 
-repo_list | while read -r repo; do
+repos="$(repo_list)"
+
+while read -r repo; do
+  [[ -z "$repo" ]] && continue
+
+  visibility="$(github_api "repos/$repo" --jq .visibility)"
+
   echo
   echo "==> $repo"
 
@@ -254,13 +272,8 @@ repo_list | while read -r repo; do
     github_api \
     -X PUT \
     "repos/$repo/actions/permissions/workflow" \
-    -F "default_workflow_permissions=write" \
+    -F "default_workflow_permissions=read" \
     -F "can_approve_pull_request_reviews=false"
-
-  step "private vulnerability reporting" \
-    github_api \
-    -X PUT \
-    "repos/$repo/private-vulnerability-reporting"
 
   step "dependency graph + alerts" \
     github_api \
@@ -272,24 +285,33 @@ repo_list | while read -r repo; do
     -X PUT \
     "repos/$repo/automated-security-fixes"
 
-  step "secret scanning extras" \
-    github_api \
-    -X PATCH \
-    "repos/$repo" \
-    -F "security_and_analysis[secret_scanning][status]=enabled" \
-    -F "security_and_analysis[secret_scanning_push_protection][status]=enabled" \
-    -F "security_and_analysis[secret_scanning_non_provider_patterns][status]=enabled" \
-    -F "security_and_analysis[secret_scanning_validity_checks][status]=enabled"
+  if [[ "$visibility" == "public" ]]; then
+    step "private vulnerability reporting" \
+      github_api \
+      -X PUT \
+      "repos/$repo/private-vulnerability-reporting"
 
-  step "protect main: only me" \
-    protect_main_only_me "$repo" "$user_id"
+    step "secret scanning + push protection" \
+      enable_secret_scanning "$repo"
 
-  step "protect main: no force push" \
-    protect_main_no_force_push "$repo"
+    step "protect main: only me" \
+      protect_main_only_me "$repo" "$user_id"
 
-  step "protect v*: only me create" \
-    protect_v_tags_only_me_create "$repo" "$user_id"
+    step "protect main: no force push" \
+      protect_main_no_force_push "$repo"
 
-  step "protect v*: immutable" \
-    protect_v_tags_immutable "$repo"
-done
+    step "protect v*: only me create" \
+      protect_v_tags_only_me_create "$repo" "$user_id"
+
+    step "protect v*: immutable" \
+      protect_v_tags_immutable "$repo"
+  else
+    skip "private vulnerability reporting" "public repositories only"
+    skip "secret scanning + push protection" "not available on the current plan"
+    skip "repository rulesets" "not available on the current plan"
+  fi
+done <<<"$repos"
+
+if [[ "$failed" == "true" ]]; then
+  exit 1
+fi

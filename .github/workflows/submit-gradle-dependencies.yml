@@ -1,0 +1,23 @@
+name: Submit Gradle dependencies
+
+on:
+  workflow_call:
+    inputs:
+      java_version:
+        required: true
+        type: string
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: ${{ inputs.java_version }}
+      - uses: gradle/actions/dependency-submission@v6
