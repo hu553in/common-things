@@ -254,6 +254,7 @@ group:
           enable_docker_compose: true
           docker_compose_directories:
             - /stacks/beget
+            - /stacks/beget-micopes
             - /stacks/hostvds-lv
             - /stacks/spacecore-nl
     repos: |
