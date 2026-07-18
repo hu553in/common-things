@@ -13,7 +13,7 @@ Shared resources for cross-project use.
   `dependabot.yml.njk`, `lefthook.bun.yml`, and `ci.yml.python`.
 
 Current shared resources include agent instructions, base editor/git configs, Dependabot configs,
-Bun Lefthook and Release It! configs, common formatter configs, native Git hooks, a shared Prek
+Bun Lefthook and Release It! configs, common formatter configs, native Git hooks, a shared prek
 config, Go lint config, language-specific Docker ignore files, Gradle properties, Detekt config,
 static CI callers, and narrowly scoped Renovate configs for Python and Go runtimes.
 
@@ -37,7 +37,7 @@ Identical Bun, Python, Python with Docker, and Go with Docker CI callers are syn
 Use `build-publish-attest-docker.yml` for the standard Docker path and the lower-level Docker
 workflows for custom release flows.
 
-CI runs each project's non-mutating `check` command. Local Prek hooks run `make check-fix`, while
+CI runs each project's non-mutating `check` command. Local prek hooks run `make check-fix`, while
 Bun Lefthook hooks run `bun check:fix`, so formatter and linter fixes are applied before a commit.
 
 Repositories without a hook manager receive `.gitconfig` with project-check and Commitlint hooks.
