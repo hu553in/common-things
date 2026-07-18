@@ -24,9 +24,7 @@ REQUIRED_DESTINATIONS = {
 HOOK_DESTINATIONS = {".gitconfig", "lefthook.yml", "prek.toml"}
 MANAGED_SOURCE_DIRS = (ROOT / "files", ROOT / "templates")
 NUNJUCKS_RENDERER = """
-const path = require("node:path");
-const binDirectory = process.env.PATH.split(path.delimiter)[0];
-const nunjucks = require(path.resolve(binDirectory, "../nunjucks"));
+const nunjucks = require("nunjucks");
 const input = JSON.parse(await Bun.stdin.text());
 
 nunjucks.configure({ autoescape: true, trimBlocks: true, lstripBlocks: true });
@@ -70,10 +68,8 @@ def validate_dependabot(rendered: str, source: Path) -> None:
 def render_nunjucks(source: Path, context: dict[str, Any]) -> str:
     result = subprocess.run(
         [
-            "bunx",
-            "--package",
-            "nunjucks",
             "bun",
+            "--install=fallback",
             "-e",
             NUNJUCKS_RENDERER,
         ],
