@@ -250,60 +250,6 @@ EOF
   )"
 }
 
-protect_ascii_profile_card_major_tags() {
-  local repo="$1"
-  local user_id="$2"
-  local floating_major_tags="$3"
-  local github_actions_app_id
-
-  github_actions_app_id="$(github_api apps/github-actions --jq .id)"
-
-  put_ruleset "$repo" "vN: workflow-managed floating tags" "tag" "$(
-    cat <<EOF
-{
-  "name": "vN: workflow-managed floating tags",
-  "target": "tag",
-  "enforcement": "active",
-  "bypass_actors": [
-    {
-      "actor_id": $user_id,
-      "actor_type": "User",
-      "bypass_mode": "always"
-    },
-    {
-      "actor_id": $github_actions_app_id,
-      "actor_type": "Integration",
-      "bypass_mode": "always"
-    }
-  ],
-  "conditions": {
-    "ref_name": {
-      "include": $floating_major_tags,
-      "exclude": []
-    }
-  },
-  "rules": [
-    {
-      "type": "creation"
-    },
-    {
-      "type": "update",
-      "parameters": {
-        "update_allows_fetch_and_merge": false
-      }
-    },
-    {
-      "type": "deletion"
-    },
-    {
-      "type": "non_fast_forward"
-    }
-  ]
-}
-EOF
-  )"
-}
-
 user_id="$(github_api user --jq .id)"
 
 repos="$(repo_list)"
@@ -365,11 +311,6 @@ while read -r repo; do
 
     step "protect v*: immutable" \
       protect_v_tags_immutable "$repo" "$floating_major_tags"
-
-    if [[ "$floating_major_tags" != "[]" ]]; then
-      step "protect vN: workflow-managed" \
-        protect_ascii_profile_card_major_tags "$repo" "$user_id" "$floating_major_tags"
-    fi
   else
     skip "private vulnerability reporting" "public repositories only"
     skip "secret scanning + push protection" "not available on the current plan"

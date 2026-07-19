@@ -60,8 +60,8 @@ The shell helpers in `scripts/` manage GitHub state. Live checks and updates exp
   `repos-metadata.json`; pass `--validate-only` for an offline manifest check or `--apply` to update
   GitHub.
 
-Exact `vX.Y.Z` tags remain immutable. The `ascii-profile-card` rulesets additionally allow its
-release workflow to move protected floating major tags such as `v1` and `v2` to their latest
+Exact `vX.Y.Z` tags remain immutable. For `ascii-profile-card`, floating major tags such as `v1` and
+`v2` are excluded from tag restrictions so its release workflow can move them to the latest
 compatible releases.
 
 Configure scripts with environment variables:
