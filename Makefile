@@ -30,7 +30,7 @@ lint-fix:
 check-config:
 	uv run --with pyyaml python scripts/check_shared_configs.py
 	scripts/common_repos_metadata.sh --validate-only
-	bunx --package renovate renovate-config-validator --strict --no-global files/configs/renovate.python.json files/configs/renovate.go.json
+	bunx --package renovate renovate-config-validator --strict --no-global presets/renovate/python.json presets/renovate/go.json
 	LEFTHOOK_CONFIG=files/configs/lefthook.bun.yml bunx lefthook validate
 	golangci-lint config verify -c files/configs/.golangci.yaml
 	$(ACTIONLINT)

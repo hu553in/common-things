@@ -7,25 +7,33 @@ Shared resources for cross-project use.
 
 ## Sync resources
 
-- `files/` contains static files copied as-is.
+- Root-level shared files are both the configs used by this repository and the canonical sync
+  sources: `.editorconfig`, `.gitattributes`, `.gitconfig`, `.prettierrc.json`, `AGENTS.md`, and
+  `CLAUDE.md`.
+- `files/` contains static configs and workflow callers that are not used at the repository root.
 - `templates/` contains repo-file-sync templates rendered with per-repository variables.
+- `presets/renovate/` contains native Renovate presets referenced by target repositories.
 - Source names identify the destination, optional variant, and template format, for example
   `dependabot.yml.njk`, `lefthook.bun.yml`, and `ci.yml.python`.
 
-Current shared resources include agent instructions, base editor/git configs, Dependabot configs,
-Bun Lefthook and Release It! configs, common formatter configs, native Git hooks, a shared prek
-config, Go lint config, language-specific Docker ignore files, Gradle properties, Detekt config,
-static CI callers, and narrowly scoped Renovate configs for Python and Go runtimes.
+Current shared resources include agent instructions, base editor and Git configs, Dependabot
+configs, Bun Lefthook and Release It! configs, formatter and hook configs, Go and Detekt lint
+configs, static CI callers, and Renovate presets for Python and Go runtimes. Project-owned files
+such as `.dockerignore` and `gradle.properties` remain local to each repository.
 
 ## Repo sync
 
 `.github/sync.yml` is the source of truth for which repositories receive each file.
 
-Keep static files under `files/`. Use `templates/` only when the destination needs per-repository
-variables, such as enabled Dependabot ecosystems.
+Sync only files that are intentionally identical in every listed repository. Keep files with
+project-local sections under project ownership.
 
-Synced Renovate configs cover only runtime versions that Dependabot does not update. Dependabot
-continues to own package dependencies, lockfiles, actions, and container images.
+Keep static files that are not used by this repository under `files/`. Use `templates/` only when
+the destination needs per-repository variables, such as enabled Dependabot ecosystems.
+
+Target `renovate.json` files extend the presets under `presets/renovate/`. They cover only runtime
+versions that Dependabot does not update; Dependabot continues to own package dependencies,
+lockfiles, actions, and container images.
 
 Reusable workflows under `.github/workflows/` provide shared Bun, Python, Go, and Docker image
 checks, Gradle dependency submission, and Docker build/publish/attestation jobs. Docker checks run

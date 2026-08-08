@@ -151,13 +151,6 @@ group:
       hu553in/grooming-studio-chat-helper
       hu553in/keenetic-vpn-switcher
 
-  - files:
-      - source: files/configs/.dockerignore.python
-        dest: .dockerignore
-    repos: |
-      hu553in/grooming-studio-chat-helper
-      hu553in/keenetic-vpn-switcher
-
   # =============================================================================
   # GO PROJECTS
   # =============================================================================
@@ -197,13 +190,6 @@ group:
       hu553in/telekilogram
       hu553in/tempstream
 
-  - files:
-      - source: files/configs/.dockerignore.go
-        dest: .dockerignore
-    repos: |
-      hu553in/telekilogram
-      hu553in/tempstream
-
   # =============================================================================
   # GRADLE PROJECTS
   # =============================================================================
@@ -235,13 +221,6 @@ group:
       hu553in/invites-keycloak
       hu553in/na-omsk-bot
 
-  - files:
-      - source: files/configs/gradle.properties
-        dest: gradle.properties
-    repos: |
-      hu553in/invites-keycloak
-      hu553in/na-omsk-bot
-
   # =============================================================================
   # INFRASTRUCTURE
   # =============================================================================
@@ -261,34 +240,11 @@ group:
       hu553in/single-deployment
 
   # =============================================================================
-  # RUNTIME VERSION UPDATES
-  # =============================================================================
-
-  - files:
-      - source: files/configs/renovate.python.json
-        dest: renovate.json
-    repos: |
-      hu553in/dbeaver-gcloud-free
-      hu553in/grooming-studio-chat-helper
-      hu553in/keenetic-vpn-switcher
-      hu553in/kinescope-io-loader
-      hu553in/spa-crawler
-      hu553in/tizen-tool
-      hu553in/vod-recovery
-
-  - files:
-      - source: files/configs/renovate.go.json
-        dest: renovate.json
-    repos: |
-      hu553in/telekilogram
-      hu553in/tempstream
-
-  # =============================================================================
   # FORMATTER CONFIGURATION
   # =============================================================================
 
   - files:
-      - source: files/configs/.prettierrc.json
+      - source: .prettierrc.json
         dest: .prettierrc.json
     repos: |
       hu553in/common-things
@@ -332,7 +288,7 @@ group:
   # =============================================================================
 
   - files:
-      - source: files/configs/.gitconfig
+      - source: .gitconfig
         dest: .gitconfig
     repos: |
       hu553in/common-things
@@ -345,13 +301,11 @@ group:
   # =============================================================================
 
   - files:
-      - source: files/configs/.editorconfig
+      - source: .editorconfig
         dest: .editorconfig
-      - source: files/configs/.gitattributes
+      - source: .gitattributes
         dest: .gitattributes
-      - source: files/docs/AGENTS.md
-        dest: AGENTS.md
-      - source: files/docs/CLAUDE.md
+      - source: CLAUDE.md
         dest: CLAUDE.md
     repos: |
       hu553in/ascii-profile-card
@@ -377,4 +331,33 @@ group:
       hu553in/tizen-tool
       hu553in/vod-recovery
       hu553in/voomy
+      hu553in/vrubel-museum-exhibitions
+
+  # Voomy appends generated Next.js instructions, so its AGENTS.md remains project-owned.
+  - files:
+      - source: AGENTS.md
+        dest: AGENTS.md
+    repos: |
+      hu553in/ascii-profile-card
+      hu553in/common-things
+      hu553in/dbeaver-gcloud-free
+      hu553in/dota2-schedule-bot
+      hu553in/flash-games
+      hu553in/gh-workflow-dashboard
+      hu553in/grooming-studio
+      hu553in/grooming-studio-chat-helper
+      hu553in/hu553in
+      hu553in/invites-keycloak
+      hu553in/keenetic-vpn-switcher
+      hu553in/kinescope-io-loader
+      hu553in/na-omsk-bot
+      hu553in/personal-website
+      hu553in/relay
+      hu553in/single-deployment
+      hu553in/skills
+      hu553in/spa-crawler
+      hu553in/telekilogram
+      hu553in/tempstream
+      hu553in/tizen-tool
+      hu553in/vod-recovery
       hu553in/vrubel-museum-exhibitions

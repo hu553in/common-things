@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '.github/sync.yml'
+      - '.editorconfig'
+      - '.gitattributes'
+      - '.gitconfig'
+      - '.prettierrc.json'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'files/**'
+      - 'templates/**'
   workflow_dispatch:
 
 jobs:

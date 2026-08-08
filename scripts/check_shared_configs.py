@@ -18,9 +18,10 @@ REQUIRED_DESTINATIONS = {
     ".editorconfig",
     ".gitattributes",
     ".github/dependabot.yml",
-    "AGENTS.md",
     "CLAUDE.md",
 }
+AGENTS_DESTINATION = "AGENTS.md"
+AGENTS_SYNC_EXCLUSIONS = {"hu553in/voomy"}
 HOOK_DESTINATIONS = {".gitconfig", "lefthook.yml", "prek.toml"}
 MANAGED_SOURCE_DIRS = (ROOT / "files", ROOT / "templates")
 NUNJUCKS_RENDERER = """
@@ -175,6 +176,31 @@ def validate_sync(repos_root: Path | None) -> None:
             + ", ".join(missing_required_files)
         )
 
+    unknown_agents_exclusions = sorted(AGENTS_SYNC_EXCLUSIONS - expected_sync_repos)
+    if unknown_agents_exclusions:
+        raise ValueError(
+            "AGENTS.md sync exclusions missing from repos-metadata.json: "
+            + ", ".join(unknown_agents_exclusions)
+        )
+
+    missing_agents = sorted(
+        repo
+        for repo in expected_sync_repos - AGENTS_SYNC_EXCLUSIONS
+        if (repo, AGENTS_DESTINATION) not in assignments
+    )
+    unexpected_agents = sorted(
+        repo
+        for repo in AGENTS_SYNC_EXCLUSIONS
+        if (repo, AGENTS_DESTINATION) in assignments
+    )
+    if missing_agents or unexpected_agents:
+        raise ValueError(
+            "invalid AGENTS.md sync coverage: missing="
+            + ",".join(missing_agents)
+            + "; unexpected="
+            + ",".join(unexpected_agents)
+        )
+
     invalid_hook_coverage = []
     for repo in sorted(expected_sync_repos):
         hooks = sorted(
@@ -223,7 +249,7 @@ def main() -> None:
         load_yaml(path)
 
     subprocess.run(
-        ["git", "config", "-f", "files/configs/.gitconfig", "--list"],
+        ["git", "config", "-f", ".gitconfig", "--list"],
         cwd=ROOT,
         check=True,
     )
