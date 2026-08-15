@@ -37,7 +37,9 @@ lockfiles, actions, and container images.
 
 Reusable workflows under `.github/workflows/` provide shared Bun, Python, Go, and Docker image
 checks, Gradle dependency submission, and Docker build/publish/attestation jobs. Docker checks run
-Hadolint, BuildKit validation, an image build, and a blocking Trivy scan by default.
+Hadolint, BuildKit validation, an image build, and a blocking Trivy scan by default. The Bun
+workflow can persist content-based ESLint and Playwright caches when callers enable the
+`cache_eslint` and `cache_playwright` inputs.
 
 Identical Bun, Python, Python with Docker, and Go with Docker CI callers are synced from
 `files/workflows/`.

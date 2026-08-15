@@ -3,6 +3,10 @@ name: Check Bun project
 on:
   workflow_call:
     inputs:
+      cache_eslint:
+        required: false
+        type: boolean
+        default: false
       cache_playwright:
         required: false
         type: boolean
@@ -21,6 +25,15 @@ jobs:
         with:
           bun-version-file: package.json
       - run: bun ci
+      - if: inputs.cache_eslint
+        uses: actions/cache@v6
+        env:
+          ESLINT_CACHE_KEY: eslint|${{ runner.os }}|${{ hashFiles('bun.lock', 'eslint.config.*') }}
+        with:
+          path: .cache/eslint
+          key: ${{ env.ESLINT_CACHE_KEY }}|${{ github.sha }}
+          restore-keys: |
+            ${{ env.ESLINT_CACHE_KEY }}|
       - if: inputs.cache_playwright
         uses: actions/cache@v6
         with:

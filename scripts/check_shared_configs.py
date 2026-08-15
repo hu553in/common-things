@@ -13,6 +13,7 @@ METADATA_PATH = ROOT / "repos-metadata.json"
 SYNC_PATH = ROOT / ".github/sync.yml"
 YAML_CONFIGS = (ROOT / "files/configs/detekt.yml",)
 SYNC_OWNER = "hu553in"
+# dotfiles is assembled from a yadm-managed home tree; sync manages only GitHub metadata.
 METADATA_ONLY_REPOS = {"dotfiles"}
 REQUIRED_DESTINATIONS = {
     ".editorconfig",
@@ -21,6 +22,7 @@ REQUIRED_DESTINATIONS = {
     "CLAUDE.md",
 }
 AGENTS_DESTINATION = "AGENTS.md"
+# voomy appends generated Next.js instructions and therefore owns AGENTS.md.
 AGENTS_SYNC_EXCLUSIONS = {"hu553in/voomy"}
 HOOK_DESTINATIONS = {".gitconfig", "lefthook.yml", "prek.toml"}
 MANAGED_SOURCE_DIRS = (ROOT / "files", ROOT / "templates")

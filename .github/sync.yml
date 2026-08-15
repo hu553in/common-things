@@ -1,3 +1,4 @@
+# dotfiles is assembled from a yadm-managed home tree, so only its GitHub metadata is managed here.
 group:
   # =============================================================================
   # GITHUB ACTIONS ONLY
@@ -12,6 +13,9 @@ group:
       hu553in/common-things
       hu553in/hu553in
       hu553in/skills
+
+  # CI stays project-owned: common-things installs its validator toolchain, hu553in generates
+  # profile artifacts, and skills runs repository-specific schema checks.
 
   # =============================================================================
   # BUN PROJECTS
@@ -66,6 +70,12 @@ group:
       hu553in/voomy
       hu553in/vrubel-museum-exhibitions
 
+  # Project-owned Bun CI callers:
+  # - ascii-profile-card installs external SVG test tooling and drafts tagged releases.
+  # - flash-games enables the reusable Playwright cache.
+  # - grooming-studio checks and publishes its Docker image.
+  # - relay builds, attests, and publishes cross-platform desktop releases.
+  # - voomy enables the reusable ESLint cache.
   - files:
       - source: files/workflows/ci.yml.bun
         dest: .github/workflows/ci.yml
@@ -73,7 +83,6 @@ group:
       hu553in/dota2-schedule-bot
       hu553in/gh-workflow-dashboard
       hu553in/personal-website
-      hu553in/voomy
       hu553in/vrubel-museum-exhibitions
 
   # =============================================================================
@@ -135,6 +144,9 @@ group:
             - /src/tizen_tool/resources
     repos: |
       hu553in/tizen-tool
+
+  # spa-crawler owns CI to check two Dockerfiles and publish the crawler image.
+  # tizen-tool owns CI because its Docker build needs an installer that is not stored in Git.
 
   - files:
       - source: files/workflows/ci.yml.python
@@ -221,9 +233,15 @@ group:
       hu553in/invites-keycloak
       hu553in/na-omsk-bot
 
+  # Gradle CI stays project-owned: invites-keycloak builds and releases a buildpack image, while
+  # na-omsk-bot uses constrained Gradle settings and a non-attesting private-repo publisher.
+
   # =============================================================================
   # INFRASTRUCTURE
   # =============================================================================
+
+  # single-deployment owns CI because it installs Ansible and repository-specific role
+  # dependencies.
 
   - files:
       - source: templates/configs/dependabot.yml.njk
@@ -243,12 +261,17 @@ group:
   # FORMATTER CONFIGURATION
   # =============================================================================
 
+  # Project-owned Prettier configs:
+  # - grooming-studio, relay, and voomy need Tailwind or plugin-specific options.
+  # - vrubel-museum-exhibitions keeps its JSX quote policy.
+
   - files:
       - source: .prettierrc.json
         dest: .prettierrc.json
     repos: |
       hu553in/common-things
       hu553in/dbeaver-gcloud-free
+      hu553in/gh-workflow-dashboard
       hu553in/grooming-studio-chat-helper
       hu553in/hu553in
       hu553in/invites-keycloak
@@ -333,7 +356,7 @@ group:
       hu553in/voomy
       hu553in/vrubel-museum-exhibitions
 
-  # Voomy appends generated Next.js instructions, so its AGENTS.md remains project-owned.
+  # voomy appends generated Next.js instructions, so its AGENTS.md remains project-owned.
   - files:
       - source: AGENTS.md
         dest: AGENTS.md
