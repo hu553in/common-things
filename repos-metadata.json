@@ -195,6 +195,23 @@
       "telegram-bot"
     ]
   },
+  "one-last-chance": {
+    "description": "Minimal iPhone client for connecting to olcRTC through one subscription URL",
+    "homepage": null,
+    "topics": [
+      "bun",
+      "expo",
+      "golang",
+      "ios",
+      "iphone",
+      "network-extension",
+      "olcrtc",
+      "react-native",
+      "swift",
+      "typescript",
+      "vpn"
+    ]
+  },
   "personal-website": {
     "description": "Personal Next.js website for Ruslan Khasanshin",
     "homepage": "https://hu553in.su",
