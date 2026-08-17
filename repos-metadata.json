@@ -16,18 +16,16 @@
     ]
   },
   "common-things": {
-    "description": "Shared docs, config templates, and maintenance scripts for repository upkeep",
+    "description": "Reusable GitHub Actions workflows, Renovate presets, and repository maintenance scripts",
     "homepage": null,
     "topics": [
       "automation",
       "dependabot",
       "developer-tools",
       "github-actions",
-      "nunjucks",
-      "repo-file-sync",
+      "renovate",
       "repository-management",
-      "shell",
-      "templates"
+      "shell"
     ]
   },
   "dbeaver-gcloud-free": {

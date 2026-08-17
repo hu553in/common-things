@@ -15,8 +15,11 @@ jobs:
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
+      - uses: astral-sh/setup-uv@v7
       - uses: oven-sh/setup-bun@v2
       - uses: golangci/golangci-lint-action@v9
         with:
           install-only: true
       - run: make check
+        env:
+          PREK: uvx prek

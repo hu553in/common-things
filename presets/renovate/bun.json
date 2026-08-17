@@ -1,0 +1,40 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>hu553in/common-things//presets/renovate/base"],
+  "enabledManagers": ["bun", "custom.regex", "docker-compose", "dockerfile", "github-actions"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track Bun runtime in package metadata",
+      "managerFilePatterns": ["/(^|/)package\\.json$/"],
+      "matchStrings": [
+        "\"packageManager\"[ \\t]*:[ \\t]*\"bun@(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
+      ],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "bun",
+      "versioningTemplate": "npm"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Group Bun runtime updates",
+      "matchPackageNames": ["bun", "oven/bun"],
+      "groupName": "Bun runtime"
+    },
+    {
+      "description": "Disable automatic TypeScript major updates",
+      "matchManagers": ["bun"],
+      "matchPackageNames": ["typescript"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "Disable automatic Node.js major updates",
+      "matchManagers": ["bun"],
+      "matchPackageNames": ["node"],
+      "matchDepTypes": ["engines"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    }
+  ]
+}

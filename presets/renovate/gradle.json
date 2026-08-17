@@ -1,0 +1,38 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>hu553in/common-things//presets/renovate/base"],
+  "ignorePresets": ["workarounds:javaLTSVersions"],
+  "enabledManagers": [
+    "custom.regex",
+    "docker-compose",
+    "dockerfile",
+    "github-actions",
+    "gradle",
+    "gradle-wrapper"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track Java runtime in Gradle and CI",
+      "managerFilePatterns": [
+        "/(^|/)build\\.gradle\\.kts$/",
+        "/(^|/)\\.github/workflows/[^/]+\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*jvmToolchain[ \\t]*\\([ \\t]*(?<currentValue>\\d+)[ \\t]*\\)",
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*java[_-]version:[ \\t]*['\"](?<currentValue>\\d+)['\"]"
+      ],
+      "datasourceTemplate": "java-version",
+      "depNameTemplate": "java",
+      "extractVersionTemplate": "^(?<version>\\d+)",
+      "versioningTemplate": "regex:^(?<major>\\d+)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Group Java runtime updates",
+      "matchPackageNames": ["java", "eclipse-temurin"],
+      "groupName": "Java runtime"
+    }
+  ]
+}

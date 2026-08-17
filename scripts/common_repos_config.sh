@@ -85,7 +85,7 @@ put_ruleset() {
     return 1
   fi
 
-  if [ -n "$id" ]; then
+  if [[ -n "$id" ]]; then
     printf '%s' "$body" | github_api \
       -X PUT \
       "repos/$repo/rulesets/$id" \
@@ -103,7 +103,7 @@ repo_list_from_env() {
 }
 
 repo_list() {
-  if [ -n "$REPOS" ]; then
+  if [[ -n "$REPOS" ]]; then
     repo_list_from_env
     return
   fi
@@ -286,9 +286,10 @@ while read -r repo; do
     -X PUT \
     "repos/$repo/vulnerability-alerts"
 
-  step "dependabot security updates" \
+  # Renovate reads Dependabot alerts but owns the remediation pull requests.
+  step "disable dependabot security updates" \
     github_api \
-    -X PUT \
+    -X DELETE \
     "repos/$repo/automated-security-fixes"
 
   if [[ "$visibility" == "public" ]]; then

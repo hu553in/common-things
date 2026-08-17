@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "group:allNonMajor",
+    "schedule:weekly",
+    ":enableVulnerabilityAlerts"
+  ],
+  "assignees": ["hu553in"],
+  "labels": ["dependencies"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Preserve floating major tags for GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "matchCurrentValue": "/^v\\d+$/",
+      "allowedVersions": "/^v\\d+$/"
+    }
+  ]
+}

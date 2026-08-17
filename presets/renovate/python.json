@@ -1,5 +1,58 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "enabledManagers": ["pyenv"]
+  "extends": ["github>hu553in/common-things//presets/renovate/base"],
+  "enabledManagers": ["custom.regex", "docker-compose", "dockerfile", "github-actions", "pep621"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track minimum Python version in project metadata",
+      "managerFilePatterns": ["/(^|/)pyproject\\.toml$/"],
+      "matchStrings": [
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*requires-python[ \\t]*=[ \\t]*\">=(?<currentValue>\\d+\\.\\d+)\""
+      ],
+      "datasourceTemplate": "endoflife-date",
+      "depNameTemplate": "python",
+      "extractVersionTemplate": "^(?<version>\\d+\\.\\d+)",
+      "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "description": "Track Ruff target version with minimum Python version",
+      "managerFilePatterns": ["/(^|/)pyproject\\.toml$/"],
+      "matchStrings": [
+        "(?<indentation>(?:^|\\r\\n|\\r|\\n)[ \\t]*)target-version[ \\t]*=[ \\t]*\"py(?<major>\\d)(?<minor>\\d+)\""
+      ],
+      "currentValueTemplate": "{{{major}}}.{{{minor}}}",
+      "autoReplaceStringTemplate": "{{{indentation}}}target-version = \"py{{{replace '\\.' '' newValue}}}\"",
+      "datasourceTemplate": "endoflife-date",
+      "depNameTemplate": "python",
+      "extractVersionTemplate": "^(?<version>\\d+\\.\\d+)",
+      "versioningTemplate": "loose"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Bump Python dependency ranges",
+      "matchManagers": ["pep621"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": "Disable native minimum Python update",
+      "matchManagers": ["pep621"],
+      "matchDepTypes": ["requires-python"],
+      "enabled": false
+    },
+    {
+      "description": "Parse Python runtime tags in uv images",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/astral-sh/uv"],
+      "versioning": "regex:^python(?<major>\\d+)\\.(?<minor>\\d+)-(?<compatibility>.+)$"
+    },
+    {
+      "description": "Group Python runtime updates",
+      "matchManagers": ["custom.regex", "dockerfile"],
+      "matchPackageNames": ["ghcr.io/astral-sh/uv", "python"],
+      "groupName": "Python runtime"
+    }
+  ]
 }
