@@ -5,18 +5,6 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Track minimum Python version in project metadata",
-      "managerFilePatterns": ["/(^|/)pyproject\\.toml$/"],
-      "matchStrings": [
-        "(?:^|\\r\\n|\\r|\\n)[ \\t]*requires-python[ \\t]*=[ \\t]*\">=(?<currentValue>\\d+\\.\\d+)\""
-      ],
-      "datasourceTemplate": "endoflife-date",
-      "depNameTemplate": "python",
-      "extractVersionTemplate": "^(?<version>\\d+\\.\\d+)",
-      "versioningTemplate": "loose"
-    },
-    {
-      "customType": "regex",
       "description": "Track Ruff target version with minimum Python version",
       "managerFilePatterns": ["/(^|/)pyproject\\.toml$/"],
       "matchStrings": [
@@ -37,12 +25,6 @@
       "rangeStrategy": "bump"
     },
     {
-      "description": "Disable native minimum Python update",
-      "matchManagers": ["pep621"],
-      "matchDepTypes": ["requires-python"],
-      "enabled": false
-    },
-    {
       "description": "Parse Python runtime tags in uv images",
       "matchDatasources": ["docker"],
       "matchPackageNames": ["ghcr.io/astral-sh/uv"],
@@ -50,7 +32,7 @@
     },
     {
       "description": "Group Python runtime updates",
-      "matchManagers": ["custom.regex", "dockerfile"],
+      "matchManagers": ["custom.regex", "dockerfile", "pep621"],
       "matchPackageNames": ["ghcr.io/astral-sh/uv", "python"],
       "groupName": "Python runtime"
     }
