@@ -25,6 +25,13 @@
       "rangeStrategy": "bump"
     },
     {
+      "description": "Preserve Python compatibility floor",
+      "matchManagers": ["pep621"],
+      "matchDepTypes": ["requires-python"],
+      "matchUpdateTypes": ["patch"],
+      "enabled": false
+    },
+    {
       "description": "Parse Python runtime tags in uv images",
       "matchDatasources": ["docker"],
       "matchPackageNames": ["ghcr.io/astral-sh/uv"],

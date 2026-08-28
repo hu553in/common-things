@@ -78,7 +78,8 @@
       "pwa",
       "ruffle",
       "static-site",
-      "swf"
+      "swf",
+      "vercel"
     ]
   },
   "gh-workflow-dashboard": {
@@ -94,6 +95,7 @@
       "javascript",
       "monitoring",
       "static-site",
+      "vercel",
       "vite"
     ]
   },
@@ -103,13 +105,13 @@
     "topics": [
       "bun",
       "business",
-      "docker",
       "grooming",
       "landing-page",
       "pets",
       "react",
-      "self-hosted",
+      "static-site",
       "typescript",
+      "vercel",
       "vite",
       "website"
     ]
@@ -387,6 +389,7 @@
       "self-hosted",
       "subscriptions",
       "typescript",
+      "vercel",
       "video-platform",
       "video-streaming"
     ]
@@ -404,6 +407,7 @@
       "react",
       "static-site",
       "typescript",
+      "vercel",
       "vite",
       "website"
     ]

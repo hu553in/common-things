@@ -12,8 +12,9 @@ dependency submission, and Docker build, publish, and attestation jobs. Project 
 them directly from `main`.
 
 Docker checks run Hadolint, BuildKit validation, an image build, and a blocking Trivy scan by
-default. The Bun workflow can persist content-based ESLint and Playwright caches when callers enable
-the `cache_eslint` and `cache_playwright` inputs.
+default. The Bun workflow can persist the content-based ESLint cache, cache Playwright browser
+binaries, and install their system dependencies when callers enable the `cache_eslint` and
+`playwright` inputs.
 
 Use `build-publish-attest-docker.yml` when GitHub artifact attestations are available. Use the
 lower-level Docker workflows for private repositories that cannot create attestations and for custom

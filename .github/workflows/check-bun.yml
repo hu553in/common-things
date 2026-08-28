@@ -7,7 +7,7 @@ on:
         required: false
         type: boolean
         default: false
-      cache_playwright:
+      playwright:
         required: false
         type: boolean
         default: false
@@ -34,11 +34,13 @@ jobs:
           key: ${{ env.ESLINT_CACHE_KEY }}|${{ github.sha }}
           restore-keys: |
             ${{ env.ESLINT_CACHE_KEY }}|
-      - if: inputs.cache_playwright
+      - if: inputs.playwright
         uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright|${{ runner.os }}|${{ hashFiles('bun.lock') }}
           restore-keys: |
             playwright|${{ runner.os }}|
+      - if: inputs.playwright
+        run: bun playwright install-deps chromium
       - run: bun check

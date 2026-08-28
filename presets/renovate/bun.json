@@ -18,7 +18,7 @@
   "packageRules": [
     {
       "description": "Group Bun runtime updates",
-      "matchPackageNames": ["bun", "oven/bun"],
+      "matchPackageNames": ["@types/bun", "bun", "oven/bun"],
       "groupName": "Bun runtime"
     },
     {
