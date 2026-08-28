@@ -49,8 +49,11 @@ jobs:
           build-args: ${{ inputs.build_args }}
           load: true
           tags: local/docker-check:${{ github.sha }}
+          pull: true
           cache-from: type=gha,scope=${{ inputs.file }}
           cache-to: type=gha,scope=${{ inputs.file }},mode=max
+      - if: inputs.build
+        run: docker buildx prune --all --force
       - if: inputs.build
         uses: aquasecurity/trivy-action@v0.36.0
         with:
