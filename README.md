@@ -65,6 +65,9 @@ checks and updates:
   `repos-metadata.json`; pass `--validate-only` for an offline manifest check or `--apply` to update
   GitHub.
 
+On public repositories, the GitHub user running the script can update, delete, and force-push
+`main`; other users cannot.
+
 Exact `vX.Y.Z` tags remain immutable. For `ascii-profile-card`, floating major tags such as `v1` and
 `v2` are excluded from tag restrictions so its release workflow can move them to the latest
 compatible releases.

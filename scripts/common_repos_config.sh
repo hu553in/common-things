@@ -156,6 +156,7 @@ EOF
 
 protect_main_no_force_push() {
   local repo="$1"
+  local user_id="$2"
 
   put_ruleset "$repo" "main: no force pushes" "branch" "$(
     cat <<EOF
@@ -163,7 +164,13 @@ protect_main_no_force_push() {
   "name": "main: no force pushes",
   "target": "branch",
   "enforcement": "active",
-  "bypass_actors": [],
+  "bypass_actors": [
+    {
+      "actor_id": $user_id,
+      "actor_type": "User",
+      "bypass_mode": "always"
+    }
+  ],
   "conditions": {
     "ref_name": {
       "include": ["refs/heads/main"],
@@ -305,7 +312,7 @@ while read -r repo; do
       protect_main_only_me "$repo" "$user_id"
 
     step "protect main: no force push" \
-      protect_main_no_force_push "$repo"
+      protect_main_no_force_push "$repo" "$user_id"
 
     step "protect v*: only me create" \
       protect_v_tags_only_me_create "$repo" "$user_id" "$floating_major_tags"
