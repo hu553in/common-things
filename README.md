@@ -2,19 +2,37 @@
 
 [![CI](https://github.com/hu553in/common-things/actions/workflows/ci.yml/badge.svg)](https://github.com/hu553in/common-things/actions/workflows/ci.yml)
 
-Reusable GitHub Actions workflows, Renovate presets, and maintenance scripts for hu553in
-repositories.
+Reusable GitHub Actions workflows and composite actions, Renovate presets, and maintenance scripts
+for hu553in repositories.
 
-## Reusable workflows
+## Reusable workflows and actions
 
 Reusable workflows under `.github/workflows/` provide Bun, Python, Go, and Docker checks, Gradle
 dependency submission, and Docker build, publish, and attestation jobs. Project CI workflows call
 them directly from `main`.
 
 Docker checks run Hadolint, BuildKit validation, an image build, and a blocking Trivy scan by
-default. The Bun workflow can persist the content-based ESLint cache, cache Playwright browser
-binaries, and install their system dependencies when callers enable the `cache_eslint` and
-`playwright` inputs.
+default. Publishing pushes the `sha-*` tag first and updates `latest` on the default branch only
+after the scan passes, without rebuilding the image or replacing its digest.
+
+Set `build: false` when a publishing job will build and scan the same image in that run; Hadolint
+and BuildKit validation still run. Keep full image checks enabled on non-publishing refs.
+
+Calling CI workflows group concurrent runs by workflow and ref, canceling superseded branch and
+pull-request runs while letting tag releases finish. Keep concurrency in the caller so reusable
+workflows do not cancel their parent run.
+
+The Bun workflow's `cache_eslint` input enables the content-based ESLint cache. Its `playwright`
+input enables browser caching, system dependencies, and test-result uploads on failure. The `shfmt`
+input installs the shell formatter.
+
+Custom workflows can reuse these composite actions after checkout:
+
+- `hu553in/common-things/.github/actions/cache-eslint@main` caches `.cache/eslint`.
+- `hu553in/common-things/.github/actions/scan-docker@main` accepts an `image-ref` and runs the same
+  blocking Trivy scan against a local or published image, using the caller's Trivy configuration.
+- `hu553in/common-things/.github/actions/setup-shfmt@main` installs shfmt after Go setup, using the
+  caller's toolchain without changing it.
 
 Use `build-publish-attest-docker.yml` when GitHub artifact attestations are available. Use the
 lower-level Docker workflows for private repositories that cannot create attestations and for custom

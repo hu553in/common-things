@@ -23,7 +23,7 @@ check-config:
 	scripts/common_repos_metadata.sh --validate-only
 	bunx --package renovate renovate-config-validator --strict --no-global renovate.json presets/renovate/*.json
 	$(ACTIONLINT)
-	bash -n $(SHELL_FILES)
+	printf '%s\0' .github/actions/*/action.yml | xargs -0 -n 1 bunx --package @action-validator/cli action-validator
 
 .PHONY: check
 check: lint check-config

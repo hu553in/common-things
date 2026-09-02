@@ -1,0 +1,19 @@
+name: Scan Docker image
+description: Block images with fixable high or critical vulnerabilities
+
+inputs:
+  image-ref:
+    description: Docker image tag or digest to scan
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: aquasecurity/trivy-action@v0.36.0
+      with:
+        image-ref: ${{ inputs.image-ref }}
+        format: table
+        exit-code: '1'
+        ignore-unfixed: true
+        severity: HIGH,CRITICAL
+        scanners: vuln

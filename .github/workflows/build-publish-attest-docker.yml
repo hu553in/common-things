@@ -28,7 +28,7 @@ on:
 
 jobs:
   publish:
-    uses: hu553in/common-things/.github/workflows/build-publish-docker.yml@main
+    uses: ./.github/workflows/build-publish-docker.yml
     permissions:
       contents: read
       packages: write
@@ -41,7 +41,7 @@ jobs:
 
   attest:
     needs: publish
-    uses: hu553in/common-things/.github/workflows/attest-docker.yml@main
+    uses: ./.github/workflows/attest-docker.yml
     permissions:
       packages: write
       id-token: write

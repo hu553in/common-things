@@ -11,6 +11,10 @@ on:
         required: false
         type: boolean
         default: false
+      shfmt:
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   check:
@@ -24,16 +28,16 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: package.json
+      - if: inputs.shfmt
+        uses: actions/setup-go@v7
+        with:
+          go-version: stable
+          cache: false
+      - if: inputs.shfmt
+        uses: hu553in/common-things/.github/actions/setup-shfmt@main
       - run: bun ci
       - if: inputs.cache_eslint
-        uses: actions/cache@v6
-        env:
-          ESLINT_CACHE_KEY: eslint|${{ runner.os }}|${{ hashFiles('bun.lock', 'eslint.config.*') }}
-        with:
-          path: .cache/eslint
-          key: ${{ env.ESLINT_CACHE_KEY }}|${{ github.sha }}
-          restore-keys: |
-            ${{ env.ESLINT_CACHE_KEY }}|
+        uses: hu553in/common-things/.github/actions/cache-eslint@main
       - if: inputs.playwright
         uses: actions/cache@v6
         with:
@@ -44,3 +48,9 @@ jobs:
       - if: inputs.playwright
         run: bun playwright install-deps chromium
       - run: bun check
+      - if: failure() && inputs.playwright
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-test-results-${{ github.run_attempt }}
+          path: test-results
+          if-no-files-found: ignore

@@ -7,6 +7,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref_type != 'tag' }}
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -20,5 +24,6 @@ jobs:
       - uses: actions/setup-go@v7
         with:
           go-version: stable
-      - run: go install mvdan.cc/sh/v3/cmd/shfmt@latest
+          cache: false
+      - uses: ./.github/actions/setup-shfmt
       - run: make check

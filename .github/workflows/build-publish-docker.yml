@@ -48,9 +48,7 @@ jobs:
         id: meta
         with:
           images: ${{ inputs.image }}
-          tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=sha
+          tags: type=sha
           labels: |
             org.opencontainers.image.authors=Ruslan Khasanshin
       - id: build
@@ -68,11 +66,13 @@ jobs:
           cache-to: type=gha,scope=${{ inputs.file }},mode=max
           build-args: ${{ inputs.build_args }}
       - run: docker buildx prune --all --force
-      - uses: aquasecurity/trivy-action@v0.36.0
+      - uses: hu553in/common-things/.github/actions/scan-docker@main
         with:
           image-ref: ${{ inputs.image }}@${{ steps.build.outputs.digest }}
-          format: table
-          exit-code: '1'
-          ignore-unfixed: true
-          severity: HIGH,CRITICAL
-          scanners: vuln
+      - if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        env:
+          IMAGE: ${{ inputs.image }}
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run:
+          docker buildx imagetools create --prefer-index=false --tag "$IMAGE:latest"
+          "$IMAGE@$DIGEST"

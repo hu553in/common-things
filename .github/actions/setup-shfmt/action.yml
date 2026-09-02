@@ -1,0 +1,8 @@
+name: Set up shfmt
+description: Install shfmt using the caller's Go toolchain
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: go install mvdan.cc/sh/v3/cmd/shfmt@latest

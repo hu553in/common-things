@@ -1,0 +1,14 @@
+name: Cache ESLint
+description: Persist the ESLint cache by operating system, dependencies, and configuration
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/cache@v6
+      env:
+        ESLINT_CACHE_KEY: eslint|${{ runner.os }}|${{ hashFiles('bun.lock', 'eslint.config.*') }}
+      with:
+        path: .cache/eslint
+        key: ${{ env.ESLINT_CACHE_KEY }}|${{ github.sha }}
+        restore-keys: |
+          ${{ env.ESLINT_CACHE_KEY }}|

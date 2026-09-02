@@ -55,11 +55,6 @@ jobs:
       - if: inputs.build
         run: docker buildx prune --all --force
       - if: inputs.build
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: hu553in/common-things/.github/actions/scan-docker@main
         with:
           image-ref: local/docker-check:${{ github.sha }}
-          format: table
-          exit-code: '1'
-          ignore-unfixed: true
-          severity: HIGH,CRITICAL
-          scanners: vuln
