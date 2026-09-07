@@ -356,6 +356,11 @@
       "wgt"
     ]
   },
+  "vlt": {
+    "description": "Terminal interface for browsing and editing HashiCorp Vault KV v2 secrets",
+    "homepage": null,
+    "topics": ["cli", "golang", "hashicorp-vault", "kv-v2", "secrets-management", "terminal", "tui"]
+  },
   "vod-recovery": {
     "description": "Python CLI for finding and downloading recoverable hidden Twitch VOD playlists",
     "homepage": null,
