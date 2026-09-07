@@ -28,22 +28,6 @@
       "shell"
     ]
   },
-  "dbeaver-gcloud-free": {
-    "description": "DBeaver Community launcher for Google Cloud PostgreSQL token auth",
-    "homepage": null,
-    "topics": [
-      "access-token",
-      "auth",
-      "cli",
-      "database-tools",
-      "dbeaver",
-      "developer-tools",
-      "gcloud",
-      "google-cloud",
-      "postgresql",
-      "python"
-    ]
-  },
   "dota2-schedule-bot": {
     "description": "Cloudflare Telegram bot for Dota 2 schedules, live matches, results, and favorites",
     "homepage": "https://t.me/d2_schedule_bot",
@@ -114,20 +98,6 @@
       "vercel",
       "vite",
       "website"
-    ]
-  },
-  "grooming-studio-chat-helper": {
-    "description": "Telegram bot with reusable message templates for a pet grooming studio",
-    "homepage": null,
-    "topics": [
-      "business",
-      "docker",
-      "grooming",
-      "message-templates",
-      "pets",
-      "python",
-      "self-hosted",
-      "telegram-bot"
     ]
   },
   "hu553in": {
