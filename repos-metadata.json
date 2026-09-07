@@ -102,7 +102,7 @@
   },
   "hu553in": {
     "description": "GitHub profile README for Ruslan Khasanshin",
-    "homepage": "https://hu553in.su",
+    "homepage": "https://hu553in.dev",
     "topics": ["github-actions", "github-profile", "markdown", "profile-readme"]
   },
   "invites-keycloak": {
@@ -186,7 +186,7 @@
   },
   "personal-website": {
     "description": "Personal Next.js website for Ruslan Khasanshin",
-    "homepage": "https://hu553in.su",
+    "homepage": "https://hu553in.dev",
     "topics": [
       "bun",
       "nextjs",
