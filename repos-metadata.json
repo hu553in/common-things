@@ -1,7 +1,7 @@
 {
   "ascii-profile-card": {
     "description": "GitHub Action that generates Neofetch-style SVG profile cards with daily ASCII art and live GitHub stats",
-    "homepage": null,
+    "homepage": "https://github.com/marketplace/actions/ascii-profile-card",
     "topics": [
       "ascii-art",
       "bun",
