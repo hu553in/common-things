@@ -7,6 +7,10 @@ on:
         required: false
         type: boolean
         default: false
+      node_options:
+        required: false
+        type: string
+        default: ''
       playwright:
         required: false
         type: boolean
@@ -19,6 +23,8 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: ${{ inputs.node_options }}
     permissions:
       contents: read
     steps:
