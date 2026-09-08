@@ -21,12 +21,18 @@ lint-fix:
 check-config:
 	git config --file .gitconfig --list >/dev/null
 	scripts/common_repos_metadata.sh --validate-only
+
+.PHONY: check-renovate
+check-renovate:
 	bunx --package renovate renovate-config-validator --strict --no-global renovate.json presets/renovate/*.json
+
+.PHONY: check-workflows
+check-workflows:
 	$(ACTIONLINT)
 	printf '%s\0' .github/actions/*/action.yml | xargs -0 -n 1 bunx --package @action-validator/cli action-validator
 
 .PHONY: check
-check: lint check-config
+check: lint check-config check-renovate check-workflows
 
 .PHONY: check-fix
 check-fix: lint-fix

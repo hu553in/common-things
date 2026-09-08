@@ -56,13 +56,13 @@
       "bun",
       "flash",
       "games",
-      "javascript",
       "legacy",
       "offline-first",
       "pwa",
       "ruffle",
       "static-site",
       "swf",
+      "typescript",
       "vercel"
     ]
   },
@@ -76,9 +76,9 @@
       "github-actions",
       "github-api",
       "github-workflows",
-      "javascript",
       "monitoring",
       "static-site",
+      "typescript",
       "vercel",
       "vite"
     ]

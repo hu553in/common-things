@@ -18,6 +18,10 @@ on:
         required: false
         type: string
         default: ''
+      no_cache_filters:
+        required: false
+        type: string
+        default: ''
       runs-on:
         required: false
         type: string
@@ -62,6 +66,7 @@ jobs:
           provenance: mode=max
           sbom: true
           pull: true
+          no-cache-filters: ${{ inputs.no_cache_filters }}
           cache-from: type=gha,scope=${{ inputs.file }}
           cache-to: type=gha,scope=${{ inputs.file }},mode=max
           build-args: ${{ inputs.build_args }}

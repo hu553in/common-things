@@ -18,6 +18,10 @@ on:
         required: false
         type: string
         default: ''
+      no_cache_filters:
+        required: false
+        type: string
+        default: ''
       runs-on:
         required: false
         type: string
@@ -37,6 +41,7 @@ jobs:
       context: ${{ inputs.context }}
       file: ${{ inputs.file }}
       build_args: ${{ inputs.build_args }}
+      no_cache_filters: ${{ inputs.no_cache_filters }}
       runs-on: ${{ inputs.runs-on }}
 
   attest:

@@ -13,6 +13,24 @@
   "customManagers": [
     {
       "customType": "regex",
+      "description": "Track annotated Spring dependency version overrides",
+      "managerFilePatterns": ["/(^|/)gradle\\.properties$/"],
+      "matchStrings": [
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*# renovate: datasource=maven depName=(?<depName>[^\\s]+)[ \\t]*(?:\\r\\n|\\r|\\n)[ \\t]*[\\w.]+[ \\t]*=[ \\t]*(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "description": "Track annotated Docker buildpacks in Gradle",
+      "managerFilePatterns": ["/(^|/)build\\.gradle\\.kts$/"],
+      "matchStrings": [
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*// renovate: datasource=docker[ \\t]*(?:\\r\\n|\\r|\\n)[ \\t]*\"(?<depName>[^\"\\s]+):(?<currentValue>[^\"\\s:]+)\""
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
       "description": "Track Java runtime in Gradle and CI",
       "managerFilePatterns": [
         "/(^|/)build\\.gradle\\.kts$/",

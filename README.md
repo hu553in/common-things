@@ -18,6 +18,10 @@ after the scan passes, without rebuilding the image or replacing its digest.
 Set `build: false` when a publishing job will build and scan the same image in that run; Hadolint
 and BuildKit validation still run. Keep full image checks enabled on non-publishing refs.
 
+Set `no_cache_filters` to a comma-separated list of Docker stages to rebuild without cached layers
+(default: empty). Use the runtime stage, such as `runner`, in both check and publish jobs to fetch
+current OS package updates.
+
 Calling CI workflows group concurrent runs by workflow and ref, canceling superseded branch and
 pull-request runs while letting tag releases finish. Keep concurrency in the caller so reusable
 workflows do not cancel their parent run.
@@ -55,6 +59,13 @@ stack. They share weekly scheduling, non-major grouping, assignment, labels, and
 alerts as the vulnerability source while Renovate creates remediation pull requests. Stack presets
 coordinate runtime versions across project files and add language-specific grouping and lockfile
 behavior.
+
+The Gradle preset also tracks annotated Spring dependency overrides and Docker buildpacks:
+
+- In `gradle.properties`, put `# renovate: datasource=maven depName=<group>:<artifact>` immediately
+  before the version property, using the dependency's Maven coordinates.
+- In `build.gradle.kts`, put `// renovate: datasource=docker` immediately before the quoted
+  buildpack image and tag.
 
 ## Repository maintenance
 
@@ -100,3 +111,7 @@ Run the complete local check or apply supported fixes before checking again:
 make check
 make check-fix
 ```
+
+For focused checks, use `make check-config` for the local metadata manifest and Git hooks,
+`make check-workflows` for workflows and composite actions, or `make check-renovate` for Renovate
+configuration and presets.

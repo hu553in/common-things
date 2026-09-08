@@ -15,6 +15,10 @@ on:
         required: false
         type: string
         default: ''
+      no_cache_filters:
+        required: false
+        type: string
+        default: ''
       build:
         required: false
         type: boolean
@@ -50,6 +54,7 @@ jobs:
           load: true
           tags: local/docker-check:${{ github.sha }}
           pull: true
+          no-cache-filters: ${{ inputs.no_cache_filters }}
           cache-from: type=gha,scope=${{ inputs.file }}
           cache-to: type=gha,scope=${{ inputs.file }},mode=max
       - if: inputs.build
