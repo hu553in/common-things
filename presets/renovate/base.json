@@ -8,6 +8,7 @@
   ],
   "assignees": ["hu553in"],
   "labels": ["dependencies"],
+  "rebaseWhen": "behind-base-branch",
   "lockFileMaintenance": {
     "enabled": true
   },
