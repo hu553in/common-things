@@ -198,24 +198,6 @@
       "website"
     ]
   },
-  "relay": {
-    "description": "Electron desktop app for live speech transcription and translated captions",
-    "homepage": null,
-    "topics": [
-      "bun",
-      "captions",
-      "desktop-app",
-      "electron",
-      "live-captions",
-      "openai",
-      "openai-realtime-api",
-      "react",
-      "speech-to-text",
-      "transcription",
-      "translation",
-      "typescript"
-    ]
-  },
   "single-deployment": {
     "description": "Ansible and Komodo configuration for personal Docker hosts",
     "homepage": null,
