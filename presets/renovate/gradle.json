@@ -31,14 +31,14 @@
     },
     {
       "customType": "regex",
-      "description": "Track Java runtime in Gradle and CI",
+      "description": "Track Java runtime in Gradle and reusable workflows",
       "managerFilePatterns": [
         "/(^|/)build\\.gradle\\.kts$/",
         "/(^|/)\\.github/workflows/[^/]+\\.ya?ml$/"
       ],
       "matchStrings": [
         "(?:^|\\r\\n|\\r|\\n)[ \\t]*jvmToolchain[ \\t]*\\([ \\t]*(?<currentValue>\\d+)[ \\t]*\\)",
-        "(?:^|\\r\\n|\\r|\\n)[ \\t]*java[_-]version:[ \\t]*['\"](?<currentValue>\\d+)['\"]"
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*java_version:[ \\t]*['\"](?<currentValue>\\d+)['\"]"
       ],
       "datasourceTemplate": "java-version",
       "depNameTemplate": "java",
@@ -48,8 +48,15 @@
   ],
   "packageRules": [
     {
+      "description": "Preserve major-only Java versions in GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "matchDatasources": ["java-version"],
+      "matchCurrentValue": "/^\\d+$/",
+      "versioning": "npm"
+    },
+    {
       "description": "Group Java runtime updates",
-      "matchPackageNames": ["java", "eclipse-temurin"],
+      "matchPackageNames": ["eclipse-temurin", "java", "java-jdk"],
       "groupName": "Java runtime"
     }
   ]

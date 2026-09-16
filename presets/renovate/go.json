@@ -1,9 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>hu553in/common-things//presets/renovate/base",
-    "security:gomodIndirectSecurityUpdates"
-  ],
+  "extends": ["github>hu553in/common-things//presets/renovate/base"],
   "enabledManagers": ["docker-compose", "dockerfile", "github-actions", "gomod"],
   "packageRules": [
     {
@@ -13,7 +10,7 @@
     },
     {
       "description": "Group Go runtime updates",
-      "matchManagers": ["dockerfile", "gomod"],
+      "matchManagers": ["custom.regex", "dockerfile", "gomod"],
       "matchPackageNames": ["go", "golang"],
       "groupName": "Go runtime"
     },
