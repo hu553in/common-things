@@ -1,6 +1,6 @@
 {
   "ascii-profile-card": {
-    "description": "GitHub Action that generates Neofetch-style SVG profile cards with daily ASCII art and live GitHub stats",
+    "description": "GitHub Action that generates Neofetch-style SVG profile cards with daily ASCII art and GitHub stats",
     "homepage": "https://github.com/marketplace/actions/ascii-profile-card",
     "topics": [
       "ascii-art",
@@ -106,7 +106,7 @@
     "topics": ["github-actions", "github-profile", "markdown", "profile-readme"]
   },
   "invites-keycloak": {
-    "description": "Spring Boot service for Keycloak invitation links and user registration",
+    "description": "Keycloak invitation management with an admin UI, expiring links, usage limits, and predefined roles",
     "homepage": null,
     "topics": [
       "docker",
@@ -168,7 +168,7 @@
     ]
   },
   "one-last-chance": {
-    "description": "Minimal iPhone client for connecting to olcRTC through one subscription URL",
+    "description": "iPhone VPN client for olcRTC, configured through a single subscription URL",
     "homepage": null,
     "topics": [
       "bun",
@@ -289,7 +289,7 @@
     ]
   },
   "tizen-tool": {
-    "description": "Python CLI for Tizen TV package builds and signing via Dockerized Tizen Studio",
+    "description": "Python CLI for building, signing, and installing Tizen TV packages through Dockerized Tizen Studio",
     "homepage": null,
     "topics": [
       "automation",
@@ -309,7 +309,7 @@
     ]
   },
   "vlt": {
-    "description": "Terminal interface for browsing and editing HashiCorp Vault KV v2 secrets",
+    "description": "Terminal interface for browsing and editing HashiCorp Vault KV v2 secrets with version-checked writes",
     "homepage": null,
     "topics": ["cli", "golang", "hashicorp-vault", "kv-v2", "secrets-management", "terminal", "tui"]
   },
@@ -330,7 +330,7 @@
     ]
   },
   "voomy": {
-    "description": "Next.js creator platform for videos, subscriptions, and community content",
+    "description": "Pre-launch bilingual creator platform for videos, posts, subscriptions, and community",
     "homepage": "https://voomy.tv",
     "topics": [
       "better-auth",
