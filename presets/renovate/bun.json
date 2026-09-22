@@ -9,13 +9,6 @@
       "groupName": "Bun runtime"
     },
     {
-      "description": "Disable automatic TypeScript major updates",
-      "matchManagers": ["bun"],
-      "matchPackageNames": ["typescript"],
-      "matchUpdateTypes": ["major"],
-      "enabled": false
-    },
-    {
       "description": "Disable automatic Node.js major updates",
       "matchManagers": ["bun"],
       "matchPackageNames": ["node"],

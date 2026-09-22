@@ -54,6 +54,8 @@ jobs:
       - if: inputs.playwright
         run: bun playwright install-deps chromium
       - run: bun check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - if: failure() && inputs.playwright
         uses: actions/upload-artifact@v7
         with:

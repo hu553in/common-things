@@ -27,3 +27,5 @@ jobs:
           cache: false
       - uses: ./.github/actions/setup-shfmt
       - run: make check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

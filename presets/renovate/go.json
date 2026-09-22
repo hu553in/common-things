@@ -2,11 +2,33 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>hu553in/common-things//presets/renovate/base"],
   "enabledManagers": ["docker-compose", "dockerfile", "github-actions", "gomod"],
+  "postUpdateOptions": ["gomodTidy"],
   "packageRules": [
     {
-      "description": "Run go mod tidy after Go module updates",
+      "description": "Update indirect Go dependencies",
       "matchManagers": ["gomod"],
-      "postUpdateOptions": ["gomodTidy"]
+      "matchDepTypes": ["indirect"],
+      "enabled": true
+    },
+    {
+      "description": "Disable automatic indirect Go major updates",
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["indirect"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "Allow major updates for Go tools extracted as indirect dependencies",
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["indirect"],
+      "matchPackageNames": [
+        "github.com/sqlc-dev/sqlc{,/**}",
+        "github.com/vladopajic/go-test-coverage{,/**}",
+        "golang.org/x/mobile",
+        "golang.org/x/vuln"
+      ],
+      "matchUpdateTypes": ["major"],
+      "enabled": true
     },
     {
       "description": "Group Go runtime updates",
