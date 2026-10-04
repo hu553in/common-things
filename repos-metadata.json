@@ -83,6 +83,22 @@
       "vite"
     ]
   },
+  "gpt-live-speaker": {
+    "description": "Go/Svelte test bench for full-duplex voice conversations with OpenAI GPT-Live over WebRTC",
+    "homepage": null,
+    "topics": [
+      "bun",
+      "full-duplex",
+      "golang",
+      "openai",
+      "smart-speaker",
+      "svelte",
+      "typescript",
+      "vite",
+      "voice-assistant",
+      "webrtc"
+    ]
+  },
   "grooming-studio": {
     "description": "React/Vite website for a pet grooming studio in Omsk",
     "homepage": "https://xn-----flcj2bnpjd0gcb.xn--p1ai",
