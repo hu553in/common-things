@@ -169,6 +169,22 @@
       "widevine"
     ]
   },
+  "m5stick-ai-usage": {
+    "description": "Codex and Claude usage-limit monitor for M5StickC Plus2 with a local Mac bridge",
+    "homepage": null,
+    "topics": [
+      "ai-agents",
+      "claude",
+      "codex",
+      "cpp",
+      "esp32",
+      "m5stickc",
+      "macos",
+      "platformio",
+      "python",
+      "usage-monitoring"
+    ]
+  },
   "na-omsk-bot": {
     "description": "Kotlin Telegram bot for Omsk Narcotics Anonymous group resources",
     "homepage": null,
