@@ -7,6 +7,10 @@ on:
         required: false
         type: boolean
         default: false
+      node:
+        required: false
+        type: boolean
+        default: false
       node_options:
         required: false
         type: string
@@ -23,10 +27,10 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    env:
-      NODE_OPTIONS: ${{ inputs.node_options }}
     permissions:
       contents: read
+    env:
+      NODE_OPTIONS: ${{ inputs.node_options }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -34,6 +38,10 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: package.json
+      - if: inputs.node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: package.json
       - if: inputs.shfmt
         uses: actions/setup-go@v7
         with:

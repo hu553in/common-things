@@ -31,12 +31,6 @@
       "enabled": true
     },
     {
-      "description": "Group Go runtime updates",
-      "matchManagers": ["custom.regex", "dockerfile", "gomod"],
-      "matchPackageNames": ["go", "golang"],
-      "groupName": "Go runtime"
-    },
-    {
       "description": "Bump Go version in go.mod",
       "matchManagers": ["gomod"],
       "matchPackageNames": ["go"],

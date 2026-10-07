@@ -28,9 +28,10 @@ workflows do not cancel their parent run.
 
 The Bun workflow's `cache_eslint` input enables the content-based ESLint cache. Its `playwright`
 input enables browser caching, system dependencies, and test-result uploads on failure. The `shfmt`
-input installs the shell formatter. The `node_options` input sets `NODE_OPTIONS` for the check job
-and defaults to an empty string. For example, `node_options: --max-old-space-size=4096` raises the
-Node.js old-space heap limit to 4 GiB.
+input installs the shell formatter. Set `node: true` when the project declares a Node.js version in
+`package.json`; the workflow installs that version before running checks. The `node_options` input
+sets `NODE_OPTIONS` for the check job and defaults to an empty string. For example,
+`node_options: --max-old-space-size=4096` raises the Node.js old-space heap limit to 4 GiB.
 
 Custom workflows can reuse these composite actions after checkout:
 

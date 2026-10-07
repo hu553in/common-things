@@ -36,12 +36,6 @@
       "matchDatasources": ["docker"],
       "matchPackageNames": ["ghcr.io/astral-sh/uv"],
       "versioning": "regex:^python(?<major>\\d+)\\.(?<minor>\\d+)-(?<compatibility>.+)$"
-    },
-    {
-      "description": "Group Python runtime updates",
-      "matchManagers": ["custom.regex", "dockerfile", "pep621"],
-      "matchPackageNames": ["ghcr.io/astral-sh/uv", "python"],
-      "groupName": "Python runtime"
     }
   ]
 }

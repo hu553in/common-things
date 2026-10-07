@@ -16,7 +16,7 @@
       "description": "Track annotated Spring dependency version overrides",
       "managerFilePatterns": ["/(^|/)gradle\\.properties$/"],
       "matchStrings": [
-        "(?:^|\\r\\n|\\r|\\n)[ \\t]*# renovate: datasource=maven depName=(?<depName>[^\\s]+)[ \\t]*(?:\\r\\n|\\r|\\n)[ \\t]*[\\w.]+[ \\t]*=[ \\t]*(?<currentValue>[^\\s]+)"
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*# renovate: datasource=maven depName=(?<depName>[^\\s]+)[ \\t]*(?:\\r\\n|\\r|\\n)[ \\t]*[\\w.-]+[ \\t]*=[ \\t]*(?<currentValue>[^\\s]+)"
       ],
       "datasourceTemplate": "maven"
     },
@@ -53,11 +53,6 @@
       "matchDatasources": ["java-version"],
       "matchCurrentValue": "/^\\d+$/",
       "versioning": "npm"
-    },
-    {
-      "description": "Group Java runtime updates",
-      "matchPackageNames": ["eclipse-temurin", "java", "java-jdk"],
-      "groupName": "Java runtime"
     }
   ]
 }

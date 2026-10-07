@@ -4,11 +4,6 @@
   "enabledManagers": ["bun", "custom.regex", "docker-compose", "dockerfile", "github-actions"],
   "packageRules": [
     {
-      "description": "Group Bun runtime updates",
-      "matchPackageNames": ["@types/bun", "bun", "oven/bun"],
-      "groupName": "Bun runtime"
-    },
-    {
       "description": "Disable automatic Node.js major updates",
       "matchManagers": ["bun"],
       "matchPackageNames": ["node"],
