@@ -84,19 +84,17 @@
     ]
   },
   "gpt-live-speaker": {
-    "description": "Go/Svelte test bench for full-duplex voice conversations with OpenAI GPT-Live over WebRTC",
+    "description": "Go smart speaker daemon for full-duplex voice conversations with OpenAI GPT-Live",
     "homepage": null,
     "topics": [
-      "bun",
       "full-duplex",
       "golang",
       "openai",
+      "python",
+      "raspberry-pi",
       "smart-speaker",
-      "svelte",
-      "typescript",
-      "vite",
       "voice-assistant",
-      "webrtc"
+      "wake-word"
     ]
   },
   "grooming-studio": {
