@@ -7,9 +7,9 @@ for hu553in repositories.
 
 ## Reusable workflows and actions
 
-Reusable workflows under `.github/workflows/` provide Bun, Python, Go, and Docker checks, Gradle
-dependency submission, and Docker build, publish, and attestation jobs. Project CI workflows call
-them directly from `main`.
+Reusable workflows under `.github/workflows/` provide Bun, Python, Go, and Docker checks, Gradle and
+Maven dependency submission, and Docker build, publish, and attestation jobs. Project CI workflows
+call them directly from `main`.
 
 Docker checks run Hadolint, BuildKit validation, an image build, and a blocking Trivy scan by
 default. Publishing pushes the `sha-*` tag first and updates `latest` on the default branch only
@@ -55,11 +55,11 @@ Target repositories extend the stack-specific presets under `presets/renovate/`:
 }
 ```
 
-The `actions`, `bun`, `gradle`, `python`, and `go` presets enable only the managers relevant to each
-stack. They share weekly scheduling, non-major grouping, assignment, labels, and GitHub Dependabot
-alerts as the vulnerability source while Renovate creates remediation pull requests. Stack presets
-coordinate runtime versions across project files and add language-specific grouping and lockfile
-behavior.
+The `actions`, `bun`, `gradle`, `maven`, `python`, and `go` presets enable only the managers
+relevant to each stack. They share weekly scheduling, non-major grouping, assignment, labels, and
+GitHub Dependabot alerts as the vulnerability source while Renovate creates remediation pull
+requests. Stack presets coordinate runtime versions across project files and add language-specific
+grouping and lockfile behavior.
 
 The Gradle preset also tracks annotated Spring dependency overrides and Docker buildpacks:
 

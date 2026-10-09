@@ -28,6 +28,18 @@
       "shell"
     ]
   },
+  "confluence-share": {
+    "description": "Public links with optional password protection for individual Confluence Data Center pages",
+    "homepage": null,
+    "topics": [
+      "atlassian",
+      "confluence",
+      "confluence-plugin",
+      "java",
+      "page-sharing",
+      "password-protection"
+    ]
+  },
   "dota2-schedule-bot": {
     "description": "Cloudflare Telegram bot for Dota 2 schedules, live matches, results, and favorites",
     "homepage": "https://t.me/d2_schedule_bot",

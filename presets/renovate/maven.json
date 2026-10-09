@@ -1,0 +1,46 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>hu553in/common-things//presets/renovate/base"],
+  "ignorePresets": ["workarounds:javaLTSVersions"],
+  "enabledManagers": [
+    "custom.regex",
+    "docker-compose",
+    "dockerfile",
+    "github-actions",
+    "maven",
+    "maven-wrapper"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track annotated Maven dependency versions",
+      "managerFilePatterns": ["/(^|/|\\.)pom\\.xml$/"],
+      "matchStrings": [
+        "<!-- renovate: datasource=maven depName=(?<depName>[^\\s]+)[ \\t]*-->\\s*<[\\w.-]+>(?<currentValue>[^<\\s]+)</[\\w.-]+>"
+      ],
+      "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "description": "Track Java runtime in annotated matrices and reusable workflows",
+      "managerFilePatterns": ["/(^|/)\\.github/workflows/[^/]+\\.ya?ml$/"],
+      "matchStrings": [
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*# renovate: datasource=java-version depName=java[ \\t]*(?:\\r\\n|\\r|\\n)[ \\t]*-[ \\t]*['\"](?<currentValue>\\d+)['\"]",
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]*java_version:[ \\t]*['\"](?<currentValue>\\d+)['\"]"
+      ],
+      "datasourceTemplate": "java-version",
+      "depNameTemplate": "java",
+      "extractVersionTemplate": "^(?<version>\\d+)",
+      "versioningTemplate": "regex:^(?<major>\\d+)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Preserve major-only Java versions in GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "matchDatasources": ["java-version"],
+      "matchCurrentValue": "/^\\d+$/",
+      "versioning": "npm"
+    }
+  ]
+}
