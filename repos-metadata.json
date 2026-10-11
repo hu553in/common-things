@@ -261,6 +261,19 @@
       "self-hosted"
     ]
   },
+  "skill-issue": {
+    "description": "macOS interview assistant with local speech recognition and an encrypted web viewer",
+    "homepage": null,
+    "topics": [
+      "cloudflare-workers",
+      "end-to-end-encryption",
+      "interview-assistant",
+      "macos",
+      "speech-recognition",
+      "swift",
+      "swiftui"
+    ]
+  },
   "skills": {
     "description": "Personal reusable agent skills",
     "homepage": "https://skills.sh/hu553in/skills",
