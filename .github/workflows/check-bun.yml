@@ -7,6 +7,10 @@ on:
         required: false
         type: boolean
         default: false
+      check_script:
+        required: false
+        type: string
+        default: check
       node:
         required: false
         type: boolean
@@ -61,8 +65,14 @@ jobs:
             playwright|${{ runner.os }}|
       - if: inputs.playwright
         run: bun playwright install-deps chromium
-      - run: bun check
+      - run: |
+          if [ -z "$CHECK_SCRIPT" ]; then
+            echo "check_script is empty." >&2
+            exit 1
+          fi
+          bun run "$CHECK_SCRIPT"
         env:
+          CHECK_SCRIPT: ${{ inputs.check_script }}
           GITHUB_TOKEN: ${{ github.token }}
       - if: failure() && inputs.playwright
         uses: actions/upload-artifact@v7
