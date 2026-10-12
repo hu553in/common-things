@@ -1,11 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "schedule:weekly", ":enableVulnerabilityAlerts"],
+  "extends": ["config:recommended", ":enableVulnerabilityAlerts"],
   "assignees": ["hu553in"],
   "labels": ["dependencies"],
   "rebaseWhen": "behind-base-branch",
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": true,
+    "schedule": ["at any time"]
   },
   "packageRules": [
     {
