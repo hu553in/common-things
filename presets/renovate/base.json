@@ -6,7 +6,7 @@
   "rebaseWhen": "behind-base-branch",
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["at any time"]
+    "schedule": ["* * * * 1"]
   },
   "packageRules": [
     {

@@ -58,11 +58,12 @@ Target repositories extend the stack-specific presets under `presets/renovate/`:
 ```
 
 The `actions`, `bun`, `gradle`, `maven`, `python`, and `go` presets enable only the managers
-relevant to each stack. Dependency updates and lockfile maintenance can create PRs at any time,
-whenever Renovate runs. They share non-major grouping, assignment, labels, and GitHub Dependabot
-alerts as the vulnerability source while Renovate creates remediation pull requests. Stack presets
-coordinate runtime versions across project files and add language-specific grouping and lockfile
-behavior.
+relevant to each stack. Dependency updates can create PRs at any time, whenever Renovate runs.
+Lockfile maintenance can create PRs throughout Monday in UTC. Merge maintenance PRs on Tuesday after
+00:00 UTC to avoid creating another maintenance PR in the same weekly window. The presets share
+non-major grouping, assignment, labels, and GitHub Dependabot alerts as the vulnerability source
+while Renovate creates remediation pull requests. Stack presets coordinate runtime versions across
+project files and add language-specific grouping and lockfile behavior.
 
 The Gradle preset also tracks annotated Spring dependency overrides and Docker buildpacks:
 
