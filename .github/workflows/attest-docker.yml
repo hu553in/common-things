@@ -14,9 +14,9 @@ jobs:
   attest:
     runs-on: ubuntu-latest
     permissions:
-      packages: write
-      id-token: write
       attestations: write
+      id-token: write
+      packages: write
     steps:
       - uses: docker/login-action@v4
         with:

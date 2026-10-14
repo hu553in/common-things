@@ -22,7 +22,11 @@ on:
         required: false
         type: string
         default: ''
-      runs-on:
+      smoke_command:
+        required: false
+        type: string
+        default: ''
+      runs_on:
         required: false
         type: string
         default: ubuntu-latest
@@ -32,25 +36,26 @@ on:
 
 jobs:
   publish:
-    uses: ./.github/workflows/build-publish-docker.yml
     permissions:
       contents: read
       packages: write
+    uses: ./.github/workflows/build-publish-docker.yml
     with:
       image: ${{ inputs.image }}
       context: ${{ inputs.context }}
       file: ${{ inputs.file }}
       build_args: ${{ inputs.build_args }}
       no_cache_filters: ${{ inputs.no_cache_filters }}
-      runs-on: ${{ inputs.runs-on }}
+      smoke_command: ${{ inputs.smoke_command }}
+      runs_on: ${{ inputs.runs_on }}
 
   attest:
     needs: publish
-    uses: ./.github/workflows/attest-docker.yml
     permissions:
-      packages: write
-      id-token: write
       attestations: write
+      id-token: write
+      packages: write
+    uses: ./.github/workflows/attest-docker.yml
     with:
       image: ${{ inputs.image }}
       digest: ${{ needs.publish.outputs.digest }}

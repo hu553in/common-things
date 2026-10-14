@@ -20,13 +20,13 @@
     {
       "description": "Allow major updates for Go tools extracted as indirect dependencies",
       "matchManagers": ["gomod"],
-      "matchDepTypes": ["indirect"],
       "matchPackageNames": [
         "github.com/sqlc-dev/sqlc{,/**}",
         "github.com/vladopajic/go-test-coverage{,/**}",
         "golang.org/x/mobile",
         "golang.org/x/vuln"
       ],
+      "matchDepTypes": ["indirect"],
       "matchUpdateTypes": ["major"],
       "enabled": true
     },

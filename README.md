@@ -7,7 +7,7 @@ for hu553in repositories.
 
 ## Reusable workflows and actions
 
-Reusable workflows under `.github/workflows/` provide Bun, Python, Go, and Docker checks, Gradle and
+Reusable workflows under `.github/workflows/` provide Bun, Go, Python, and Docker checks, Gradle and
 Maven dependency submission, and Docker build, publish, and attestation jobs. Project CI workflows
 call them directly from `main`.
 
@@ -15,8 +15,17 @@ Docker checks run Hadolint, BuildKit validation, an image build, and a blocking 
 default. Publishing pushes the `sha-*` tag first and updates `latest` on the default branch only
 after the scan passes, without rebuilding the image or replacing its digest.
 
-Set `build: false` when a publishing job will build and scan the same image in that run; Hadolint
-and BuildKit validation still run. Keep full image checks enabled on non-publishing refs.
+SHA tags identify the source commit and may be replaced by rerunning a build. Pin the image digest
+(`@sha256:...`) for an immutable deployment.
+
+Set `build: false` when a publishing job will build and check the image in that run; Hadolint and
+BuildKit validation still run. Keep full image checks enabled on non-publishing refs.
+
+Set `smoke_command` to check the image before scanning it, for example
+`/app/.venv/bin/python --version`. It runs with the image's default user through `/bin/sh -ec`, with
+network access disabled. Pass the command to both check and publish workflows. The check workflow
+runs it when `build` is enabled; publishing workflows run it against the built digest before
+updating `latest`. Use a YAML anchor to keep both commands identical.
 
 Set `no_cache_filters` to a comma-separated list of Docker stages to rebuild without cached layers
 (default: empty). Use the runtime stage, such as `runner`, in both check and publish jobs to fetch
@@ -47,6 +56,8 @@ Use `build-publish-attest-docker.yml` when GitHub artifact attestations are avai
 lower-level Docker workflows for private repositories that cannot create attestations and for custom
 release flows.
 
+The publishing workflows accept `runs_on` to select a runner (default: `ubuntu-latest`).
+
 ## Renovate presets
 
 Target repositories extend the stack-specific presets under `presets/renovate/`:
@@ -57,13 +68,20 @@ Target repositories extend the stack-specific presets under `presets/renovate/`:
 }
 ```
 
-The `actions`, `bun`, `gradle`, `maven`, `python`, and `go` presets enable only the managers
+The `actions`, `bun`, `go`, `gradle`, `maven`, and `python` presets enable only the managers
 relevant to each stack. Dependency updates can create PRs at any time, whenever Renovate runs.
 Lockfile maintenance can create PRs throughout Monday in UTC. Merge maintenance PRs on Tuesday after
 00:00 UTC to avoid creating another maintenance PR in the same weekly window. The presets share
 non-major grouping, assignment, labels, and GitHub Dependabot alerts as the vulnerability source
 while Renovate creates remediation pull requests. Stack presets coordinate runtime versions across
 project files and add language-specific grouping and lockfile behavior.
+
+Python projects let Ruff infer its target version from `project.requires-python`; an explicit
+`tool.ruff.target-version` is unnecessary. Python-tagged uv images follow Python versions, while
+numeric uv image tags follow uv releases.
+
+Run Python checks with `uv run --locked` so an outdated lockfile fails validation instead of being
+updated by a check command.
 
 The Gradle preset also tracks annotated Spring dependency overrides and Docker buildpacks:
 
@@ -77,11 +95,11 @@ The Gradle preset also tracks annotated Spring dependency overrides and Docker b
 The shell helpers in `scripts/` manage GitHub state and require an authenticated `gh` CLI for live
 checks and updates:
 
-- `merge_prs_by_keyword.sh` searches and squash-merges open PRs by title keyword.
-- `common_repos_config.sh` standardizes repository settings and protection rulesets.
-- `common_repos_metadata.sh` checks repository descriptions, homepages, and topics against
+- `common-repos-config.sh` standardizes repository settings and protection rulesets.
+- `common-repos-metadata.sh` checks repository descriptions, homepages, and topics against
   `repos-metadata.json`; pass `--validate-only` for an offline manifest check or `--apply` to update
   GitHub.
+- `merge-prs-by-keyword.sh` searches and squash-merges open PRs by title keyword.
 
 On public repositories, the GitHub user running the script can update, delete, and force-push
 `main`; other users cannot.
@@ -91,20 +109,20 @@ Exact `vX.Y.Z` tags remain immutable. For `ascii-profile-card`, floating major t
 compatible releases.
 
 ```bash
+REPOS="hu553in/common-things hu553in/personal-website" ./scripts/common-repos-config.sh
+./scripts/common-repos-metadata.sh
+./scripts/common-repos-metadata.sh --apply
 REPOS="hu553in/common-things hu553in/personal-website" \
   KEYWORD="deps" \
-  ./scripts/merge_prs_by_keyword.sh
-REPOS="hu553in/common-things hu553in/personal-website" ./scripts/common_repos_config.sh
-./scripts/common_repos_metadata.sh
-./scripts/common_repos_metadata.sh --apply
+  ./scripts/merge-prs-by-keyword.sh
 ```
 
 Public-only or plan-gated operations are reported as skipped for private repositories.
 
 ## Local development
 
-Local checks require Bun, jq, and shfmt. Git 2.54 or newer can use the tracked `.gitconfig` for
-project checks and Commitlint hooks. Enable it once per clone:
+Local checks require Make, Bun, jq, and shfmt. Git 2.54 or newer can use the tracked `.gitconfig`
+for project checks and Commitlint hooks. Enable it once per clone:
 
 ```console
 $ git config --local include.path ../.gitconfig
@@ -117,6 +135,10 @@ make check
 make check-fix
 ```
 
-For focused checks, use `make check-config` for the local metadata manifest and Git hooks,
-`make check-workflows` for workflows and composite actions, or `make check-renovate` for Renovate
-configuration and presets.
+Focused checks:
+
+```bash
+make check-config
+make check-renovate
+make check-workflows
+```

@@ -20,6 +20,6 @@ jobs:
       - uses: golangci/golangci-lint-action@v9
         with:
           install-only: true
-      - run: make check
-        env:
+      - env:
           PREK: uvx prek
+        run: make check

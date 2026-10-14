@@ -2,22 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>hu553in/common-things//presets/renovate/base"],
   "enabledManagers": ["custom.regex", "docker-compose", "dockerfile", "github-actions", "pep621"],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "description": "Track Ruff target version with minimum Python version",
-      "managerFilePatterns": ["/(^|/)pyproject\\.toml$/"],
-      "matchStrings": [
-        "(?<indentation>(?:^|\\r\\n|\\r|\\n)[ \\t]*)target-version[ \\t]*=[ \\t]*\"py(?<major>\\d)(?<minor>\\d+)\""
-      ],
-      "currentValueTemplate": "{{{major}}}.{{{minor}}}",
-      "autoReplaceStringTemplate": "{{{indentation}}}target-version = \"py{{{replace '\\.' '' newValue}}}\"",
-      "datasourceTemplate": "endoflife-date",
-      "depNameTemplate": "python",
-      "extractVersionTemplate": "^(?<version>\\d+\\.\\d+)",
-      "versioningTemplate": "loose"
-    }
-  ],
   "packageRules": [
     {
       "description": "Bump Python dependency ranges",
@@ -35,6 +19,7 @@
       "description": "Parse Python runtime tags in uv images",
       "matchDatasources": ["docker"],
       "matchPackageNames": ["ghcr.io/astral-sh/uv"],
+      "matchCurrentValue": "/^python\\d+\\.\\d+-/",
       "versioning": "regex:^python(?<major>\\d+)\\.(?<minor>\\d+)-(?<compatibility>.+)$"
     }
   ]
