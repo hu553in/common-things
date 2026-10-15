@@ -19,7 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          fetch-depth: 0
           persist-credentials: false
+      - name: Tag checkout for the release notes smoke test
+        run: git tag v0.0.0-ci
+      - id: release-notes
+        uses: ./.github/actions/release-notes
+      - env:
+          RELEASE_NOTES: ${{ steps.release-notes.outputs.changelog }}
+        run: grep --fixed-strings --quiet '## [0.0.0-ci](' "$RELEASE_NOTES"
       - uses: oven-sh/setup-bun@v2
       - uses: actions/setup-go@v7
         with:

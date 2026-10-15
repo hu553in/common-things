@@ -1,0 +1,39 @@
+name: Generate release notes
+description: Generate release notes with the Conventional Commits preset
+
+outputs:
+  changelog:
+    description: Path to the generated release notes
+    value: ${{ steps.release-notes.outputs.changelog }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v7
+      with:
+        node-version: lts/*
+    - shell: bash
+      run: npm ci --ignore-scripts --prefix "$GITHUB_ACTION_PATH"
+    - id: release-notes
+      shell: bash
+      env:
+        # Keep tag discovery independent of examples in commit messages.
+        GIT_CONFIG_COUNT: '1'
+        GIT_CONFIG_KEY_0: format.pretty
+        GIT_CONFIG_VALUE_0: format:%d
+      run: |
+        # Keep tags on merge commits visible as release boundaries.
+        # Count the tagged release after the empty unreleased range.
+        "$GITHUB_ACTION_PATH/node_modules/.bin/conventional-changelog" \
+          --config "$GITHUB_ACTION_PATH/changelog.mjs" \
+          --preset conventionalcommits \
+          --tag-prefix v \
+          --release-count 2 \
+          --no-output-unreleased \
+          --infile /dev/null \
+          --outfile "$RUNNER_TEMP/release-notes.md"
+        if [[ ! -s "$RUNNER_TEMP/release-notes.md" ]]; then
+          echo "::error::No release notes were generated. Check for conflicting tags on the release commit."
+          exit 1
+        fi
+        echo "changelog=$RUNNER_TEMP/release-notes.md" >> "$GITHUB_OUTPUT"

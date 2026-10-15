@@ -47,6 +47,12 @@ raises the Node.js old-space heap limit to 4 GiB.
 Custom workflows can reuse these composite actions after checkout:
 
 - `hu553in/common-things/.github/actions/cache-eslint@main` caches `.cache/eslint`.
+- `hu553in/common-things/.github/actions/release-notes@main` generates release notes with
+  Conventional Changelog's `conventionalcommits` preset. Check out the release tag with
+  `fetch-depth: 0`, then pass its `changelog` output to softprops' `body_path`. It includes breaking
+  changes and ignores floating major tags. Additional aliases such as `vnext` or multiple release
+  versions on one commit can make the upstream generator return empty notes; the action fails
+  instead of publishing them.
 - `hu553in/common-things/.github/actions/scan-docker@main` accepts an `image-ref` and runs the same
   blocking Trivy scan against a local or published image, using the caller's Trivy configuration.
 - `hu553in/common-things/.github/actions/setup-shfmt@main` installs shfmt after Go setup, using the
