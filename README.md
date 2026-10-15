@@ -104,6 +104,10 @@ checks and updates:
 On public repositories, the GitHub user running the script can update, delete, and force-push
 `main`; other users cannot.
 
+The script sets default `GITHUB_TOKEN` permissions to `read`; jobs can request additional
+permissions. **Allow GitHub Actions to create and approve pull requests** is enabled for
+`homebrew-tap` and disabled for other repositories.
+
 Exact `vX.Y.Z` tags remain immutable. For `ascii-profile-card`, floating major tags such as `v1` and
 `v2` are excluded from tag restrictions so its release workflow can move them to the latest
 compatible releases.

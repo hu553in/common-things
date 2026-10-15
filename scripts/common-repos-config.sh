@@ -269,6 +269,10 @@ while read -r repo; do
   if [[ "$repo" == "$USER_OWNER/ascii-profile-card" ]]; then
     floating_major_tags='["refs/tags/v[0-9]", "refs/tags/v[0-9][0-9]", "refs/tags/v[0-9][0-9][0-9]"]'
   fi
+  can_approve_pull_request_reviews=false
+  if [[ "$repo" == "$USER_OWNER/homebrew-tap" ]]; then
+    can_approve_pull_request_reviews=true
+  fi
 
   echo
   echo "==> $repo"
@@ -286,7 +290,7 @@ while read -r repo; do
     -X PUT \
     "repos/$repo/actions/permissions/workflow" \
     -F "default_workflow_permissions=read" \
-    -F "can_approve_pull_request_reviews=false"
+    -F "can_approve_pull_request_reviews=$can_approve_pull_request_reviews"
 
   step "dependency graph + alerts" \
     github_api \
