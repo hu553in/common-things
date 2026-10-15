@@ -126,6 +126,11 @@
       "website"
     ]
   },
+  "homebrew-tap": {
+    "description": "Personal Homebrew tap for formulae and casks",
+    "homepage": null,
+    "topics": ["homebrew", "homebrew-cask", "homebrew-formula", "homebrew-tap"]
+  },
   "hu553in": {
     "description": "GitHub profile README for Ruslan Khasanshin",
     "homepage": "https://hu553in.dev",
