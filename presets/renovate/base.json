@@ -38,6 +38,12 @@
       "groupName": "Python runtime"
     },
     {
+      "description": "Use loose versioning for Homebrew actions",
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["Homebrew/actions"],
+      "versioning": "loose"
+    },
+    {
       "description": "Preserve floating major tags for GitHub Actions",
       "matchManagers": ["github-actions"],
       "matchCurrentValue": "/^v\\d+$/",
