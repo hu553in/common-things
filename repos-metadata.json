@@ -214,6 +214,11 @@
       "telegram-bot"
     ]
   },
+  "obsidian-main": {
+    "description": "Personal Obsidian vault",
+    "homepage": null,
+    "topics": ["markdown", "notes", "obsidian", "obsidian-vault"]
+  },
   "one-last-chance": {
     "description": "iPhone VPN client for olcRTC, configured through a single subscription URL",
     "homepage": null,
