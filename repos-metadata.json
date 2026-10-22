@@ -428,5 +428,20 @@
       "vite",
       "website"
     ]
+  },
+  "yandex-station-root": {
+    "description": "Root ADB and OTA controls for Yandex Stations, tested only on Mini 2",
+    "homepage": null,
+    "topics": [
+      "adb",
+      "dns",
+      "mitmproxy",
+      "ota",
+      "python",
+      "root",
+      "smart-speaker",
+      "yandex",
+      "yandex-station"
+    ]
   }
 }
