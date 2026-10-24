@@ -5,6 +5,7 @@ set -euo pipefail
 USER_OWNER="${USER_OWNER:-hu553in}"
 REPO_LIMIT="${REPO_LIMIT:-200}"
 REPOS="${REPOS:-}"
+RENOVATE_APP_ID=2740
 failed=false
 
 step() {
@@ -115,7 +116,7 @@ repo_list() {
     --jq '.[].nameWithOwner'
 }
 
-protect_main_only_me() {
+protect_main_only_me_and_renovate() {
   local repo="$1"
   local user_id="$2"
 
@@ -130,6 +131,11 @@ protect_main_only_me() {
       "actor_id": $user_id,
       "actor_type": "User",
       "bypass_mode": "always"
+    },
+    {
+      "actor_id": $RENOVATE_APP_ID,
+      "actor_type": "Integration",
+      "bypass_mode": "pull_request"
     }
   ],
   "conditions": {
@@ -312,8 +318,8 @@ while read -r repo; do
     step "secret scanning + push protection" \
       enable_secret_scanning "$repo"
 
-    step "protect main: only me" \
-      protect_main_only_me "$repo" "$user_id"
+    step "protect main: only me and Renovate" \
+      protect_main_only_me_and_renovate "$repo" "$user_id"
 
     step "protect main: no force push" \
       protect_main_no_force_push "$repo" "$user_id"

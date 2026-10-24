@@ -37,12 +37,18 @@ workflows do not cancel their parent run.
 
 The Bun workflow runs the package script named by `check_script` (default: `check`); a project can
 pass a narrower script, such as `check:static`, to keep slow suites out of CI. Its `cache_eslint`
-input enables the content-based ESLint cache. Its `playwright` input enables browser caching, system
-dependencies, and test-result uploads on failure. The `shfmt` input installs the shell formatter.
-Set `node: true` when the project declares a Node.js version in `package.json`; the workflow
-installs that version before running checks. The `node_options` input sets `NODE_OPTIONS` for the
-check job and defaults to an empty string. For example, `node_options: --max-old-space-size=4096`
-raises the Node.js old-space heap limit to 4 GiB.
+input restores and saves `.cache/eslint`. Enable caching in the project's ESLint command with
+`--cache --cache-strategy content --cache-location .cache/eslint`. The `playwright` input enables
+browser caching, system dependencies, and test-result uploads on failure. The `shfmt` input installs
+the shell formatter. Set `node: true` when the project declares a Node.js version in `package.json`;
+the workflow installs that version before running checks. The `node_options` input sets
+`NODE_OPTIONS` for the check job and defaults to an empty string. For example,
+`node_options: --max-old-space-size=4096` raises the Node.js old-space heap limit to 4 GiB.
+
+The Python workflow runs `make install-deps` and `make check`. Run project checks with
+`uv run --locked` so an outdated lockfile fails validation instead of being updated. Let Ruff infer
+its target version from `project.requires-python`; an explicit `tool.ruff.target-version` is
+unnecessary.
 
 Custom workflows can reuse these composite actions after checkout:
 
@@ -76,18 +82,15 @@ Target repositories extend the stack-specific presets under `presets/renovate/`:
 
 The `actions`, `bun`, `go`, `gradle`, `maven`, and `python` presets enable only the managers
 relevant to each stack. Dependency updates can create PRs at any time, whenever Renovate runs.
-Lockfile maintenance can create PRs throughout Monday in UTC. Merge maintenance PRs on Tuesday after
-00:00 UTC to avoid creating another maintenance PR in the same weekly window. The presets share
-non-major grouping, assignment, labels, and GitHub Dependabot alerts as the vulnerability source
-while Renovate creates remediation pull requests. Stack presets coordinate runtime versions across
-project files and add language-specific grouping and lockfile behavior.
+Lockfile maintenance can create PRs throughout Monday in UTC. The presets share non-major grouping,
+assignment, labels, and GitHub Dependabot alerts as the vulnerability source while Renovate creates
+remediation pull requests. Stack presets coordinate runtime versions across project files and add
+language-specific grouping and lockfile behavior.
 
-Python projects let Ruff infer its target version from `project.requires-python`; an explicit
-`tool.ruff.target-version` is unnecessary. Python-tagged uv images follow Python versions, while
-numeric uv image tags follow uv releases.
+Renovate merges its PRs once CI checks pass and the branch is up to date. PRs without CI checks stay
+open. GitHub's native auto-merge stays disabled.
 
-Run Python checks with `uv run --locked` so an outdated lockfile fails validation instead of being
-updated by a check command.
+Python-tagged uv images follow Python versions, while numeric uv image tags follow uv releases.
 
 The Gradle preset also tracks annotated Spring dependency overrides and Docker buildpacks:
 
@@ -108,7 +111,7 @@ checks and updates:
 - `merge-prs-by-keyword.sh` searches and squash-merges open PRs by title keyword.
 
 On public repositories, the GitHub user running the script can update, delete, and force-push
-`main`; other users cannot.
+`main`; other users cannot. The Renovate GitHub App can also merge pull requests into `main`.
 
 The script sets default `GITHUB_TOKEN` permissions to `read`; jobs can request additional
 permissions. **Allow GitHub Actions to create and approve pull requests** is enabled for
@@ -131,8 +134,8 @@ Public-only or plan-gated operations are reported as skipped for private reposit
 
 ## Local development
 
-Local checks require Make, Bun, jq, and shfmt. Git 2.54 or newer can use the tracked `.gitconfig`
-for project checks and Commitlint hooks. Enable it once per clone:
+Local checks require Make, Bun, Node.js, jq, and shfmt. Git 2.54 or newer can use the tracked
+`.gitconfig` for project checks and Commitlint hooks. Enable it once per clone:
 
 ```console
 $ git config --local include.path ../.gitconfig

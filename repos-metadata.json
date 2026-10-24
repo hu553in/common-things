@@ -434,6 +434,22 @@
       "website"
     ]
   },
+  "yandex-station-chatgpt-voice": {
+    "description": "ChatGPT Voice for rooted Yandex Stations, tested only on Mini 2",
+    "homepage": null,
+    "topics": [
+      "adb",
+      "chatgpt",
+      "golang",
+      "opus",
+      "smart-speaker",
+      "voice-assistant",
+      "wake-word",
+      "webrtc",
+      "yandex",
+      "yandex-station"
+    ]
+  },
   "yandex-station-root": {
     "description": "Root ADB and OTA controls for Yandex Stations, tested only on Mini 2",
     "homepage": null,
