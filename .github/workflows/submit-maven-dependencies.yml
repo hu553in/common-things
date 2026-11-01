@@ -6,10 +6,14 @@ on:
       java_version:
         required: true
         type: string
+      runs_on:
+        required: false
+        type: string
+        default: ubuntu-latest
 
 jobs:
   submit:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs_on }}
     permissions:
       contents: write
     steps:

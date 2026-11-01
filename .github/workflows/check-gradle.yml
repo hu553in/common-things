@@ -1,0 +1,79 @@
+name: Check Gradle project
+
+on:
+  workflow_call:
+    inputs:
+      java_version:
+        required: true
+        type: string
+      gradle_jvmargs:
+        required: true
+        type: string
+      gradle_workers_max:
+        required: false
+        type: string
+        default: ''
+      image_ref:
+        required: false
+        type: string
+        default: ''
+      runs_on:
+        required: false
+        type: string
+        default: ubuntu-latest
+
+jobs:
+  check:
+    runs-on: ${{ inputs.runs_on }}
+    permissions:
+      contents: read
+    env:
+      BUILD_IMAGE:
+        ${{ inputs.image_ref != '' && github.ref_type != 'tag' && github.ref !=
+        format('refs/heads/{0}', github.event.repository.default_branch) }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: ${{ inputs.java_version }}
+      - uses: astral-sh/setup-uv@v7
+      - uses: oven-sh/setup-bun@v2
+      - uses: gradle/actions/setup-gradle@v6
+      - env:
+          GRADLE_JVMARGS: ${{ inputs.gradle_jvmargs }}
+          GRADLE_WORKERS_MAX: ${{ inputs.gradle_workers_max }}
+        run: |
+          {
+            printf 'org.gradle.jvmargs=%s\n' "$GRADLE_JVMARGS"
+            if [ -n "$GRADLE_WORKERS_MAX" ]; then
+              printf 'org.gradle.workers.max=%s\n' "$GRADLE_WORKERS_MAX"
+            fi
+            echo "org.gradle.daemon=false"
+          } > "$GRADLE_USER_HOME/gradle.properties"
+      - env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PREK: uvx prek
+        run: make check
+      - if: env.BUILD_IMAGE == 'true'
+        env:
+          IMAGE_REF: ${{ inputs.image_ref }}
+        run: ./gradlew bootBuildImage --imageName="$IMAGE_REF"
+      - if: env.BUILD_IMAGE == 'true'
+        uses: hu553in/common-things/.github/actions/scan-docker@main
+        with:
+          image-ref: ${{ inputs.image_ref }}
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports
+          path: |
+            build/reports/tests/test
+            build/test-results/test
+            build/reports/kover
+            build/reports/detekt
+          if-no-files-found: ignore
+          overwrite: true
+          retention-days: 14

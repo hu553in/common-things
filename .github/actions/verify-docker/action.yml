@@ -1,0 +1,30 @@
+name: Verify Docker image
+description: Smoke-test an image, free build cache, and run the blocking scan
+
+inputs:
+  image-ref:
+    description: Docker image tag or digest to verify
+    required: true
+  smoke-command:
+    description: Shell command to run inside the image without network access
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - if: inputs.smoke-command != ''
+      shell: bash
+      env:
+        IMAGE_REF: ${{ inputs.image-ref }}
+        SMOKE_COMMAND: ${{ inputs.smoke-command }}
+      run: |
+        docker run --rm --network none \
+          --entrypoint /bin/sh \
+          "$IMAGE_REF" \
+          -ec "$SMOKE_COMMAND"
+    - shell: bash
+      run: docker buildx prune --all --force
+    - uses: hu553in/common-things/.github/actions/scan-docker@main
+      with:
+        image-ref: ${{ inputs.image-ref }}

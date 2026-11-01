@@ -2,10 +2,15 @@ name: Check Python project
 
 on:
   workflow_call:
+    inputs:
+      runs_on:
+        required: false
+        type: string
+        default: ubuntu-latest
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs_on }}
     permissions:
       contents: read
     steps:
@@ -15,4 +20,6 @@ jobs:
       - uses: astral-sh/setup-uv@v7
       - uses: oven-sh/setup-bun@v2
       - run: make install-deps
-      - run: make check
+      - env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: make check

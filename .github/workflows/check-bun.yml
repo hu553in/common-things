@@ -27,10 +27,14 @@ on:
         required: false
         type: boolean
         default: false
+      runs_on:
+        required: false
+        type: string
+        default: ubuntu-latest
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs_on }}
     permissions:
       contents: read
     env:
@@ -70,7 +74,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           if [ -z "$CHECK_SCRIPT" ]; then
-            echo "check_script is empty." >&2
+            echo "::error::check_script is empty."
             exit 1
           fi
           bun run "$CHECK_SCRIPT"

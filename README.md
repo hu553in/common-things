@@ -7,48 +7,74 @@ for hu553in repositories.
 
 ## Reusable workflows and actions
 
-Reusable workflows under `.github/workflows/` provide Bun, Go, Python, and Docker checks, Gradle and
-Maven dependency submission, and Docker build, publish, and attestation jobs. Project CI workflows
-call them directly from `main`.
+Reusable workflows under `.github/workflows/` provide Bun, Go, Python, Gradle, and Docker checks,
+Gradle and Maven dependency submission, and Docker build, publish, and attestation jobs. Project CI
+workflows call them directly from `main`. All of them accept `runs_on` to select a runner (default:
+`ubuntu-latest`). Bun, Go, Python, and Gradle check steps receive `GITHUB_TOKEN` so tools that
+download from GitHub are not rate limited.
 
-Docker checks run Hadolint, BuildKit validation, an image build, and a blocking Trivy scan by
-default. Publishing pushes the `sha-*` tag first and updates `latest` on the default branch only
-after the scan passes, without rebuilding the image or replacing its digest.
+The Docker check workflow (`check-docker.yml`) runs Hadolint, BuildKit validation, an image build,
+and a blocking Trivy scan by default. The default branch and tags skip the build and scan because
+publishing repeats them. Set `build_default_branch: true` for an image that is not published. Set
+`build: false` when CI cannot build the image on any ref; Hadolint and BuildKit validation still
+run.
+
+The publish workflows (`build-publish-docker.yml`, `build-publish-attest-docker.yml`) require
+`image`, a name without a tag, and output the pushed `digest`. They push the `sha-*` tag first and
+update `latest` on the default branch only after the scan passes, without rebuilding the image or
+replacing its digest.
+
+The attest workflow (`attest-docker.yml`) requires `image` and `digest` and attests that digest.
+`build-publish-attest-docker.yml` runs it after publishing.
 
 SHA tags identify the source commit and may be replaced by rerunning a build. Pin the image digest
 (`@sha256:...`) for an immutable deployment.
 
-Set `build: false` when a publishing job will build and check the image in that run; Hadolint and
-BuildKit validation still run. Keep full image checks enabled on non-publishing refs.
+Set `context` (default: `.`) and `file` (default: `Dockerfile`) to choose what to build, and
+`build_args` to pass newline-separated Docker build arguments (default: empty). Pass the same values
+to both check and publish workflows.
 
-Set `smoke_command` to check the image before scanning it, for example
+Set `smoke_command` to check the image before scanning it (default: empty), for example
 `/app/.venv/bin/python --version`. It runs with the image's default user through `/bin/sh -ec`, with
-network access disabled. Pass the command to both check and publish workflows. The check workflow
-runs it when `build` is enabled; publishing workflows run it against the built digest before
-updating `latest`. Use a YAML anchor to keep both commands identical.
+network access disabled. Pass the command to both check and publish workflows. The Docker check
+workflow runs it whenever it builds the image; publish workflows run it against the built digest
+before updating `latest`. Use a YAML anchor to keep both commands identical.
 
 Set `no_cache_filters` to a comma-separated list of Docker stages to rebuild without cached layers
-(default: empty). Use the runtime stage, such as `runner`, in both check and publish jobs to fetch
-current OS package updates.
+(default: empty). Use the runtime stage, such as `runner`, in both check and publish workflows to
+fetch current OS package updates.
 
 Calling CI workflows group concurrent runs by workflow and ref, canceling superseded branch and
 pull-request runs while letting tag releases finish. Keep concurrency in the caller so reusable
 workflows do not cancel their parent run.
 
-The Bun workflow runs the package script named by `check_script` (default: `check`); a project can
-pass a narrower script, such as `check:static`, to keep slow suites out of CI. Its `cache_eslint`
-input restores and saves `.cache/eslint`. Enable caching in the project's ESLint command with
-`--cache --cache-strategy content --cache-location .cache/eslint`. The `playwright` input enables
-browser caching, system dependencies, and test-result uploads on failure. The `shfmt` input installs
-the shell formatter. Set `node: true` when the project declares a Node.js version in `package.json`;
-the workflow installs that version before running checks. The `node_options` input sets
-`NODE_OPTIONS` for the check job and defaults to an empty string. For example,
+The Bun workflow (`check-bun.yml`) runs the package script named by `check_script` (default:
+`check`); a project can pass a narrower script, such as `check:static`, to keep slow suites out of
+CI. Set `cache_eslint: true` to restore and save `.cache/eslint`, and enable caching in the
+project's ESLint command with `--cache --cache-strategy content --cache-location .cache/eslint`. Set
+`playwright: true` to enable browser caching, system dependencies, and test-result uploads on
+failure. Set `shfmt: true` to install the shell formatter. Set `node: true` when the project
+declares a Node.js version in `package.json`; the workflow installs that version before running
+checks. Set `node_options` to define `NODE_OPTIONS` for the check job (default: empty). For example,
 `node_options: --max-old-space-size=4096` raises the Node.js old-space heap limit to 4 GiB.
 
-The Python workflow runs `make install-deps` and `make check`. Run project checks with
-`uv run --locked` so an outdated lockfile fails validation instead of being updated. Let Ruff infer
-its target version from `project.requires-python`; an explicit `tool.ruff.target-version` is
-unnecessary.
+The Go workflow (`check-go.yml`) runs `make install-deps` and `make check` with `PREK` set to
+`uvx prek`.
+
+The Python workflow (`check-python.yml`) runs `make install-deps` and `make check`. Run project
+checks with `uv run --locked` so an outdated lockfile fails validation instead of being updated. Let
+Ruff infer its target version from `project.requires-python`; an explicit `tool.ruff.target-version`
+is unnecessary.
+
+The Gradle workflow (`check-gradle.yml`) requires `java_version` and `gradle_jvmargs`, writes the
+JVM arguments and `gradle_workers_max` (default: empty) to Gradle properties, and runs `make check`
+with `PREK` set to `uvx prek`. Gradle resolves dependencies itself, so it has no `make install-deps`
+step. Set `image_ref` (default: empty) to also build that image with `bootBuildImage` and scan it,
+except on the default branch and tags. Test, coverage, and Detekt reports go to the `reports`
+artifact for 14 days.
+
+The dependency submission workflows (`submit-gradle-dependencies.yml`,
+`submit-maven-dependencies.yml`) require `java_version` and submit the dependency graph to GitHub.
 
 Custom workflows can reuse these composite actions after checkout:
 
@@ -59,16 +85,17 @@ Custom workflows can reuse these composite actions after checkout:
   changes and ignores floating major tags. Additional aliases such as `vnext` or multiple release
   versions on one commit can make the upstream generator return empty notes; the action fails
   instead of publishing them.
-- `hu553in/common-things/.github/actions/scan-docker@main` accepts an `image-ref` and runs the same
+- `hu553in/common-things/.github/actions/scan-docker@main` requires an `image-ref` and runs the same
   blocking Trivy scan against a local or published image, using the caller's Trivy configuration.
 - `hu553in/common-things/.github/actions/setup-shfmt@main` installs shfmt after Go setup, using the
   caller's toolchain without changing it.
+- `hu553in/common-things/.github/actions/verify-docker@main` requires an `image-ref`, accepts a
+  `smoke-command` (default: empty), runs the command in the image without network access, frees
+  build cache, and runs `scan-docker`.
 
-Use `build-publish-attest-docker.yml` when GitHub artifact attestations are available. Use the
-lower-level Docker workflows for private repositories that cannot create attestations and for custom
-release flows.
-
-The publishing workflows accept `runs_on` to select a runner (default: `ubuntu-latest`).
+Use `build-publish-attest-docker.yml` when GitHub artifact attestations are available. Use
+`build-publish-docker.yml` for private repositories that cannot create attestations, and
+`attest-docker.yml` to attest an image published by a custom release flow.
 
 ## Renovate presets
 

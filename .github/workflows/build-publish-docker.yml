@@ -51,7 +51,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ github.token }}
       - id: meta
         uses: docker/metadata-action@v6
         with:
@@ -74,25 +74,14 @@ jobs:
           no-cache-filters: ${{ inputs.no_cache_filters }}
           cache-from: type=gha,scope=${{ inputs.file }}
           cache-to: type=gha,scope=${{ inputs.file }},mode=max
-      - name: Smoke-test published image
-        if: inputs.smoke_command != ''
-        env:
-          DIGEST: ${{ steps.build.outputs.digest }}
-          IMAGE: ${{ inputs.image }}
-          SMOKE_COMMAND: ${{ inputs.smoke_command }}
-        run: |
-          docker run --rm --network none \
-            --entrypoint /bin/sh \
-            "$IMAGE@$DIGEST" \
-            -ec "$SMOKE_COMMAND"
-      - run: docker buildx prune --all --force
-      - uses: hu553in/common-things/.github/actions/scan-docker@main
+      - uses: hu553in/common-things/.github/actions/verify-docker@main
         with:
           image-ref: ${{ inputs.image }}@${{ steps.build.outputs.digest }}
+          smoke-command: ${{ inputs.smoke_command }}
       - if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         env:
           DIGEST: ${{ steps.build.outputs.digest }}
           IMAGE: ${{ inputs.image }}
-        run:
-          docker buildx imagetools create --prefer-index=false --tag "$IMAGE:latest"
-          "$IMAGE@$DIGEST"
+        run: |
+          docker buildx imagetools create --prefer-index=false --tag "$IMAGE:latest" \
+            "$IMAGE@$DIGEST"

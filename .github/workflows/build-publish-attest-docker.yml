@@ -59,3 +59,4 @@ jobs:
     with:
       image: ${{ inputs.image }}
       digest: ${{ needs.publish.outputs.digest }}
+      runs_on: ${{ inputs.runs_on }}

@@ -2,10 +2,15 @@ name: Check Go project
 
 on:
   workflow_call:
+    inputs:
+      runs_on:
+        required: false
+        type: string
+        default: ubuntu-latest
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs_on }}
     permissions:
       contents: read
     steps:
@@ -20,6 +25,8 @@ jobs:
       - uses: golangci/golangci-lint-action@v9
         with:
           install-only: true
+      - run: make install-deps
       - env:
+          GITHUB_TOKEN: ${{ github.token }}
           PREK: uvx prek
         run: make check
