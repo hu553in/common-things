@@ -61,6 +61,21 @@
     "homepage": null,
     "topics": ["configuration", "developer-environment", "dotfiles", "macos", "shell", "yadm"]
   },
+  "fans-test-task": {
+    "description": "Content moderation take-home with durable screening, human review, and outage recovery",
+    "homepage": null,
+    "topics": [
+      "content-moderation",
+      "docker-compose",
+      "fastapi",
+      "postgresql",
+      "python",
+      "react",
+      "redis",
+      "take-home-assignment",
+      "typescript"
+    ]
+  },
   "flash-games": {
     "description": "Offline-capable Ruffle PWA for bundled Flash games",
     "homepage": "https://flash-games-hu553in.vercel.app",

@@ -8,7 +8,8 @@
     "dockerfile",
     "github-actions",
     "maven",
-    "maven-wrapper"
+    "maven-wrapper",
+    "mise"
   ],
   "customManagers": [
     {
@@ -22,10 +23,9 @@
     },
     {
       "customType": "regex",
-      "description": "Track Java runtime in annotated matrices and reusable workflows",
+      "description": "Track Java runtime in reusable workflows",
       "managerFilePatterns": ["/(^|/)\\.github/workflows/[^/]+\\.ya?ml$/"],
       "matchStrings": [
-        "(?:^|\\r\\n|\\r|\\n)[ \\t]*# renovate: datasource=java-version depName=java[ \\t]*(?:\\r\\n|\\r|\\n)[ \\t]*-[ \\t]*['\"](?<currentValue>\\d+)['\"]",
         "(?:^|\\r\\n|\\r|\\n)[ \\t]*java_version:[ \\t]*['\"](?<currentValue>\\d+)['\"]"
       ],
       "datasourceTemplate": "java-version",
@@ -36,10 +36,10 @@
   ],
   "packageRules": [
     {
-      "description": "Preserve major-only Java versions in GitHub Actions",
-      "matchManagers": ["github-actions"],
+      "description": "Preserve partial Java versions and compatibility limits",
+      "matchManagers": ["github-actions", "mise"],
       "matchDatasources": ["java-version"],
-      "matchCurrentValue": "/^\\d+$/",
+      "matchCurrentValue": "/^\\d+(?:\\.\\d+)?$/",
       "versioning": "npm"
     }
   ]

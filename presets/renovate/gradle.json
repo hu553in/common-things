@@ -8,7 +8,8 @@
     "dockerfile",
     "github-actions",
     "gradle",
-    "gradle-wrapper"
+    "gradle-wrapper",
+    "mise"
   ],
   "customManagers": [
     {
@@ -48,10 +49,10 @@
   ],
   "packageRules": [
     {
-      "description": "Preserve major-only Java versions in GitHub Actions",
-      "matchManagers": ["github-actions"],
+      "description": "Preserve partial Java versions and compatibility limits",
+      "matchManagers": ["github-actions", "mise"],
       "matchDatasources": ["java-version"],
-      "matchCurrentValue": "/^\\d+$/",
+      "matchCurrentValue": "/^\\d+(?:\\.\\d+)?$/",
       "versioning": "npm"
     }
   ]
