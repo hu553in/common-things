@@ -1,6 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>hu553in/common-things//presets/renovate/base"],
+  "extends": [
+    "github>hu553in/common-things//presets/renovate/base",
+    "security:minimumReleaseAgeNpm"
+  ],
   "enabledManagers": ["bun", "custom.regex", "docker-compose", "dockerfile", "github-actions"],
   "packageRules": [
     {
@@ -10,6 +13,18 @@
       "matchDepTypes": ["engines"],
       "matchUpdateTypes": ["major"],
       "enabled": false
+    },
+    {
+      "description": "Group Stylelint updates because shared configs require the matching Stylelint major",
+      "matchManagers": ["bun"],
+      "extends": ["packages:stylelint"],
+      "groupName": "Stylelint packages"
+    },
+    {
+      "description": "Group ESLint updates because plugins require the matching ESLint major",
+      "matchManagers": ["bun"],
+      "extends": ["packages:eslint"],
+      "groupName": "ESLint packages"
     }
   ]
 }

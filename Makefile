@@ -1,6 +1,5 @@
 .DEFAULT_GOAL := check
 
-PRETTIER := bunx prettier -u
 ACTIONLINT := bunx github-actionlint
 SHELLCHECK := bunx shellcheck
 SHFMT := shfmt
@@ -8,13 +7,13 @@ SHELL_FILES := scripts/common-repos-config.sh scripts/common-repos-metadata.sh s
 
 .PHONY: lint
 lint:
-	$(PRETTIER) -c .
+	bun fmt --check
 	$(SHFMT) -d $(SHELL_FILES)
 	$(SHELLCHECK) $(SHELL_FILES)
 
 .PHONY: lint-fix
 lint-fix:
-	$(PRETTIER) -w .
+	bun fmt
 	$(SHFMT) -w $(SHELL_FILES)
 
 .PHONY: check-config

@@ -41,6 +41,12 @@
       "matchDatasources": ["java-version"],
       "matchCurrentValue": "/^\\d+(?:\\.\\d+)?$/",
       "versioning": "npm"
+    },
+    {
+      "description": "Wait until Maven releases are three days old when the registry reports a release date",
+      "matchDatasources": ["maven"],
+      "minimumReleaseAge": "3 days",
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
     }
   ]
 }

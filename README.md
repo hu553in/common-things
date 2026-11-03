@@ -49,8 +49,8 @@ pull-request runs while letting tag releases finish. Keep concurrency in the cal
 workflows do not cancel their parent run.
 
 The Bun workflow (`check-bun.yml`) runs the package script named by `check_script` (default:
-`check`); a project can pass a narrower script, such as `check:static`, to keep slow suites out of
-CI. Set `cache_eslint: true` to restore and save `.cache/eslint`, and enable caching in the
+`check:all`); a project can pass a narrower script, such as `check:static`, to keep slow suites out
+of CI. Set `cache_eslint: true` to restore and save `.cache/eslint`, and enable caching in the
 project's ESLint command with `--cache --cache-strategy content --cache-location .cache/eslint`. Set
 `playwright: true` to enable browser caching, system dependencies, and test-result uploads on
 failure. Set `shfmt: true` to install the shell formatter. Set `node: true` when the project
@@ -108,11 +108,17 @@ Target repositories extend the stack-specific presets under `presets/renovate/`:
 ```
 
 The `actions`, `bun`, `go`, `gradle`, `maven`, and `python` presets enable only the managers
-relevant to each stack. Dependency updates can create PRs at any time, whenever Renovate runs.
-Lockfile maintenance can create PRs throughout Monday in UTC. The presets share non-major grouping,
-assignment, labels, and GitHub Dependabot alerts as the vulnerability source while Renovate creates
-remediation pull requests. Stack presets coordinate runtime versions across project files and add
-language-specific grouping and lockfile behavior.
+relevant to each stack. Dependency updates can create PRs at any time, whenever Renovate runs. The
+Bun, Python, Go, Gradle, and Maven presets wait until an npm, PyPI, Go module, or Maven release is
+three days old. Go and Maven releases without a registry release date, such as Go digests and
+JitPack packages, do not wait. In Bun and Python repositories, set the same delay with
+`minimumReleaseAge = 259200` in `bunfig.toml` and `exclude-newer = "3 days"` in `[tool.uv]` so
+lockfile maintenance, which runs the package manager, waits too. Vulnerability fixes skip the
+Renovate delay, but Bun and uv still reject a release younger than three days, so a fresh fix lands
+once it is old enough. Lockfile maintenance can create PRs throughout Monday in UTC. The presets
+share non-major grouping, assignment, labels, and GitHub Dependabot alerts as the vulnerability
+source while Renovate creates remediation pull requests. Stack presets coordinate runtime versions
+across project files and add language-specific grouping and lockfile behavior.
 
 Renovate merges its PRs once CI checks pass and the branch is up to date. PRs without CI checks stay
 open. GitHub's native auto-merge stays disabled.

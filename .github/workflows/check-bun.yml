@@ -10,7 +10,7 @@ on:
       check_script:
         required: false
         type: string
-        default: check
+        default: check:all
       node:
         required: false
         type: boolean

@@ -36,6 +36,12 @@
       "matchPackageNames": ["go"],
       "matchDepTypes": ["golang"],
       "rangeStrategy": "bump"
+    },
+    {
+      "description": "Wait until Go module releases are three days old when the registry reports a release date",
+      "matchDatasources": ["go"],
+      "minimumReleaseAge": "3 days",
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
     }
   ]
 }
