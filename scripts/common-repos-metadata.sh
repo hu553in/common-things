@@ -7,6 +7,7 @@ REPO_LIMIT="${REPO_LIMIT:-200}"
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 METADATA_FILE="${METADATA_FILE:-$REPO_ROOT/repos-metadata.json}"
+RESERVE_FILE="${RESERVE_FILE:-$REPO_ROOT/reserve-repos.json}"
 apply=false
 validate_only=false
 
@@ -15,8 +16,9 @@ usage() {
 Usage: $(basename "$0") [--apply | --validate-only]
 
 Check GitHub repository metadata against $METADATA_FILE.
+Reserve repositories listed in $RESERVE_FILE must have empty metadata.
 Use --apply to update descriptions, homepages, and topics.
-Use --validate-only to check the local manifest without accessing GitHub.
+Use --validate-only to check the local manifests without accessing GitHub.
 EOF
 }
 
@@ -98,15 +100,27 @@ if ! jq -e '
   exit 1
 fi
 
+if ! jq -e --slurpfile manifest "$METADATA_FILE" '
+  type == "array" and . == (sort | unique) and
+  all(.[]; type == "string" and test("^[A-Za-z0-9._-]+$")) and
+  all(.[]; . as $repo | $manifest[0] | has($repo) | not)
+' "$RESERVE_FILE" >/dev/null; then
+  echo "Invalid reserve repository list (sorted unique names, absent from $METADATA_FILE): $RESERVE_FILE" >&2
+  exit 1
+fi
+
 if [[ "$validate_only" == "true" ]]; then
-  echo "Repository metadata manifest is valid."
+  echo "Repository metadata manifests are valid."
   exit 0
 fi
 
 temporary_directory="$(mktemp -d)"
 trap 'rm -rf "$temporary_directory"' EXIT
 
-jq -r 'keys[]' "$METADATA_FILE" | LC_ALL=C sort >"$temporary_directory/manifest-repos"
+{
+  jq -r 'keys[]' "$METADATA_FILE"
+  jq -r '.[]' "$RESERVE_FILE"
+} | LC_ALL=C sort >"$temporary_directory/manifest-repos"
 gh repo list "$USER_OWNER" \
   --limit "$REPO_LIMIT" \
   --source \
@@ -115,7 +129,7 @@ gh repo list "$USER_OWNER" \
   LC_ALL=C sort >"$temporary_directory/github-repos"
 
 if ! cmp -s "$temporary_directory/manifest-repos" "$temporary_directory/github-repos"; then
-  echo "Repository set differs from $METADATA_FILE:" >&2
+  echo "Repository set differs from $METADATA_FILE and $RESERVE_FILE:" >&2
   comm -23 "$temporary_directory/github-repos" "$temporary_directory/manifest-repos" |
     sed 's/^/  missing from manifest: /' >&2
   comm -13 "$temporary_directory/github-repos" "$temporary_directory/manifest-repos" |
@@ -127,7 +141,9 @@ drift=false
 updated=0
 
 while read -r repo; do
-  expected="$(jq -S -c --arg repo "$repo" '.[$repo]' "$METADATA_FILE")"
+  expected="$(jq -S -c --arg repo "$repo" --slurpfile reserve "$RESERVE_FILE" '
+    if $reserve[0] | index($repo) then {description: "", homepage: null, topics: []} else .[$repo] end
+  ' "$METADATA_FILE")"
   actual="$(repo_metadata "$repo")"
 
   if [[ "$actual" == "$expected" ]]; then
@@ -172,5 +188,5 @@ fi
 if [[ "$apply" == "true" ]]; then
   echo "Repository metadata is synchronized; updated $updated repositories."
 else
-  echo "Repository metadata matches $METADATA_FILE."
+  echo "Repository metadata matches $METADATA_FILE and $RESERVE_FILE."
 fi

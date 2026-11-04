@@ -134,17 +134,18 @@ The Gradle preset also tracks annotated Spring dependency overrides and Docker b
 
 ## Repository maintenance
 
-The shell helpers in `scripts/` manage GitHub state and require an authenticated `gh` CLI for live
-checks and updates:
+The shell helpers in `scripts/` manage GitHub state and require jq and an authenticated `gh` CLI for
+live checks and updates:
 
 - `common-repos-config.sh` standardizes repository settings and protection rulesets.
 - `common-repos-metadata.sh` checks repository descriptions, homepages, and topics against
-  `repos-metadata.json`; pass `--validate-only` for an offline manifest check or `--apply` to update
-  GitHub.
+  `repos-metadata.json` and `reserve-repos.json`; pass `--validate-only` for an offline check of
+  both files or `--apply` to update GitHub.
 - `merge-prs-by-keyword.sh` searches and squash-merges open PRs by title keyword.
 
 On public repositories, the GitHub user running the script can update, delete, and force-push
-`main`; other users cannot. The Renovate GitHub App can also merge pull requests into `main`.
+`main`; other users cannot. On active repositories, the Renovate GitHub App can also merge pull
+requests into `main`.
 
 The script sets default `GITHUB_TOKEN` permissions to `read`; jobs can request additional
 permissions. **Allow GitHub Actions to create and approve pull requests** is enabled for
@@ -163,7 +164,22 @@ REPOS="hu553in/common-things hu553in/personal-website" \
   ./scripts/merge-prs-by-keyword.sh
 ```
 
-Public-only or plan-gated operations are reported as skipped for private repositories.
+Public-only or plan-gated operations are reported as skipped for private repositories. Archived
+repositories are read-only: the config script applies immutable releases, GitHub Actions, workflow
+permissions, and secret scanning to them and reports the other steps as skipped.
+
+Reserve repositories are inactive backups listed in `reserve-repos.json` instead of
+`repos-metadata.json`; their description, homepage, and topics stay empty. The config script
+disables their issues, pull requests, dependency alerts (which also turns off Dependabot security
+updates and, on private repositories, the dependency graph), and GitHub Actions, and leaves their
+workflow permissions unchanged. On public reserve repositories it also disables private
+vulnerability reporting and leaves Renovate out of the `main` ruleset. Other protections match
+active repositories. The merge script skips their pull requests. The scripts cannot change Renovate
+GitHub App access; remove reserve repositories from it in GitHub settings.
+
+Moving a repository from `reserve-repos.json` back to `repos-metadata.json` restores the active
+settings on the next config script run; add the repository back to the Renovate GitHub App
+separately.
 
 ## Local development
 

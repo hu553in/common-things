@@ -5,6 +5,8 @@ set -euo pipefail
 USER_OWNER="${USER_OWNER:-hu553in}"
 KEYWORD="${KEYWORD:-}"
 REPOS="${REPOS:-}"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+RESERVE_FILE="${RESERVE_FILE:-$SCRIPT_DIR/../reserve-repos.json}"
 
 if [ -z "$KEYWORD" ]; then
   echo "KEYWORD is empty."
@@ -64,6 +66,24 @@ if [[ ${#pr_urls[@]} -eq 0 ]]; then
   echo "No matching open PRs found."
   exit 0
 fi
+
+reserve_repos="$(jq -r '.[]' "$RESERVE_FILE")"
+active_pr_urls=()
+for url in "${pr_urls[@]}"; do
+  repo_path="${url#https://github.com/}"
+  repo_path="${repo_path%%/pull/*}"
+  if [[ "${repo_path%%/*}" == "$USER_OWNER" ]] && grep -Fxq -- "${repo_path#*/}" <<<"$reserve_repos"; then
+    echo "Skipping reserve repository PR: $url"
+  else
+    active_pr_urls+=("$url")
+  fi
+done
+
+if [[ ${#active_pr_urls[@]} -eq 0 ]]; then
+  echo "No matching open PRs outside reserve repositories."
+  exit 0
+fi
+pr_urls=("${active_pr_urls[@]}")
 
 echo "Found ${#pr_urls[@]} PR(s) to process."
 
