@@ -28,6 +28,7 @@ jobs:
       - env:
           CHANGELOG: ${{ steps.release-notes.outputs.changelog }}
         run: grep --fixed-strings --quiet '## [0.0.0-ci](' "$CHANGELOG"
+      - uses: astral-sh/setup-uv@v7
       - uses: oven-sh/setup-bun@v2
       - uses: actions/setup-go@v7
         with:
@@ -36,4 +37,5 @@ jobs:
       - uses: ./.github/actions/setup-shfmt
       - env:
           GITHUB_TOKEN: ${{ github.token }}
+          PREK: uvx prek
         run: make check

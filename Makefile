@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := check
 
+PREK ?= prek
 ACTIONLINT := bunx github-actionlint
 SHELLCHECK := bunx shellcheck
 SHFMT := shfmt
@@ -18,7 +19,7 @@ lint-fix:
 
 .PHONY: check-config
 check-config:
-	git config --file .gitconfig --list >/dev/null
+	$(PREK) validate-config prek.toml
 	scripts/common-repos-metadata.sh --validate-only
 
 .PHONY: check-renovate

@@ -183,11 +183,11 @@ separately.
 
 ## Local development
 
-Local checks require Make, Bun, Node.js, jq, and shfmt. Git 2.54 or newer can use the tracked
-`.gitconfig` for project checks and Commitlint hooks. Enable it once per clone:
+Local checks require Make, Bun, Node.js, jq, shfmt, and [prek](https://prek.j178.dev/installation/).
+Install the project-check and Commitlint hooks once per clone:
 
 ```console
-$ git config --local include.path ../.gitconfig
+$ prek install
 ```
 
 Run the complete local check or apply supported fixes before checking again:
