@@ -61,21 +61,6 @@
     "homepage": null,
     "topics": ["configuration", "developer-environment", "dotfiles", "macos", "shell", "yadm"]
   },
-  "fans-test-task": {
-    "description": "Content moderation take-home with durable screening, human review, and outage recovery",
-    "homepage": null,
-    "topics": [
-      "content-moderation",
-      "docker-compose",
-      "fastapi",
-      "postgresql",
-      "python",
-      "react",
-      "redis",
-      "take-home-assignment",
-      "typescript"
-    ]
-  },
   "flash-games": {
     "description": "Offline-capable Ruffle PWA for bundled Flash games",
     "homepage": "https://flash-games-hu553in.vercel.app",
@@ -233,23 +218,6 @@
     "description": "Personal Obsidian vault",
     "homepage": null,
     "topics": ["markdown", "notes", "obsidian", "obsidian-vault"]
-  },
-  "one-last-chance": {
-    "description": "iPhone VPN client for olcRTC, configured through a single subscription URL",
-    "homepage": null,
-    "topics": [
-      "bun",
-      "expo",
-      "golang",
-      "ios",
-      "iphone",
-      "network-extension",
-      "olcrtc",
-      "react-native",
-      "swift",
-      "typescript",
-      "vpn"
-    ]
   },
   "personal-website": {
     "description": "Personal Next.js website for Ruslan Khasanshin",
