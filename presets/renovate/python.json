@@ -15,7 +15,6 @@
       "description": "Preserve Python compatibility floor",
       "matchManagers": ["pep621"],
       "matchDepTypes": ["requires-python"],
-      "matchUpdateTypes": ["patch"],
       "enabled": false
     },
     {
