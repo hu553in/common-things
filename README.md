@@ -120,8 +120,18 @@ share non-major grouping, assignment, labels, and GitHub Dependabot alerts as th
 source while Renovate creates remediation pull requests. Stack presets coordinate runtime versions
 across project files and add language-specific grouping and lockfile behavior.
 
-Renovate merges its PRs once CI checks pass and the branch is up to date. PRs without CI checks stay
-open. GitHub's native auto-merge stays disabled.
+The presets also mark packages without a release for a year as abandoned
+(`abandonments:recommended`) and open a PR when the Renovate configuration needs migrating
+(`:configMigration`).
+
+Renovate merges non-major PRs once CI checks pass and the branch is up to date. Major updates still
+get PRs, which wait for manual review. PRs without CI checks stay open. GitHub's native auto-merge
+stays disabled.
+
+This repository's own Renovate configuration waits until npm releases for the `release-notes` action
+are three days old. Renovate does not apply that delay to lockfile maintenance, so
+`.github/actions/release-notes/.npmrc` sets npm's `min-release-age=3`, and npm waits too when it
+regenerates `package-lock.json`. `npm ci` still installs the committed lockfile as is.
 
 Python-tagged uv images follow Python versions, while numeric uv image tags follow uv releases.
 
@@ -141,7 +151,6 @@ live checks and updates:
 - `common-repos-metadata.sh` checks repository descriptions, homepages, and topics against
   `repos-metadata.json` and `reserve-repos.json`; pass `--validate-only` for an offline check of
   both files or `--apply` to update GitHub.
-- `merge-prs-by-keyword.sh` searches and squash-merges open PRs by title keyword.
 
 On public repositories, the GitHub user running the script can update, delete, and force-push
 `main`; other users cannot. On active repositories, the Renovate GitHub App can also merge pull
@@ -159,9 +168,6 @@ compatible releases.
 REPOS="hu553in/common-things hu553in/personal-website" ./scripts/common-repos-config.sh
 ./scripts/common-repos-metadata.sh
 ./scripts/common-repos-metadata.sh --apply
-REPOS="hu553in/common-things hu553in/personal-website" \
-  KEYWORD="deps" \
-  ./scripts/merge-prs-by-keyword.sh
 ```
 
 Public-only or plan-gated operations are reported as skipped for private repositories. Archived
@@ -174,8 +180,8 @@ disables their issues, pull requests, dependency alerts (which also turns off De
 updates and, on private repositories, the dependency graph), and GitHub Actions, and leaves their
 workflow permissions unchanged. On public reserve repositories it also disables private
 vulnerability reporting and leaves Renovate out of the `main` ruleset. Other protections match
-active repositories. The merge script skips their pull requests. The scripts cannot change Renovate
-GitHub App access; remove reserve repositories from it in GitHub settings.
+active repositories. The scripts cannot change Renovate GitHub App access; remove reserve
+repositories from it in GitHub settings.
 
 Moving a repository from `reserve-repos.json` back to `repos-metadata.json` restores the active
 settings on the next config script run; add the repository back to the Renovate GitHub App

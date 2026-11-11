@@ -4,7 +4,7 @@ PREK ?= prek
 ACTIONLINT := bunx github-actionlint
 SHELLCHECK := bunx shellcheck
 SHFMT := shfmt
-SHELL_FILES := scripts/common-repos-config.sh scripts/common-repos-metadata.sh scripts/merge-prs-by-keyword.sh
+SHELL_FILES := scripts/common-repos-config.sh scripts/common-repos-metadata.sh
 
 .PHONY: lint
 lint:

@@ -1,5 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>hu553in/common-things//presets/renovate/actions"],
+  "extends": [
+    "github>hu553in/common-things//presets/renovate/actions",
+    "security:minimumReleaseAgeNpm"
+  ],
   "enabledManagers": ["github-actions", "npm"]
 }

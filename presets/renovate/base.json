@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":enableVulnerabilityAlerts"],
+  "extends": [
+    "config:recommended",
+    ":enableVulnerabilityAlerts",
+    "abandonments:recommended",
+    ":configMigration"
+  ],
   "assignees": ["hu553in"],
   "labels": ["dependencies"],
   "rebaseWhen": "behind-base-branch",
@@ -16,6 +21,11 @@
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch"
+    },
+    {
+      "description": "Leave major updates for manual review",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
     },
     {
       "description": "Group Bun runtime updates",
