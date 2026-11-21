@@ -219,6 +219,23 @@
     "homepage": null,
     "topics": ["markdown", "notes", "obsidian", "obsidian-vault"]
   },
+  "one-last-chance": {
+    "description": "iPhone VPN client for olcRTC, configured through a single subscription URL",
+    "homepage": null,
+    "topics": [
+      "bun",
+      "expo",
+      "golang",
+      "ios",
+      "iphone",
+      "network-extension",
+      "olcrtc",
+      "react-native",
+      "swift",
+      "typescript",
+      "vpn"
+    ]
+  },
   "personal-website": {
     "description": "Personal Next.js website for Ruslan Khasanshin",
     "homepage": "https://hu553in.dev",
