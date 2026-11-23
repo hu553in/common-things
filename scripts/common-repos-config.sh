@@ -7,7 +7,6 @@ REPO_LIMIT="${REPO_LIMIT:-200}"
 REPOS="${REPOS:-}"
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 RESERVE_FILE="${RESERVE_FILE:-$SCRIPT_DIR/../reserve-repos.json}"
-RENOVATE_APP_ID=2740
 failed=false
 
 step() {
@@ -159,17 +158,6 @@ repo_list() {
 protect_main_only_me() {
   local repo="$1"
   local user_id="$2"
-  local renovate="$3"
-  local renovate_bypass=""
-
-  if [[ "$renovate" == "true" ]]; then
-    renovate_bypass=",
-    {
-      \"actor_id\": $RENOVATE_APP_ID,
-      \"actor_type\": \"Integration\",
-      \"bypass_mode\": \"pull_request\"
-    }"
-  fi
 
   put_ruleset "$repo" "main: only me can update/delete" "branch" "$(
     cat <<EOF
@@ -182,7 +170,7 @@ protect_main_only_me() {
       "actor_id": $user_id,
       "actor_type": "User",
       "bypass_mode": "always"
-    }$renovate_bypass
+    }
   ],
   "conditions": {
     "ref_name": {
@@ -394,7 +382,6 @@ while read -r repo; do
       -X PUT \
       "repos/$repo/vulnerability-alerts"
 
-    # Renovate reads Dependabot alerts but owns the remediation pull requests.
     writable_step "disable dependabot security updates" \
       github_api \
       -X DELETE \
@@ -417,13 +404,8 @@ while read -r repo; do
     step "secret scanning + push protection" \
       enable_secret_scanning "$repo"
 
-    if [[ "$reserve" == "true" ]]; then
-      writable_step "protect main: only me" \
-        protect_main_only_me "$repo" "$user_id" false
-    else
-      writable_step "protect main: only me and Renovate" \
-        protect_main_only_me "$repo" "$user_id" true
-    fi
+    writable_step "protect main: only me" \
+      protect_main_only_me "$repo" "$user_id"
 
     writable_step "protect main: no force push" \
       protect_main_no_force_push "$repo" "$user_id"

@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v10.4.0
       - uses: oven-sh/setup-bun@v2
       - uses: golangci/golangci-lint-action@v9
         with:
@@ -28,5 +28,5 @@ jobs:
       - run: make install-deps
       - env:
           GITHUB_TOKEN: ${{ github.token }}
-          PREK: uvx prek
+          PREK: uvx --exclude-newer 3d prek
         run: make check

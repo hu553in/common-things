@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := check
 
 PREK ?= prek
-ACTIONLINT := bunx github-actionlint
-SHELLCHECK := bunx shellcheck
+ACTIONLINT := bunx --minimum-release-age 259200 github-actionlint
+SHELLCHECK := bunx --minimum-release-age 259200 shellcheck
 SHFMT := shfmt
 SHELL_FILES := scripts/common-repos-config.sh scripts/common-repos-metadata.sh
 
@@ -22,17 +22,13 @@ check-config:
 	$(PREK) validate-config prek.toml
 	scripts/common-repos-metadata.sh --validate-only
 
-.PHONY: check-renovate
-check-renovate:
-	bunx --package renovate renovate-config-validator --strict --no-global renovate.json presets/renovate/*.json
-
 .PHONY: check-workflows
 check-workflows:
 	$(ACTIONLINT)
-	printf '%s\0' .github/actions/*/action.yml | xargs -0 -n 1 bunx --package @action-validator/cli action-validator
+	printf '%s\0' .github/actions/*/action.yml | xargs -0 -n 1 bunx --minimum-release-age 259200 --package @action-validator/cli action-validator
 
 .PHONY: check
-check: lint check-config check-renovate check-workflows
+check: lint check-config check-workflows
 
 .PHONY: check-fix
 check-fix: lint-fix

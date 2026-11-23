@@ -39,7 +39,7 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ inputs.java_version }}
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v10.4.0
       - uses: oven-sh/setup-bun@v2
       - uses: gradle/actions/setup-gradle@v6
       - env:
@@ -55,7 +55,7 @@ jobs:
           } > "$GRADLE_USER_HOME/gradle.properties"
       - env:
           GITHUB_TOKEN: ${{ github.token }}
-          PREK: uvx prek
+          PREK: uvx --exclude-newer 3d prek
         run: make check
       - if: env.BUILD_IMAGE == 'true'
         env:

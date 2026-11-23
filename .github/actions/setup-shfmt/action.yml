@@ -5,4 +5,4 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: go install mvdan.cc/sh/v3/cmd/shfmt@latest
+      run: go install mvdan.cc/sh/v3/cmd/shfmt@v3.14.1

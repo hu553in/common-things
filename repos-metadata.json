@@ -16,14 +16,13 @@
     ]
   },
   "common-things": {
-    "description": "Reusable GitHub Actions workflows, Renovate presets, and repository maintenance scripts",
+    "description": "Reusable GitHub Actions workflows and repository maintenance scripts",
     "homepage": null,
     "topics": [
       "automation",
       "dependabot",
       "developer-tools",
       "github-actions",
-      "renovate",
       "repository-management",
       "shell"
     ]

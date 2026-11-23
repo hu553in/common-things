@@ -2,8 +2,8 @@
 
 [![CI](https://github.com/hu553in/common-things/actions/workflows/ci.yml/badge.svg)](https://github.com/hu553in/common-things/actions/workflows/ci.yml)
 
-Reusable GitHub Actions workflows and composite actions, Renovate presets, and maintenance scripts
-for hu553in repositories.
+Reusable GitHub Actions workflows, composite actions, and maintenance scripts for hu553in
+repositories.
 
 ## Reusable workflows and actions
 
@@ -59,7 +59,7 @@ checks. Set `node_options` to define `NODE_OPTIONS` for the check job (default: 
 `node_options: --max-old-space-size=4096` raises the Node.js old-space heap limit to 4 GiB.
 
 The Go workflow (`check-go.yml`) runs `make install-deps` and `make check` with `PREK` set to
-`uvx prek`.
+`uvx --exclude-newer 3d prek`.
 
 The Python workflow (`check-python.yml`) runs `make install-deps` and `make check`. Run project
 checks with `uv run --locked` so an outdated lockfile fails validation instead of being updated. Let
@@ -68,10 +68,10 @@ is unnecessary.
 
 The Gradle workflow (`check-gradle.yml`) requires `java_version` and `gradle_jvmargs`, writes the
 JVM arguments and `gradle_workers_max` (default: empty) to Gradle properties, and runs `make check`
-with `PREK` set to `uvx prek`. Gradle resolves dependencies itself, so it has no `make install-deps`
-step. Set `image_ref` (default: empty) to also build that image with `bootBuildImage` and scan it,
-except on the default branch and tags. Test, coverage, and Detekt reports go to the `reports`
-artifact for 14 days.
+with `PREK` set to `uvx --exclude-newer 3d prek`. Gradle resolves dependencies itself, so it has no
+`make install-deps` step. Set `image_ref` (default: empty) to also build that image with
+`bootBuildImage` and scan it, except on the default branch and tags. Test, coverage, and Detekt
+reports go to the `reports` artifact for 14 days.
 
 The dependency submission workflows (`submit-gradle-dependencies.yml`,
 `submit-maven-dependencies.yml`) require `java_version` and submit the dependency graph to GitHub.
@@ -87,8 +87,8 @@ Custom workflows can reuse these composite actions after checkout:
   instead of publishing them.
 - `hu553in/common-things/.github/actions/scan-docker@main` requires an `image-ref` and runs the same
   blocking Trivy scan against a local or published image, using the caller's Trivy configuration.
-- `hu553in/common-things/.github/actions/setup-shfmt@main` installs shfmt after Go setup, using the
-  caller's toolchain without changing it.
+- `hu553in/common-things/.github/actions/setup-shfmt@main` installs the pinned shfmt release after
+  Go setup, using the caller's toolchain.
 - `hu553in/common-things/.github/actions/verify-docker@main` requires an `image-ref`, accepts a
   `smoke-command` (default: empty), runs the command in the image without network access, frees
   build cache, and runs `scan-docker`.
@@ -96,51 +96,6 @@ Custom workflows can reuse these composite actions after checkout:
 Use `build-publish-attest-docker.yml` when GitHub artifact attestations are available. Use
 `build-publish-docker.yml` for private repositories that cannot create attestations, and
 `attest-docker.yml` to attest an image published by a custom release flow.
-
-## Renovate presets
-
-Target repositories extend the stack-specific presets under `presets/renovate/`:
-
-```json
-{
-  "extends": ["github>hu553in/common-things//presets/renovate/bun"]
-}
-```
-
-The `actions`, `bun`, `go`, `gradle`, `maven`, and `python` presets enable only the managers
-relevant to each stack. Dependency updates can create PRs at any time, whenever Renovate runs. The
-Bun, Python, Go, Gradle, and Maven presets wait until an npm, PyPI, Go module, or Maven release is
-three days old. Go and Maven releases without a registry release date, such as Go digests and
-JitPack packages, do not wait. In Bun and Python repositories, set the same delay with
-`minimumReleaseAge = 259200` in `bunfig.toml` and `exclude-newer = "3 days"` in `[tool.uv]` so
-lockfile maintenance, which runs the package manager, waits too. Vulnerability fixes skip the
-Renovate delay, but Bun and uv still reject a release younger than three days, so a fresh fix lands
-once it is old enough. Lockfile maintenance can create PRs throughout Monday in UTC. The presets
-share non-major grouping, assignment, labels, and GitHub Dependabot alerts as the vulnerability
-source while Renovate creates remediation pull requests. Stack presets coordinate runtime versions
-across project files and add language-specific grouping and lockfile behavior.
-
-The presets also mark packages without a release for a year as abandoned
-(`abandonments:recommended`) and open a PR when the Renovate configuration needs migrating
-(`:configMigration`).
-
-Renovate merges non-major PRs once CI checks pass and the branch is up to date. Major updates still
-get PRs, which wait for manual review. PRs without CI checks stay open. GitHub's native auto-merge
-stays disabled.
-
-This repository's own Renovate configuration waits until npm releases for the `release-notes` action
-are three days old. Renovate does not apply that delay to lockfile maintenance, so
-`.github/actions/release-notes/.npmrc` sets npm's `min-release-age=3`, and npm waits too when it
-regenerates `package-lock.json`. `npm ci` still installs the committed lockfile as is.
-
-Python-tagged uv images follow Python versions, while numeric uv image tags follow uv releases.
-
-The Gradle preset also tracks annotated Spring dependency overrides and Docker buildpacks:
-
-- In `gradle.properties`, put `# renovate: datasource=maven depName=<group>:<artifact>` immediately
-  before the version property, using the dependency's Maven coordinates.
-- In `build.gradle.kts`, put `// renovate: datasource=docker` immediately before the quoted
-  buildpack image and tag.
 
 ## Repository maintenance
 
@@ -153,8 +108,7 @@ live checks and updates:
   both files or `--apply` to update GitHub.
 
 On public repositories, the GitHub user running the script can update, delete, and force-push
-`main`; other users cannot. On active repositories, the Renovate GitHub App can also merge pull
-requests into `main`.
+`main`; other users cannot.
 
 The script sets default `GITHUB_TOKEN` permissions to `read`; jobs can request additional
 permissions. **Allow GitHub Actions to create and approve pull requests** is enabled for
@@ -179,13 +133,10 @@ Reserve repositories are inactive backups listed in `reserve-repos.json` instead
 disables their issues, pull requests, dependency alerts (which also turns off Dependabot security
 updates and, on private repositories, the dependency graph), and GitHub Actions, and leaves their
 workflow permissions unchanged. On public reserve repositories it also disables private
-vulnerability reporting and leaves Renovate out of the `main` ruleset. Other protections match
-active repositories. The scripts cannot change Renovate GitHub App access; remove reserve
-repositories from it in GitHub settings.
+vulnerability reporting. Other protections match active repositories.
 
 Moving a repository from `reserve-repos.json` back to `repos-metadata.json` restores the active
-settings on the next config script run; add the repository back to the Renovate GitHub App
-separately.
+settings on the next config script run.
 
 ## Local development
 
@@ -207,6 +158,5 @@ Focused checks:
 
 ```bash
 make check-config
-make check-renovate
 make check-workflows
 ```
