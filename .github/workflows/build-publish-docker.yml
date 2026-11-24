@@ -26,6 +26,10 @@ on:
         required: false
         type: string
         default: ''
+      smoke_seccomp_profile:
+        required: false
+        type: string
+        default: ''
       runs_on:
         required: false
         type: string
@@ -78,6 +82,7 @@ jobs:
         with:
           image-ref: ${{ inputs.image }}@${{ steps.build.outputs.digest }}
           smoke-command: ${{ inputs.smoke_command }}
+          smoke-seccomp-profile: ${{ inputs.smoke_seccomp_profile }}
       - if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         env:
           DIGEST: ${{ steps.build.outputs.digest }}

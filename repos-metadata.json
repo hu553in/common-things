@@ -236,16 +236,16 @@
     ]
   },
   "personal-website": {
-    "description": "Personal Next.js website for Ruslan Khasanshin",
+    "description": "Personal website for Ruslan Khasanshin",
     "homepage": "https://hu553in.dev",
     "topics": [
       "bun",
-      "nextjs",
+      "cloudflare-workers",
       "personal-website",
       "react",
       "tailwindcss",
       "typescript",
-      "vercel",
+      "vinext",
       "website"
     ]
   },

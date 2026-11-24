@@ -124,9 +124,13 @@ trap 'rm -rf "$temporary_directory"' EXIT
 gh repo list "$USER_OWNER" \
   --limit "$REPO_LIMIT" \
   --source \
-  --json name \
-  --jq '.[].name' |
-  LC_ALL=C sort >"$temporary_directory/github-repos"
+  --json name,description,homepageUrl,repositoryTopics |
+  jq 'map({key: .name, value: {
+    description: (.description // ""),
+    homepage: (if .homepageUrl == "" then null else .homepageUrl end),
+    topics: ((.repositoryTopics // []) | map(.name) | sort)
+  }}) | from_entries' >"$temporary_directory/github-metadata.json"
+jq -r 'keys[]' "$temporary_directory/github-metadata.json" | LC_ALL=C sort >"$temporary_directory/github-repos"
 
 if ! cmp -s "$temporary_directory/manifest-repos" "$temporary_directory/github-repos"; then
   echo "Repository set differs from $METADATA_FILE and $RESERVE_FILE:" >&2
@@ -144,7 +148,7 @@ while read -r repo; do
   expected="$(jq -S -c --arg repo "$repo" --slurpfile reserve "$RESERVE_FILE" '
     if $reserve[0] | index($repo) then {description: "", homepage: null, topics: []} else .[$repo] end
   ' "$METADATA_FILE")"
-  actual="$(repo_metadata "$repo")"
+  actual="$(jq -S -c --arg repo "$repo" '.[$repo]' "$temporary_directory/github-metadata.json")"
 
   if [[ "$actual" == "$expected" ]]; then
     continue

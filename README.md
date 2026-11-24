@@ -40,6 +40,9 @@ network access disabled. Pass the command to both check and publish workflows. T
 workflow runs it whenever it builds the image; publish workflows run it against the built digest
 before updating `latest`. Use a YAML anchor to keep both commands identical.
 
+If the smoke command needs a seccomp profile, pass its relative path in the caller checkout as
+`smoke_seccomp_profile` to both workflows. By default Docker uses its standard profile.
+
 Set `no_cache_filters` to a comma-separated list of Docker stages to rebuild without cached layers
 (default: empty). Use the runtime stage, such as `runner`, in both check and publish workflows to
 fetch current OS package updates.
@@ -50,16 +53,16 @@ workflows do not cancel their parent run.
 
 The Bun workflow (`check-bun.yml`) runs the package script named by `check_script` (default:
 `check:all`); a project can pass a narrower script, such as `check:static`, to keep slow suites out
-of CI. Set `cache_eslint: true` to restore and save `.cache/eslint`, and enable caching in the
-project's ESLint command with `--cache --cache-strategy content --cache-location .cache/eslint`. Set
-`playwright: true` to enable browser caching, system dependencies, and test-result uploads on
+of CI.
+
+Set `playwright: true` to enable browser caching, system dependencies, and test-result uploads on
 failure. Set `shfmt: true` to install the shell formatter. Set `node: true` when the project
 declares a Node.js version in `package.json`; the workflow installs that version before running
 checks. Set `node_options` to define `NODE_OPTIONS` for the check job (default: empty). For example,
 `node_options: --max-old-space-size=4096` raises the Node.js old-space heap limit to 4 GiB.
 
-The Go workflow (`check-go.yml`) runs `make install-deps` and `make check` with `PREK` set to
-`uvx --exclude-newer 3d prek`.
+The Go workflow (`check-go.yml`) verifies the golangci-lint configuration and runs
+`make install-deps check`. It sets up uv when the checkout contains an `uv.lock` file.
 
 The Python workflow (`check-python.yml`) runs `make install-deps` and `make check`. Run project
 checks with `uv run --locked` so an outdated lockfile fails validation instead of being updated. Let
@@ -67,18 +70,17 @@ Ruff infer its target version from `project.requires-python`; an explicit `tool.
 is unnecessary.
 
 The Gradle workflow (`check-gradle.yml`) requires `java_version` and `gradle_jvmargs`, writes the
-JVM arguments and `gradle_workers_max` (default: empty) to Gradle properties, and runs `make check`
-with `PREK` set to `uvx --exclude-newer 3d prek`. Gradle resolves dependencies itself, so it has no
-`make install-deps` step. Set `image_ref` (default: empty) to also build that image with
-`bootBuildImage` and scan it, except on the default branch and tags. Test, coverage, and Detekt
-reports go to the `reports` artifact for 14 days.
+JVM arguments and `gradle_workers_max` (default: empty) to Gradle properties, and runs `make check`.
+Gradle resolves dependencies itself, so it has no `make install-deps` step. Set `image_ref`
+(default: empty) to also build that image with `bootBuildImage` and scan it. Set
+`build_publish_refs: true` to include the default branch and tags, for example on a check-only
+manual run. Test, coverage, and Detekt reports go to the `reports` artifact for 14 days.
 
 The dependency submission workflows (`submit-gradle-dependencies.yml`,
 `submit-maven-dependencies.yml`) require `java_version` and submit the dependency graph to GitHub.
 
 Custom workflows can reuse these composite actions after checkout:
 
-- `hu553in/common-things/.github/actions/cache-eslint@main` caches `.cache/eslint`.
 - `hu553in/common-things/.github/actions/release-notes@main` generates release notes with
   Conventional Changelog's `conventionalcommits` preset. Check out the release tag with
   `fetch-depth: 0`, then pass its `changelog` output to softprops' `body_path`. It includes breaking
@@ -140,19 +142,20 @@ settings on the next config script run.
 
 ## Local development
 
-Local checks require Make, Bun, Node.js, jq, shfmt, and [prek](https://prek.j178.dev/installation/).
-Install the project-check and Commitlint hooks once per clone:
+Local checks require Make, Bun, jq, and shfmt. Install the project-check and Commitlint hooks once
+per clone:
 
 ```console
-$ prek install
+$ bunx lefthook install
 ```
 
-Run the complete local check or apply supported fixes before checking again:
+Run the complete local check:
 
 ```bash
 make check
-make check-fix
 ```
+
+Use `make check-fix` to apply supported fixes before the full check.
 
 Focused checks:
 

@@ -26,6 +26,10 @@ on:
         required: false
         type: string
         default: ''
+      smoke_seccomp_profile:
+        required: false
+        type: string
+        default: ''
       runs_on:
         required: false
         type: string
@@ -47,6 +51,7 @@ jobs:
       build_args: ${{ inputs.build_args }}
       no_cache_filters: ${{ inputs.no_cache_filters }}
       smoke_command: ${{ inputs.smoke_command }}
+      smoke_seccomp_profile: ${{ inputs.smoke_seccomp_profile }}
       runs_on: ${{ inputs.runs_on }}
 
   attest:

@@ -20,13 +20,13 @@ jobs:
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
-      - uses: astral-sh/setup-uv@v10.4.0
+      - if: hashFiles('**/uv.lock') != ''
+        uses: astral-sh/setup-uv@v10.4.0
       - uses: oven-sh/setup-bun@v2
       - uses: golangci/golangci-lint-action@v9
         with:
           install-only: true
-      - run: make install-deps
+      - run: golangci-lint config verify
       - env:
           GITHUB_TOKEN: ${{ github.token }}
-          PREK: uvx --exclude-newer 3d prek
-        run: make check
+        run: make install-deps check

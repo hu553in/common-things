@@ -1,6 +1,5 @@
 .DEFAULT_GOAL := check
 
-PREK ?= prek
 ACTIONLINT := bunx --minimum-release-age 259200 github-actionlint
 SHELLCHECK := bunx --minimum-release-age 259200 shellcheck
 SHFMT := shfmt
@@ -19,7 +18,7 @@ lint-fix:
 
 .PHONY: check-config
 check-config:
-	$(PREK) validate-config prek.toml
+	bunx --minimum-release-age 259200 lefthook validate
 	scripts/common-repos-metadata.sh --validate-only
 
 .PHONY: check-workflows

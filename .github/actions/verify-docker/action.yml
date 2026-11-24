@@ -9,6 +9,10 @@ inputs:
     description: Shell command to run inside the image without network access
     required: false
     default: ''
+  smoke-seccomp-profile:
+    description: Optional relative path to a seccomp profile in the caller checkout
+    required: false
+    default: ''
 
 runs:
   using: composite
@@ -18,8 +22,13 @@ runs:
       env:
         IMAGE_REF: ${{ inputs.image-ref }}
         SMOKE_COMMAND: ${{ inputs.smoke-command }}
+        SMOKE_SECCOMP_PROFILE: ${{ inputs.smoke-seccomp-profile }}
       run: |
-        docker run --rm --network none \
+        options=(--rm --network none)
+        if [[ -n "$SMOKE_SECCOMP_PROFILE" ]]; then
+          options+=(--security-opt "seccomp=./$SMOKE_SECCOMP_PROFILE")
+        fi
+        docker run "${options[@]}" \
           --entrypoint /bin/sh \
           "$IMAGE_REF" \
           -ec "$SMOKE_COMMAND"

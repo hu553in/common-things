@@ -3,10 +3,6 @@ name: Check Bun project
 on:
   workflow_call:
     inputs:
-      cache_eslint:
-        required: false
-        type: boolean
-        default: false
       check_script:
         required: false
         type: string
@@ -58,8 +54,6 @@ jobs:
       - if: inputs.shfmt
         uses: hu553in/common-things/.github/actions/setup-shfmt@main
       - run: bun ci
-      - if: inputs.cache_eslint
-        uses: hu553in/common-things/.github/actions/cache-eslint@main
       - if: inputs.playwright
         uses: actions/cache@v6
         with:
